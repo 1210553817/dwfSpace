@@ -1,3 +1,5 @@
 <resources>
+    <style name="DwfTheme" parent="@android:style/Theme.Holo.Light.NoActionBar">
 
+    </style>
 </resources>

@@ -74,22 +74,18 @@ class MsgSendFrgm : Fragment() , OnBackListener {
         attaBtn.onClick {
             openFileSelector()
         }
+
+        initListView()
+
+        return hdvw
+    }
+
+    private fun initListView(){
         val db = DbUtil(this.activity)
         var list = db.getMsgls(citem?.ip,poffset,plimit)
         val msgLsAdapter = MemMsgLsAdapter(activity,list)
         memMsgLsView?.adapter = msgLsAdapter
         memMsgLsView?.setSelectionFromTop(list.size-1,0)
-//        memMsgLsView?.addOnLayoutChangeListener(object: View.OnLayoutChangeListener{
-//            override fun onLayoutChange(v: View?, left: Int, top: Int, right: Int, bottom: Int, oldLeft: Int, oldTop: Int, oldRight: Int, oldBottom: Int) {
-//                val listVw = v as ListView
-//                val adp = listVw?.adapter as MemMsgLsAdapter?
-//                val sz = adp?.list?.size?:return
-//                if(adp?.load2Btm==1) {
-//                    listVw?.smoothScrollToPositionFromTop(sz - 1, 0)
-//                }
-//                //listVw?.removeOnLayoutChangeListener(this)
-//            }
-//        })
         memMsgLsView?.setOnScrollListener(object : AbsListView.OnScrollListener {
             private var scrtp = 0
             override fun onScrollStateChanged(view: AbsListView, scrollState: Int) {
@@ -120,8 +116,6 @@ class MsgSendFrgm : Fragment() , OnBackListener {
                 }
             }
         })
-
-        return hdvw
     }
 
     private fun loadListMore(){

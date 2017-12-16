@@ -181,7 +181,7 @@ class FileSelector(private val context: Context) : OnBackListener {
                         }
                     }
                 }else{
-                    fIcon?.setImageDrawable(BitMapUtil.getMatrixDrawableByRid(context,R.mipmap.red_thm_42, appColorArrayLightGreen))
+                    fIcon?.setImageResource(R.mipmap.red_thm_42)
                 }
 
             }

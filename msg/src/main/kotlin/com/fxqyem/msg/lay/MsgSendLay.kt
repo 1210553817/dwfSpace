@@ -141,7 +141,6 @@ class MsgSendLay(){
                     cacheColorHint = COLOR_TRANS
                     dividerHeight = 0
                     visibility = View.VISIBLE
-                    //selector =
                 }.lparams {
                     width = matchParent
                     height = matchParent
