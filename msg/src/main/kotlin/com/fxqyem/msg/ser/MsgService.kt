@@ -30,7 +30,7 @@ class MsgService : Service(){
     private var mLocalBroadcastManager: LocalBroadcastManager? = null
     private var mReceiver: BroadcastReceiver? = null
 
-    /**network*/
+    /*Server Socket */
     var msgServer: DatagramSocket? = null
 
     override fun onCreate() {
