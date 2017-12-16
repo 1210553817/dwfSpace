@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="true">
+        <layer-list>
+            <item>
+                <shape android:shape="oval">
+                    <solid android:color="#55ffffff" />
+                </shape>
+            </item>
+            <item android:left="10dip" android:top="10dip" android:right="10dip" android:bottom="10dip">
+                <bitmap android:src="@mipmap/home_ex_dnld_btn"/>
+            </item>
+        </layer-list>
+    </item>
+    <item>
+        <layer-list>
+            <item>
+                <shape android:shape="oval">
+                    <solid android:color="@color/mainTitle" />
+                </shape>
+            </item>
+            <item android:left="10dip" android:top="10dip" android:right="10dip" android:bottom="10dip">
+                <bitmap android:src="@mipmap/home_ex_dnld_btn"/>
+            </item>
+        </layer-list>
+
+    </item>
+</selector>

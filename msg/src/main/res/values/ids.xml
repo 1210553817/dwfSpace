@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--main-->
+    <item name="msg_lay_core_mainhd_ly" type="id"/>
+    <!--btm-->
+    <item name="msg_lay_core_btm_ly" type="id"/>
+    <item name="msg_lay_core_btm_mem_img" type="id"/>
+    <item name="msg_lay_core_btm_mem_txt" type="id"/>
+    <item name="msg_lay_core_btm_grp_img" type="id"/>
+    <item name="msg_lay_core_btm_grp_txt" type="id"/>
+    <item name="msg_lay_core_btm_set_img" type="id"/>
+    <item name="msg_lay_core_btm_set_txt" type="id"/>
+    <!--cen-->
+    <item name="msg_lay_core_cen_ly" type="id"/>
+    <item name="msg_lay_core_cenhd_ly" type="id"/>
+    <item name="msg_lay_core_cen_viewPager_ly" type="id"/>
+    <item name="msg_lay_core_cenfrm_ly" type="id"/>
+    <item name="msg_lay_cen_mempg_lsvw" type="id"/>
+    <item name="msg_lay_cen_mempg_itm_hiconbtn" type="id"/>
+    <item name="msg_lay_cen_mempg_itm_chatnumbtn" type="id"/>
+    <item name="msg_lay_cen_mempg_itm_mtit" type="id"/>
+    <item name="msg_lay_cen_mempg_itm_stit" type="id"/>
+    <!--sld-->
+    <item name="msg_lay_core_sldbar_ly" type="id"/>
+    <item name="msg_lay_core_sldcov_ly" type="id"/>
+    <item name="msg_lay_core_sld_ly" type="id"/>
+    <item name="msg_lay_core_sld_ly_gra" type="id"/>
+    <item name="msg_lay_core_sld_ly_hd" type="id"/>
+    <item name="msg_lay_core_sld_ly_scrvw" type="id"/>
+    <item name="msg_lay_core_sld_ly_ls" type="id"/>
+    <item name="msg_lay_core_sld_ly_img" type="id"/>
+    <item name="msg_lay_core_sld_ly_btm" type="id"/>
+    <item name="msg_lay_core_sld_ly_msgbkgset_btn" type="id"/>
+    <item name="msg_lay_core_sld_ly_peppicset_btn" type="id"/>
+    <item name="msg_lay_core_sld_ly_appabout_btn" type="id"/>
+    <item name="msg_lay_core_sld_ly_appover_btn" type="id"/>
+    <!--ctn-->
+    <item name="msg_lay_core_onectnfrm_ly" type="id"/>
+    <!--file_slector_holder-->
+    <item name="file_slector_holder_tit" type="id"/>
+    <item name="file_slector_holder_path" type="id"/>
+    <item name="file_slector_holder_scrVw" type="id"/>
+    <item name="file_slector_holder_uplvBtn" type="id"/>
+    <item name="file_slector_holder_okBtn" type="id"/>
+    <!--file_slector_item-->
+    <item name="file_slector_item_hdly" type="id"/>
+    <item name="file_slector_item_ico" type="id"/>
+    <item name="file_slector_item_fname" type="id"/>
+    <!--msg_send_lay-->
+    <item name="msg_send_lay_top" type="id"/>
+    <item name="msg_send_lay_btm" type="id"/>
+    <item name="msg_send_lay_tit" type="id"/>
+    <item name="msg_send_lay_backBtn" type="id"/>
+    <item name="msg_send_lay_optBtn" type="id"/>
+    <item name="msg_send_lay_editTxt" type="id"/>
+    <item name="msg_send_lay_sendBtn" type="id"/>
+    <item name="msg_send_lay_attaBtn" type="id"/>
+    <item name="msg_send_lay_msgls" type="id"/>
+    <item name="msg_send_lay_msgls_itm_liconbtn" type="id"/>
+    <item name="msg_send_lay_msgls_itm_riconbtn" type="id"/>
+    <item name="msg_send_lay_msgls_itm_licon" type="id"/>
+    <item name="msg_send_lay_msgls_itm_ricon" type="id"/>
+    <item name="msg_send_lay_msgls_itm_uname" type="id"/>
+    <item name="msg_send_lay_msgls_itm_tlay" type="id"/>
+    <item name="msg_send_lay_msgls_itm_mtit" type="id"/>
+    <item name="msg_send_lay_msgls_itm_stit" type="id"/>
+    <item name="msg_send_lay_msgls_itm_status" type="id"/>
+</resources>

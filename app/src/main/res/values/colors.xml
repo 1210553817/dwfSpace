@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="statusColor">#00000000</color>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="mainTitle">#33000000</color>
+    <color name="mainTitleD">#44000000</color>
+    <color name="mainContent">#22000000</color>
+    <color name="mainPro">#ffd7ecf1</color>
+    <color name="mainProBk">#01000000</color>
+    <color name="mainTxt">#ffffffff</color>
+    <color name="subTxt">#ffcdcdcd</color>
+    <color name="lesTxt">#ffaaaaaa</color>
+
+
+</resources>

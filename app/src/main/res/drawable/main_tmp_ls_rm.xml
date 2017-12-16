@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:state_pressed="true">
+        <layer-list>
+            <item>
+                <shape>
+                    <solid android:color="#22049ff1" />
+                </shape>
+            </item>
+            <item android:drawable="@mipmap/tmp_ls_rm_pressed" />
+        </layer-list>
+    </item>
+
+    <item android:drawable="@mipmap/tmp_ls_rm" />
+
+</selector>

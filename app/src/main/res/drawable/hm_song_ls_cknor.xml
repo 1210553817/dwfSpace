@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="true">
+        <layer-list>
+            <item android:left="10dip" android:top="10dip" android:right="10dip" android:bottom="10dip">
+                <shape android:shape="oval">
+                    <gradient android:startColor="#00ffffff" android:endColor="#33ffffff"
+                        android:gradientRadius="15" android:type="radial"/>
+                </shape>
+            </item>
+            <item android:left="12dip" android:top="12dip" android:right="12dip" android:bottom="12dip">
+                <shape android:shape="oval">
+                    <gradient android:startColor="#ffffffff" android:centerColor="#66f5f5f5" android:endColor="#ffffffff"
+                        android:gradientRadius="35" android:type="radial"/>
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+    <item>
+        <layer-list>
+            <item android:left="10dip" android:top="10dip" android:right="10dip" android:bottom="10dip">
+                <shape android:shape="oval">
+                    <gradient android:startColor="#00ffffff"   android:endColor="#22ffffff"
+                        android:gradientRadius="15" android:type="radial"/>
+                </shape>
+            </item>
+            <item android:left="12dip" android:top="12dip" android:right="12dip" android:bottom="12dip">
+                <shape android:shape="oval">
+                    <gradient android:startColor="#ffffffff"  android:endColor="#33f5f5f5"
+                        android:gradientRadius="35" android:type="radial"/>
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+</selector>

@@ -1,0 +1,55 @@
+<resources>
+    <!--app-->
+    <string name="app_name">音乐</string>
+    <!--main-->
+    <string name="sld_settings">关于</string>
+    <string name="sld_quit">退出</string>
+    <string name="sld_ls_lsbkgSetting">列表背景设置</string>
+    <string name="sld_ls_ctrlbkgSetting">播放背景设置</string>
+    <string name="sld_ls_ctrlbkgnormal">普通背景</string>
+    <string name="sld_ls_ctrlbkgblur1">轻模糊背景</string>
+    <string name="sld_ls_ctrlbkgblur2">中模糊背景</string>
+    <string name="sld_ls_ctrlbkgblur3">高模糊背景</string>
+    <string name="sld_ls_ctrlbkgblur4">超模糊背景</string>
+    <string name="sld_ls_ctrlPlayMode0">顺序播放</string>
+    <string name="sld_ls_ctrlPlayMode1">单曲循环</string>
+    <string name="sld_ls_ctrlPlayMode2">倒序播放</string>
+    <string name="sld_ls_ctrlPlayMode3">随机播放</string>
+    <string name="sld_ls_musicEffectSetting">音效设置</string>
+    <string name="sld_ls_nightModelSetting">夜间模式</string>
+    <string name="sld_about_text">唯乐\nJustMusic version1.3171127)\n欢迎使用,唯乐追求简洁方便的音乐播放体验！\n任何意见和建议请联系\nEmail: mymbox@126.com</string>
+    <!--file_slector_holder-->
+    <string name="file_slector_holder_chsFile">选择文件</string>
+    <string name="file_slector_holder_curPath">当前路径:</string>
+    <string name="file_slector_holder_uplevel">上一级</string>
+    <string name="file_slector_holder_confirm">确定</string>
+    <string name="file_slector_holder_nofileseleted">还没有选择文件！</string>
+    <!--mysong_lshd(home_exctt)-->
+    <string name="home_ex_localtxt">本地音乐</string>
+    <string name="home_ex_dnldtxt">下载管理</string>
+    <string name="home_ex_lsnhistxt">听歌历史</string>
+    <!--frgm_hm_mn-->
+    <string name="frgm_hm_mn_add2fav">添加到歌单...</string>
+    <string name="frgm_hm_mn_next2play">下一曲时播放</string>
+    <string name="frgm_hm_mn_rm">从此歌单中移除</string>
+    <string name="frgm_hm_mn_info">歌曲详细信息</string>
+    <string name="frgm_hm_mn_add2p">添加到播放列表</string>
+    <string name="frgm_hm_mn_chsfav_new">新建歌单</string>
+    <string name="frgm_hm_mn_songnm">歌曲名称</string>
+    <string name="frgm_hm_mn_artnm">歌手名称</string>
+    <string name="frgm_hm_mn_albumnm">专辑名称</string>
+    <string name="frgm_hm_mn_duration">时长</string>
+    <string name="frgm_hm_mn_filesz">文件大小</string>
+    <string name="frgm_hm_mn_filepath">文件位置</string>
+    <!--hm_fav_mn-->
+    <string name="hm_fav_mn_modify">修改歌单信息...</string>
+    <string name="hm_fav_mn_remove">从该列表中移除</string>
+    <string name="hm_fav_mn_info">歌单详细信息</string>
+    <string name="hm_fav_mn_favnm">歌单名称</string>
+    <string name="hm_fav_mn_favdesc">歌单描述</string>
+    <string name="hm_fav_mn_favedtok">修改</string>
+    <string name="hm_fav_mn_favok">确定</string>
+    <string name="hm_fav_mn_favsv">保存</string>
+
+
+</resources>
