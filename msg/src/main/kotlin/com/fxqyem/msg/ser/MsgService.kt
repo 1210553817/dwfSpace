@@ -337,8 +337,6 @@ class MsgService : Service(){
                             val pct = dnsz / perclen
                             if (pct != part) {
                                 part = pct
-//                                Log.d(TAG, "rcvTcpFile Write File---$rcvPath$fnm--------------------$part %")
-//                                if(part%25==0L)loadAlert("$rcvPath$fnm 接收 $part %")
                                 progressFun(id,ip,part)
                             }
                         }

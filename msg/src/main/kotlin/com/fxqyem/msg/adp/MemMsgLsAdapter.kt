@@ -138,7 +138,8 @@ class MemMsgLsAdapter(private val context: Context, var list: ArrayList<MsgEnt>?
         }
     }
 
-    fun updateOneItem(id: Long?,listVw: ListView?,percent: Long?){
+    /*更新文件进度条*/
+    fun updateFileItem(id: Long?,listVw: ListView?,percent: Long?){
         listVw?:return
         percent?:return
         val fir = listVw.firstVisiblePosition
@@ -154,7 +155,6 @@ class MemMsgLsAdapter(private val context: Context, var list: ArrayList<MsgEnt>?
         val vwhd = itm.tag as ThisViewHd
         val tlay = vwhd.tlay
         val hdlay = tlay?.findViewById(R.id.msg_send_lay_msgls_itm_attalay) as FrameLayout?
-        //val attbtn = hdlay?.findViewById(R.id.msg_send_lay_msgls_itm_attaicon) as ImageButton?
         val prgrs = hdlay?.findViewById(R.id.msg_send_lay_msgls_itm_attaprgrs) as ProgressBar?
         val atttxt = hdlay?.findViewById(R.id.msg_send_lay_msgls_itm_attatxt) as TextView?
         prgrs?.max = 100
@@ -263,15 +263,6 @@ class MemMsgLsAdapter(private val context: Context, var list: ArrayList<MsgEnt>?
                             id = R.id.msg_send_lay_msgls_itm_attalay
                             visibility = View.GONE
                             backgroundResource = R.drawable.oval_bkg
-//                            imageButton {
-//                                id = R.id.msg_send_lay_msgls_itm_attaicon
-//                                //imageResource = R.mipmap.red_thm_42
-//                                //backgroundColor = COLOR_TRANS
-//
-//                            }.lparams{
-//                                width=dip(38)
-//                                height=dip(38)
-//                            }
 
                             progressBar {
                                 id = R.id.msg_send_lay_msgls_itm_attaprgrs
@@ -279,8 +270,8 @@ class MemMsgLsAdapter(private val context: Context, var list: ArrayList<MsgEnt>?
                                 padding = 0
 
                             }.lparams{
-                                width=dip(40)
-                                height=dip(40)
+                                width=dip(38)
+                                height=dip(38)
                             }
 
                             textView{
@@ -291,8 +282,8 @@ class MemMsgLsAdapter(private val context: Context, var list: ArrayList<MsgEnt>?
 
 
                             }.lparams{
-                                width=dip(40)
-                                height=dip(40)
+                                width=dip(38)
+                                height=dip(38)
 
                             }
 
@@ -301,7 +292,7 @@ class MemMsgLsAdapter(private val context: Context, var list: ArrayList<MsgEnt>?
                             width = wrapContent
                             height = wrapContent
                             gravity = Gravity.CENTER_VERTICAL
-                            leftMargin = dip(4)
+                            margin = dip(3)
                         }
 
                         textView{
@@ -317,19 +308,19 @@ class MemMsgLsAdapter(private val context: Context, var list: ArrayList<MsgEnt>?
 
                         }
 
-                        imageView{
-                            id = R.id.msg_send_lay_msgls_itm_status
-                            backgroundColor = 0xffececec.toInt()
-                            visibility = View.GONE
-
-                        }.lparams{
-                            width = dip(5)
-                            height = dip(5)
-                            gravity = Gravity.RIGHT
-                            rightMargin = dip(3)
-                            bottomMargin = dip(3)
-
-                        }
+//                        imageView{
+//                            id = R.id.msg_send_lay_msgls_itm_status
+//                            backgroundColor = 0xffececec.toInt()
+//                            visibility = View.GONE
+//
+//                        }.lparams{
+//                            width = dip(5)
+//                            height = dip(5)
+//                            gravity = Gravity.RIGHT
+//                            rightMargin = dip(3)
+//                            bottomMargin = dip(3)
+//
+//                        }
 
 
                     }.lparams {

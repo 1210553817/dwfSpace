@@ -550,6 +550,7 @@ class MsgActivity : MsgBaseActivity() , OnBackListener {
         if (bkStkNum > 0 && ip == msgLsFrgm?.citem?.ip) {
             msgLsFrgm?.loadFilePrgrs(id,ip,per)
         }
+
     }
 
     override fun onKeyUp(keyCode: Int, event: KeyEvent): Boolean {

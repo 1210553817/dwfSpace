@@ -150,13 +150,14 @@ class MsgSendFrgm : Fragment() , OnBackListener {
         }
     }
 
+    /*文件进度条*/
     fun loadFilePrgrs(id: Long?,ip: String?,per: Long?){
         id?:return
         ip?:return
         per?:return
         if (ip == citem?.ip) {
             val msgAdp = memMsgLsView?.adapter as MemMsgLsAdapter?
-            msgAdp?.updateOneItem(id,memMsgLsView,per)
+            msgAdp?.updateFileItem(id,memMsgLsView,per)
         }
     }
 
