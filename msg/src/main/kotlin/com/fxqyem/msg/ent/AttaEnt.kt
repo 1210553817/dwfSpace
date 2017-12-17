@@ -43,7 +43,7 @@ class AttaEnt : Serializable{
             if(i==4)type = itms[i]
 
         }
-        Log.d("AttaEnt","----------->$this")
+        //Log.d("AttaEnt","----------->$this")
 
     }
 

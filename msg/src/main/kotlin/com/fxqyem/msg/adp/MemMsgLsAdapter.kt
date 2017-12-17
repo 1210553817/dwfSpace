@@ -111,6 +111,10 @@ class MemMsgLsAdapter(private val context: Context, var list: ArrayList<MsgEnt>?
             atttxt?.textColor = COLOR_LIGHTGREEN
         }else if(itm?.mtype == 4){
             hdlay?.visibility = View.VISIBLE
+            atttxt?.textResource = R.string.timeout
+            atttxt?.textColor = COLOR_RED
+        }else if(itm?.mtype == 5){
+            hdlay?.visibility = View.VISIBLE
             atttxt?.textResource = R.string.error
             atttxt?.textColor = COLOR_RED
         }else{
@@ -179,11 +183,16 @@ class MemMsgLsAdapter(private val context: Context, var list: ArrayList<MsgEnt>?
             atttxt?.textColor = COLOR_LIGHTGREEN
             atttxt?.textResource = R.string.complete
             item?.mtype = 3
+        }else if(percent == -1L){
+            prgrs?.visibility = View.INVISIBLE
+            atttxt?.textColor = COLOR_RED
+            atttxt?.textResource = R.string.timeout
+            item?.mtype = 4
         }else{
             prgrs?.visibility = View.INVISIBLE
             atttxt?.textColor = COLOR_RED
             atttxt?.textResource = R.string.error
-            item?.mtype = 4
+            item?.mtype = 5
         }
 
     }
