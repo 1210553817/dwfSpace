@@ -20,6 +20,7 @@ object AppConstants {
     val ACTION_LOAD_MEM_ITEMS="com.fxqyem.MSG.LOAD_MEM_ITEMS"
     val ACTION_RECEIVE_MSG="com.fxqyem.MSG.RECEIVE_MSG"
     val ACTION_ALERT_MSG="com.fxqyem.MSG.ALERT_MSG"
+    val ACTION_FILE_PRGRS_MSG="com.fxqyem.MSG.FILE_PRGRS_MSG"
     /*service*/
     val ACTION_SER_LOAD_MEM_ITEMS="com.fxqyem.MSG.SER_LOAD_MEM_ITEMS"
     val ACTION_SER_SEND_MSG="com.fxqyem.MSG.SER_SEND_MSG"

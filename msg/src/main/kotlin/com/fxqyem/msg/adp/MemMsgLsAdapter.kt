@@ -2,6 +2,7 @@ package com.fxqyem.msg.adp
 
 import android.content.Context
 import android.content.Intent
+import android.media.Image
 import android.support.v4.content.LocalBroadcastManager
 import android.util.Log
 import android.view.Gravity
@@ -13,8 +14,7 @@ import com.fxqyem.msg.ben.AppConstants
 import com.fxqyem.msg.ent.MsgEnt
 import com.fxqyem.msg.lay.MsgPagerLay
 import com.fxqyem.msg.utl.StrUtil
-import com.fxqyem.msg.vw.COLOR_LIGHTGREEN
-import com.fxqyem.msg.vw.COLOR_LIGHTGREY1
+import com.fxqyem.msg.vw.*
 import org.jetbrains.anko.*
 
 class MemMsgLsAdapter(private val context: Context, var list: ArrayList<MsgEnt>?) : BaseAdapter(){
@@ -97,7 +97,17 @@ class MemMsgLsAdapter(private val context: Context, var list: ArrayList<MsgEnt>?
             tlay?.backgroundResource = R.drawable.slkt_others
         }
         tlay.layoutParams = prtly
-        //sub?.text = itm?.tit+StrUtil.formatDatea(java.util.Date())
+        val hdlay = tlay?.findViewById(R.id.msg_send_lay_msgls_itm_attalay) as FrameLayout?
+        val prgrs = hdlay?.findViewById(R.id.msg_send_lay_msgls_itm_attaprgrs) as ProgressBar?
+        val atttxt = hdlay?.findViewById(R.id.msg_send_lay_msgls_itm_attatxt) as TextView?
+        if(itm?.mtype == 1 || itm?.mtype == 2 ){
+            hdlay?.visibility = View.VISIBLE
+            atttxt?.textResource = R.string.file
+            atttxt?.textColor = COLOR_ORANGE
+        }else{
+            hdlay?.visibility = View.GONE
+        }
+        prgrs?.visibility = View.GONE
         tlay?.setOnClickListener(BtnListener(position))
 
         return convertView
@@ -112,6 +122,7 @@ class MemMsgLsAdapter(private val context: Context, var list: ArrayList<MsgEnt>?
                 R.id.msg_send_lay_msgls_itm_tlay -> {
                     if(itm.mtype==1) {//文件
                         val itt = Intent(AppConstants.ACTION_SER_GET_FILE)
+                        itt.putExtra("ID", itm.id)
                         itt.putExtra("IP", itm.ip)
                         itt.putExtra("PNO", itm.pno)
                         itt.putExtra("FNO", itm.path)
@@ -125,6 +136,39 @@ class MemMsgLsAdapter(private val context: Context, var list: ArrayList<MsgEnt>?
 
 
         }
+    }
+
+    fun updateOneItem(id: Long?,listVw: ListView?,percent: Long?){
+        listVw?:return
+        percent?:return
+        val fir = listVw.firstVisiblePosition
+        val lst = listVw.lastVisiblePosition
+        var pos = -1
+        for(i in fir .. lst){
+           if(id == list?.get(i)?.id){
+               pos = i
+           }
+        }
+        if(pos<0)return
+        val itm = listVw.getChildAt(pos-fir)
+        val vwhd = itm.tag as ThisViewHd
+        val tlay = vwhd.tlay
+        val hdlay = tlay?.findViewById(R.id.msg_send_lay_msgls_itm_attalay) as FrameLayout?
+        //val attbtn = hdlay?.findViewById(R.id.msg_send_lay_msgls_itm_attaicon) as ImageButton?
+        val prgrs = hdlay?.findViewById(R.id.msg_send_lay_msgls_itm_attaprgrs) as ProgressBar?
+        val atttxt = hdlay?.findViewById(R.id.msg_send_lay_msgls_itm_attatxt) as TextView?
+        prgrs?.max = 100
+        prgrs?.progress = percent.toInt()
+        atttxt?.text = "${percent}%"
+        if(percent<100){
+            hdlay?.visibility = View.VISIBLE
+            prgrs?.visibility = View.VISIBLE
+            atttxt?.textColor = COLOR_ORANGE
+        }else{
+            prgrs?.visibility = View.INVISIBLE
+            atttxt?.textColor = COLOR_LIGHTGREEN1
+        }
+
     }
 
     internal inner class ThisViewHd {
@@ -212,31 +256,88 @@ class MemMsgLsAdapter(private val context: Context, var list: ArrayList<MsgEnt>?
 
                     }
 
-                    textView{
-                        id=R.id.msg_send_lay_msgls_itm_mtit
-                        gravity = Gravity.LEFT or Gravity.CENTER_VERTICAL
-                        padding = dip(10)
-                        textColor = 0xff333333.toInt()
-                        textSize =  16f
+                    linearLayout {
+                        orientation = LinearLayout.HORIZONTAL
 
-                    }.lparams{
-                        width= wrapContent
-                        height= wrapContent
+                        frameLayout {
+                            id = R.id.msg_send_lay_msgls_itm_attalay
+                            visibility = View.GONE
+                            backgroundResource = R.drawable.oval_bkg
+//                            imageButton {
+//                                id = R.id.msg_send_lay_msgls_itm_attaicon
+//                                //imageResource = R.mipmap.red_thm_42
+//                                //backgroundColor = COLOR_TRANS
+//
+//                            }.lparams{
+//                                width=dip(38)
+//                                height=dip(38)
+//                            }
 
+                            progressBar {
+                                id = R.id.msg_send_lay_msgls_itm_attaprgrs
+                                progressDrawable = getResDrawable(ctx,R.drawable.progressbar_style)
+                                padding = 0
+
+                            }.lparams{
+                                width=dip(40)
+                                height=dip(40)
+                            }
+
+                            textView{
+                                id=R.id.msg_send_lay_msgls_itm_attatxt
+                                gravity = Gravity.CENTER
+                                textColor = 0xff333333.toInt()
+                                textSize =  12f
+
+
+                            }.lparams{
+                                width=dip(40)
+                                height=dip(40)
+
+                            }
+
+
+                        }.lparams {
+                            width = wrapContent
+                            height = wrapContent
+                            gravity = Gravity.CENTER_VERTICAL
+                            leftMargin = dip(4)
+                        }
+
+                        textView{
+                            id=R.id.msg_send_lay_msgls_itm_mtit
+                            gravity = Gravity.LEFT or Gravity.CENTER_VERTICAL
+                            padding = dip(10)
+                            textColor = 0xff333333.toInt()
+                            textSize =  16f
+
+                        }.lparams{
+                            width= wrapContent
+                            height= wrapContent
+
+                        }
+
+                        imageView{
+                            id = R.id.msg_send_lay_msgls_itm_status
+                            backgroundColor = 0xffececec.toInt()
+                            visibility = View.GONE
+
+                        }.lparams{
+                            width = dip(5)
+                            height = dip(5)
+                            gravity = Gravity.RIGHT
+                            rightMargin = dip(3)
+                            bottomMargin = dip(3)
+
+                        }
+
+
+                    }.lparams {
+                        width = wrapContent
+                        height = wrapContent
                     }
-                    imageView{
-                        id = R.id.msg_send_lay_msgls_itm_status
-                        backgroundColor = 0xffececec.toInt()
-                        visibility = View.GONE
 
-                    }.lparams{
-                        width = dip(5)
-                        height = dip(5)
-                        gravity = Gravity.RIGHT
-                        rightMargin = dip(3)
-                        bottomMargin = dip(3)
 
-                    }
                 }.lparams {
                     width = wrapContent
                     height = wrapContent

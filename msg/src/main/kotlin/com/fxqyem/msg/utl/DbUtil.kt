@@ -11,8 +11,7 @@ import com.fxqyem.msg.ent.MsgEnt
 import com.fxqyem.msg.vw.utilIsEmpty
 import java.io.File
 import java.sql.Timestamp
-import java.util.ArrayList
-import java.util.HashMap
+import java.util.*
 
 class DbUtil(private val context: Context) {
     var db: SQLiteDatabase? = null
@@ -254,10 +253,10 @@ class DbUtil(private val context: Context) {
         openMsgDb()
         val c = query(AppConstants.DB_TBNAME_MSGLS,
                 arrayOf("mid", "type", "mtype", "tit", "sub", "addt", "ip", "path","pno","fname","fsize","time"),
-                "ip=?", arrayOf(ip), null, null,"time desc,type","$offset,$limit")
+                "ip=?", arrayOf(ip), null, null,"mid desc","$offset,$limit")
         while (c != null && c.moveToNext()) {
             val ent = MsgEnt()
-            ent.id = c.getInt(c.getColumnIndex("mid"))
+            ent.id = c.getLong(c.getColumnIndex("mid"))
             ent.type = c.getInt(c.getColumnIndex("type"))
             ent.mtype = c.getInt(c.getColumnIndex("mtype"))
             ent.tit = c.getString(c.getColumnIndex("tit"))
@@ -277,7 +276,7 @@ class DbUtil(private val context: Context) {
         return msgLs
     }
 
-    fun add2MsgLs(msg: MsgEnt) {
+    fun add2MsgLs(msg: MsgEnt){
         val cv = ContentValues()
         openMsgDb()
         cv.put("type", msg.type.toString())
@@ -290,8 +289,10 @@ class DbUtil(private val context: Context) {
         cv.put("pno", msg.pno)
         cv.put("fname", msg.fname)
         cv.put("fsize", msg.fsize)
-        insert(AppConstants.DB_TBNAME_MSGLS, cv)
+        val rei = insert(AppConstants.DB_TBNAME_MSGLS, cv)
         close()
+        val rid = if(rei<0)Date().time else rei.toLong()
+        msg.id = rid
     }
 
     private fun rmMsgItm(ids: Array<Int>?) {

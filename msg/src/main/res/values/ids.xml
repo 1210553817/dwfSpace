@@ -62,6 +62,10 @@
     <item name="msg_send_lay_msgls_itm_ricon" type="id"/>
     <item name="msg_send_lay_msgls_itm_uname" type="id"/>
     <item name="msg_send_lay_msgls_itm_tlay" type="id"/>
+    <item name="msg_send_lay_msgls_itm_attalay" type="id"/>
+    <item name="msg_send_lay_msgls_itm_attaicon" type="id"/>
+    <item name="msg_send_lay_msgls_itm_attaprgrs" type="id"/>
+    <item name="msg_send_lay_msgls_itm_attatxt" type="id"/>
     <item name="msg_send_lay_msgls_itm_mtit" type="id"/>
     <item name="msg_send_lay_msgls_itm_stit" type="id"/>
     <item name="msg_send_lay_msgls_itm_status" type="id"/>

@@ -10,11 +10,14 @@ import java.util.*
 import java.util.regex.Pattern
 
 val COLOR_TRANS=0x00000000.toInt()
+val COLOR_GREEN=0xff00ff00.toInt()
 val COLOR_LIGHTGREEN=0xff77aa77.toInt()
-val COLOR_LIGHTGREEN1=0xff88bb88.toInt()
+val COLOR_LIGHTGREEN1=0xff32CD32.toInt()
+val COLOR_ORANGE=0xffFFA500.toInt()
 val COLOR_LIGHTGREY=0xffaaaaaa.toInt()
 val COLOR_LIGHTGREY1=0xffcdcdcd.toInt()
 val COLOR_LIGHTGREY2=0xffececec.toInt()
+
 
 val appColorArrayBlue = floatArrayOf(
         0.1f,0f,0f,0.1f,0f,

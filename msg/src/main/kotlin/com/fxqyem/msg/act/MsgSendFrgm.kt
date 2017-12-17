@@ -150,6 +150,16 @@ class MsgSendFrgm : Fragment() , OnBackListener {
         }
     }
 
+    fun loadFilePrgrs(id: Long?,ip: String?,per: Long?){
+        id?:return
+        ip?:return
+        per?:return
+        if (ip == citem?.ip) {
+            val msgAdp = memMsgLsView?.adapter as MemMsgLsAdapter?
+            msgAdp?.updateOneItem(id,memMsgLsView,per)
+        }
+    }
+
     private fun openFileSelector(){
         val fileSelector = FileSelector(activity)
         val sdpth = SDCardUtils.sdCardPath

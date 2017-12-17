@@ -524,6 +524,12 @@ class MsgActivity : MsgBaseActivity() , OnBackListener {
                         doReceivedMsg(msg)
                     }
                 }
+                AppConstants.ACTION_FILE_PRGRS_MSG -> {
+                    val id = bun?.getLong("ID")
+                    val ip = bun?.getString("IP")
+                    val per = bun?.getLong("PER")
+                    doReceivedFilePrgrs(id,ip,per)
+                }
 
             }
         }
@@ -537,6 +543,12 @@ class MsgActivity : MsgBaseActivity() , OnBackListener {
         }else{
             val adp = memListVw?.adapter as MemLsAdapter
             adp?.notifyDataSetChanged()
+        }
+    }
+    private fun doReceivedFilePrgrs(id: Long?,ip: String?,per: Long?){
+        val bkStkNum = fragmentManager.backStackEntryCount
+        if (bkStkNum > 0 && ip == msgLsFrgm?.citem?.ip) {
+            msgLsFrgm?.loadFilePrgrs(id,ip,per)
         }
     }
 
@@ -567,6 +579,7 @@ class MsgActivity : MsgBaseActivity() , OnBackListener {
         val filter = IntentFilter()
         filter.addAction(AppConstants.ACTION_LOAD_MEM_ITEMS)
         filter.addAction(AppConstants.ACTION_RECEIVE_MSG)
+        filter.addAction(AppConstants.ACTION_FILE_PRGRS_MSG)
         filter.addAction(AppConstants.ACTION_ALERT_MSG)
         mLocalBroadcastManager?.registerReceiver(mReceiver, filter)
 

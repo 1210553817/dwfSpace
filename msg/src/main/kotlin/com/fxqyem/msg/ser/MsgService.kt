@@ -105,6 +105,7 @@ class MsgService : Service(){
                     sendMsg(msg)
                 }
                 AppConstants.ACTION_SER_GET_FILE -> {
+                    val id = bun?.getLong("ID")
                     val ip = bun?.getString("IP")
                     val pno = bun?.getString("PNO")
                     val fno = bun?.getString("FNO")
@@ -117,7 +118,11 @@ class MsgService : Service(){
                         if(pnol==null){
                             loadAlert(getResString(this@MsgService,R.string.err_pno_canNotRcvFile))
                         }else {
-                            rcvTcpFile(ip, pnol, fno, fnm, utilHex2Long(fsz)?:0)
+                            rcvTcpFile(id,ip, pnol, fno, fnm, utilHex2Long(fsz)?:0,{
+                                id,ip,per ->
+                                loadFilePrgrsMsg(id,ip,per)
+
+                            })
                         }
                     }
                 }
@@ -130,14 +135,16 @@ class MsgService : Service(){
                     msg.mtype = 2
                     msg.ip = ip
                     loadMemMsg(msg)
+                    val id = msg.id
                     val file = File(fpath)
                     if(ip==null||!file.exists()){
                         loadAlert(getResString(this@MsgService,R.string.no_allInfo_canNotSendFile))
                     }else {
-                        sendTcpFile(ip, file, { msg, str ->
+                        sendTcpFile(id,ip, file, { msg, str ->
                             true
-                        }, { per ->
-                            if(per%25==0L)loadAlert("$fname 已发送 $per %")
+                        }, { id,ip,per ->
+                            loadFilePrgrsMsg(id,ip,per)
+
                         })
                     }
                 }
@@ -161,14 +168,21 @@ class MsgService : Service(){
     }
 
     private fun loadMemMsg(msg: MsgEnt){
-        AppContext.instance?.addChat(msg.ip)
-        val db = DbUtil(this)
-        db.add2MsgLs(msg)
-        val itt = Intent(AppConstants.ACTION_RECEIVE_MSG)
-        itt.putExtra("MSG", msg)
+        synchronized(this) {
+            if(msg.type==0)AppContext.instance?.addChat(msg.ip)
+            val db = DbUtil(this)
+            db.add2MsgLs(msg)
+            val itt = Intent(AppConstants.ACTION_RECEIVE_MSG)
+            itt.putExtra("MSG", msg)
+            mLocalBroadcastManager?.sendBroadcast(itt)
+        }
+    }
+    private fun loadFilePrgrsMsg(id: Long?,ip: String?,per: Long?){
+        val itt = Intent(AppConstants.ACTION_FILE_PRGRS_MSG)
+        itt.putExtra("ID", id)
+        itt.putExtra("IP", ip)
+        itt.putExtra("PER", per)
         mLocalBroadcastManager?.sendBroadcast(itt)
-
-
     }
 
     private fun loadAlert(msg: String){
@@ -289,7 +303,7 @@ class MsgService : Service(){
         }.start()
     }
 
-    private fun rcvTcpFile(ip: String, pno: Long, fno: String, fnm: String, fsz: Long){
+    private fun rcvTcpFile(id: Long?,ip: String, pno: Long, fno: String, fnm: String, fsz: Long,progressFun: (Long?,String,Long)->Unit){
         object: Thread() {
             override fun run() {
                 var socket: Socket? = null
@@ -323,13 +337,16 @@ class MsgService : Service(){
                             val pct = dnsz / perclen
                             if (pct != part) {
                                 part = pct
-                                Log.d(TAG, "rcvTcpFile Write File---$rcvPath$fnm--------------------$part %")
-                                if(part%25==0L)loadAlert("$rcvPath$fnm 接收 $part %")
+//                                Log.d(TAG, "rcvTcpFile Write File---$rcvPath$fnm--------------------$part %")
+//                                if(part%25==0L)loadAlert("$rcvPath$fnm 接收 $part %")
+                                progressFun(id,ip,part)
                             }
                         }
                     }
                     fos.flush()
                 }catch(e: Exception){
+                    val msgs = getResString(this@MsgService,R.string.rcv_file_unknownerror)
+                    loadAlert(msgs)
                     Log.e(TAG,"rcvTcpFile error!${e.message}")
                 }finally {
                     fos?.close()
@@ -342,7 +359,7 @@ class MsgService : Service(){
 
     }
 
-    private fun sendTcpFile(ip:String,file: File,ckFun: (MsgEnt,String)->Boolean,progressFun: (Long)->Unit){
+    private fun sendTcpFile(id: Long?,ip:String,file: File,ckFun: (MsgEnt,String)->Boolean,progressFun: (Long?,String,Long)->Unit){
         object: Thread() {
             override fun run() {
                 var server: ServerSocket? = null
@@ -360,6 +377,7 @@ class MsgService : Service(){
                     sendMsg(pmsg)
                     /*tcp connect*/
                     server = ServerSocket(AppConstants.MSG_GLOBAL_PORT)
+                    server.soTimeout = 20000
                     socket = server.accept()
                     nin = socket.getInputStream()
                     val rbuff = ByteArray(1024)
@@ -381,12 +399,21 @@ class MsgService : Service(){
                                 val pct = dnsz / perclen
                                 if (pct != part) {
                                     part = pct
-                                    progressFun(part)
+                                    progressFun(id,ip,part)
                                 }
                             }
                         }
                     }
+                }catch (ie: InterruptedIOException){
+                    val msgs = getResString(this@MsgService,R.string.send_file_timeout)
+                    loadAlert(msgs)
+                    Log.d(TAG,msgs+ie.message)
+
                 }catch(e: Exception) {
+                    val msgs = getResString(this@MsgService,R.string.send_file_unknownerror)
+                    loadAlert(msgs)
+                    Log.d(TAG,msgs+e.message)
+                }finally{
                     nin?.close()
                     nos?.close()
                     fin?.close()

@@ -208,6 +208,7 @@ class FileSelector(private val context: Context) : OnBackListener {
             adp?:return
             when (vid) {
                 R.id.file_slector_item_hdly -> {
+                    if(pos>adp.fsLs?.size?:0)return
                     val cf = adp.fsLs?.get(pos)?:return
                     if (cf.isDirectory) {
                         val indx = listView?.firstVisiblePosition?:0

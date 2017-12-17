@@ -3,6 +3,7 @@
     <!--MsgLay-->
     <string name="about">关于</string>
     <string name="exit">退出</string>
+    <string name="file">文件</string>
     <string name="msgbkg_set">界面背景</string>
     <string name="peppic_set">头像设置</string>
     <!--MsgLay / btm -->
@@ -17,6 +18,9 @@
     <string name="file_slector_holder_nofileseleted">还没有选择文件！</string>
     <!--alert Message-->
     <string name="no_internet_connection">没有网络连接！</string>
+    <string name="send_file_timeout">发送文件超时！</string>
+    <string name="send_file_unknownerror">发送文件发生未知错误！</string>
+    <string name="rcv_file_unknownerror">接收文件发生未知错误！</string>
     <string name="no_allInfo_canNotRcvFile">文件信息不完整，无法接收文件！</string>
     <string name="no_allInfo_canNotSendFile">文件信息不完整，无法发送文件！</string>
     <string name="err_pno_canNotRcvFile">包编号错误，无法接收文件！</string>

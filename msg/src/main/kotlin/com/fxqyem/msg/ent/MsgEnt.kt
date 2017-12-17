@@ -6,7 +6,7 @@ import java.util.Date
 
 class MsgEnt : Serializable {
     var useful: Int = 0
-    var id: Int = 0
+    var id: Long = 0
     var tit: String? = null
     var sub: String? = null
     var ip: String? = null
@@ -16,10 +16,6 @@ class MsgEnt : Serializable {
     var fsize: String? = null
     var time: String? = null
 
-    /**type:
-     * 0:对方,上线通知，加载消息
-     * 1:自己,请求列表，加载消息
-     * */
     var type: Int = 0 //消息方向，0收 1 发
     var mtype: Int = 0 //消息类型0：normal；1：收文件 2：接文件
     //protocol
