@@ -53,7 +53,7 @@ class MsgSendFrgm : Fragment() , OnBackListener {
         val tit = hdvw.findViewById(R.id.msg_send_lay_tit) as TextView
         memMsgLsView = hdvw.findViewById(R.id.msg_send_lay_msgls) as ListView
         val backBtn = hdvw.findViewById(R.id.msg_send_lay_backBtn) as ImageButton
-        val optBtn = hdvw.findViewById(R.id.msg_send_lay_optBtn) as ImageButton
+        //val optBtn = hdvw.findViewById(R.id.msg_send_lay_optBtn) as ImageButton
         val sendBtn = hdvw.findViewById(R.id.msg_send_lay_sendBtn) as ImageButton
         val attaBtn = hdvw.findViewById(R.id.msg_send_lay_attaBtn) as ImageButton
         val msgTxt = hdvw.findViewById(R.id.msg_send_lay_editTxt) as EditText
@@ -142,11 +142,12 @@ class MsgSendFrgm : Fragment() , OnBackListener {
             if (null == list) {
                 list = ArrayList<MsgEnt>()
             }
-            list?.add(msg)
+            list.add(msg)
             msgAdp?.load2Btm = 1
             msgAdp?.list = list
             msgAdp?.notifyDataSetChanged()
             memMsgLsView?.setSelectionFromTop(list.size-1,0)
+            AppContext.instance?.clearChat(citem?.ip)
         }
     }
 
@@ -162,7 +163,7 @@ class MsgSendFrgm : Fragment() , OnBackListener {
     }
 
     private fun openFileSelector(){
-        val fileSelector = FileSelector(activity)
+        val fileSelector = FileSelector(activity,FileSelector.TYPE_FILE or FileSelector.TYPE_NO_STARTP)
         val sdpth = SDCardUtils.sdCardPath
         fileSelector.open(if (utilIsEmpty(sdpth)) "/" else sdpth, null)
         fileSelector.setOnSelectOkListener(object: FileSelector.OnSelectOkListener{
@@ -179,10 +180,10 @@ class MsgSendFrgm : Fragment() , OnBackListener {
         })
     }
 
-    override fun onBackKeyUp(reqVal: Int, event: KeyEvent, reqCod: Int): Boolean {
-        when (reqCod) {
-
-        }
+    override fun onBackKeyUp(reqValue: Int, event: KeyEvent, reqCod: Int): Boolean {
+//        when (reqCod) {
+//
+//        }
         return true
     }
     override fun onDestroy() {

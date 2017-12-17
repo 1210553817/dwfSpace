@@ -199,8 +199,8 @@ class MsgActivity : MsgBaseActivity() , OnBackListener {
         memListVw = memVw.find(R.id.msg_lay_cen_mempg_lsvw)
         val memAdapter = MemLsAdapter(this,null)
         memListVw?.adapter = memAdapter
-        memListVw?.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
-            val adp = memListVw?.adapter as MemLsAdapter
+        memListVw?.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
+            val adp = memListVw?.adapter as MemLsAdapter?
             var itm = adp?.list?.get(position)
             /*fragment*/
             val bun = Bundle()
@@ -541,7 +541,7 @@ class MsgActivity : MsgBaseActivity() , OnBackListener {
         if (bkStkNum > 0 && ip == msgLsFrgm?.citem?.ip) {
             msgLsFrgm?.loadMsgItem(msg)
         }else{
-            val adp = memListVw?.adapter as MemLsAdapter
+            val adp = memListVw?.adapter as MemLsAdapter?
             adp?.notifyDataSetChanged()
         }
     }

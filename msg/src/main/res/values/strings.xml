@@ -4,6 +4,8 @@
     <string name="about">关于</string>
     <string name="exit">退出</string>
     <string name="file">文件</string>
+    <string name="complete">完成</string>
+    <string name="error">错误</string>
     <string name="msgbkg_set">界面背景</string>
     <string name="peppic_set">头像设置</string>
     <!--MsgLay / btm -->

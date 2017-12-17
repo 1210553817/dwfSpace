@@ -17,7 +17,7 @@ class MsgEnt : Serializable {
     var time: String? = null
 
     var type: Int = 0 //消息方向，0收 1 发
-    var mtype: Int = 0 //消息类型0：normal；1：收文件 2：接文件
+    var mtype: Int = 0 //消息类型0：normal；1：收文件 2：接文件 3: 完成 4：出错
     //protocol
     var ver: String? = null
     var pno: String? = null

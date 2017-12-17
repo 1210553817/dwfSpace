@@ -13,6 +13,7 @@ import com.fxqyem.msg.R
 import com.fxqyem.msg.ben.AppConstants
 import com.fxqyem.msg.ent.MsgEnt
 import com.fxqyem.msg.lay.MsgPagerLay
+import com.fxqyem.msg.utl.DbUtil
 import com.fxqyem.msg.utl.StrUtil
 import com.fxqyem.msg.vw.*
 import org.jetbrains.anko.*
@@ -34,8 +35,8 @@ class MemMsgLsAdapter(private val context: Context, var list: ArrayList<MsgEnt>?
         return arg0.toLong()
     }
 
-    override fun getView(position: Int, convertView: View?, arg2: ViewGroup): View {
-        var convertView = convertView
+    override fun getView(position: Int, convert: View?, arg2: ViewGroup): View {
+        var convertView = convert
         val tlay: LinearLayout?
         val tit: TextView?
         val sub: TextView?
@@ -45,13 +46,13 @@ class MemMsgLsAdapter(private val context: Context, var list: ArrayList<MsgEnt>?
         val ricon: ImageView?
         if (convertView == null) {
             convertView = createItmVw(context)
-            tlay = convertView?.findViewById(R.id.msg_send_lay_msgls_itm_tlay) as LinearLayout?
-            tit = convertView?.findViewById(R.id.msg_send_lay_msgls_itm_mtit) as TextView?
-            sub = convertView?.findViewById(R.id.msg_send_lay_msgls_itm_stit) as TextView?
-            lbtn = convertView?.findViewById(R.id.msg_send_lay_msgls_itm_liconbtn) as ImageButton?
-            rbtn = convertView?.findViewById(R.id.msg_send_lay_msgls_itm_riconbtn) as ImageButton?
-            licon = convertView?.findViewById(R.id.msg_send_lay_msgls_itm_licon) as ImageView?
-            ricon = convertView?.findViewById(R.id.msg_send_lay_msgls_itm_ricon) as ImageView?
+            tlay = convertView.findViewById(R.id.msg_send_lay_msgls_itm_tlay) as LinearLayout?
+            tit = convertView.findViewById(R.id.msg_send_lay_msgls_itm_mtit) as TextView?
+            sub = convertView.findViewById(R.id.msg_send_lay_msgls_itm_stit) as TextView?
+            lbtn = convertView.findViewById(R.id.msg_send_lay_msgls_itm_liconbtn) as ImageButton?
+            rbtn = convertView.findViewById(R.id.msg_send_lay_msgls_itm_riconbtn) as ImageButton?
+            licon = convertView.findViewById(R.id.msg_send_lay_msgls_itm_licon) as ImageView?
+            ricon = convertView.findViewById(R.id.msg_send_lay_msgls_itm_ricon) as ImageView?
             viewHd = ThisViewHd()
             //viewHd?.unm = unm
             viewHd?.tlay = tlay
@@ -104,6 +105,14 @@ class MemMsgLsAdapter(private val context: Context, var list: ArrayList<MsgEnt>?
             hdlay?.visibility = View.VISIBLE
             atttxt?.textResource = R.string.file
             atttxt?.textColor = COLOR_ORANGE
+        }else if(itm?.mtype == 3 ){
+            hdlay?.visibility = View.VISIBLE
+            atttxt?.textResource = R.string.complete
+            atttxt?.textColor = COLOR_LIGHTGREEN
+        }else if(itm?.mtype == 4){
+            hdlay?.visibility = View.VISIBLE
+            atttxt?.textResource = R.string.error
+            atttxt?.textColor = COLOR_RED
         }else{
             hdlay?.visibility = View.GONE
         }
@@ -151,6 +160,7 @@ class MemMsgLsAdapter(private val context: Context, var list: ArrayList<MsgEnt>?
            }
         }
         if(pos<0)return
+        val item = list?.get(pos)
         val itm = listVw.getChildAt(pos-fir)
         val vwhd = itm.tag as ThisViewHd
         val tlay = vwhd.tlay
@@ -159,14 +169,21 @@ class MemMsgLsAdapter(private val context: Context, var list: ArrayList<MsgEnt>?
         val atttxt = hdlay?.findViewById(R.id.msg_send_lay_msgls_itm_attatxt) as TextView?
         prgrs?.max = 100
         prgrs?.progress = percent.toInt()
-        atttxt?.text = "${percent}%"
-        if(percent<100){
+        atttxt?.text = String.format("%d%s",percent,"%")
+        if(percent<100&&percent>=0){
             hdlay?.visibility = View.VISIBLE
             prgrs?.visibility = View.VISIBLE
             atttxt?.textColor = COLOR_ORANGE
+        }else if(percent>=100L){
+            prgrs?.visibility = View.INVISIBLE
+            atttxt?.textColor = COLOR_LIGHTGREEN
+            atttxt?.textResource = R.string.complete
+            item?.mtype = 3
         }else{
             prgrs?.visibility = View.INVISIBLE
-            atttxt?.textColor = COLOR_LIGHTGREEN1
+            atttxt?.textColor = COLOR_RED
+            atttxt?.textResource = R.string.error
+            item?.mtype = 4
         }
 
     }
@@ -259,40 +276,54 @@ class MemMsgLsAdapter(private val context: Context, var list: ArrayList<MsgEnt>?
                     linearLayout {
                         orientation = LinearLayout.HORIZONTAL
 
+
                         frameLayout {
                             id = R.id.msg_send_lay_msgls_itm_attalay
                             visibility = View.GONE
-                            backgroundResource = R.drawable.oval_bkg
+                            backgroundResource = R.drawable.file_prgrs_bkg
 
-                            progressBar {
-                                id = R.id.msg_send_lay_msgls_itm_attaprgrs
-                                progressDrawable = getResDrawable(ctx,R.drawable.progressbar_style)
-                                padding = 0
+                            linearLayout{
+                                orientation = LinearLayout.HORIZONTAL
+                                progressBar {
+                                    id = R.id.msg_send_lay_msgls_itm_attaprgrs
+                                    progressDrawable = getResDrawable(ctx,R.drawable.progressbar_style)
+                                    padding = 0
 
-                            }.lparams{
-                                width=dip(38)
-                                height=dip(38)
+                                }.lparams{
+                                    width=dip(38)
+                                    height=dip(38)
+                                    gravity = Gravity.CENTER_VERTICAL
+                                }
+                            }.lparams {
+                                width = wrapContent
+                                height = matchParent
                             }
 
-                            textView{
-                                id=R.id.msg_send_lay_msgls_itm_attatxt
-                                gravity = Gravity.CENTER
-                                textColor = 0xff333333.toInt()
-                                textSize =  12f
+                            linearLayout{
+                                orientation = LinearLayout.HORIZONTAL
+                                textView{
+                                    id=R.id.msg_send_lay_msgls_itm_attatxt
+                                    gravity = Gravity.CENTER
+                                    textColor = 0xff333333.toInt()
+                                    textSize =  12f
 
 
-                            }.lparams{
-                                width=dip(38)
-                                height=dip(38)
-
+                                }.lparams{
+                                    width=dip(38)
+                                    height=dip(38)
+                                    gravity = Gravity.CENTER_VERTICAL
+                                }
+                            }.lparams {
+                                width = wrapContent
+                                height = matchParent
                             }
 
 
                         }.lparams {
                             width = wrapContent
-                            height = wrapContent
+                            height = matchParent
                             gravity = Gravity.CENTER_VERTICAL
-                            margin = dip(3)
+                           //margin = dip(3)
                         }
 
                         textView{

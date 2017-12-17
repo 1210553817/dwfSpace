@@ -25,18 +25,18 @@ class MemLsAdapter(private val context: Context, var list: ArrayList<MsgEnt>?) :
         return arg0.toLong()
     }
 
-    override fun getView(position: Int, convertView: View?, arg2: ViewGroup): View {
-        var convertView = convertView
+    override fun getView(position: Int, convert: View?, arg2: ViewGroup): View {
+        var convertView = convert
         val tit: TextView?
         val sub: TextView?
         val btn: ImageView?
         val btna: Button?
         if (convertView == null) {
             convertView = MsgPagerLay().createMemItmVw(context)
-            tit = convertView?.findViewById(R.id.msg_lay_cen_mempg_itm_mtit) as TextView?
-            sub = convertView?.findViewById(R.id.msg_lay_cen_mempg_itm_stit) as TextView?
-            btn = convertView?.findViewById(R.id.msg_lay_cen_mempg_itm_hiconbtn) as ImageView?
-            btna = convertView?.findViewById(R.id.msg_lay_cen_mempg_itm_chatnumbtn) as Button?
+            tit = convertView.findViewById(R.id.msg_lay_cen_mempg_itm_mtit) as TextView?
+            sub = convertView.findViewById(R.id.msg_lay_cen_mempg_itm_stit) as TextView?
+            btn = convertView.findViewById(R.id.msg_lay_cen_mempg_itm_hiconbtn) as ImageView?
+            btna = convertView.findViewById(R.id.msg_lay_cen_mempg_itm_chatnumbtn) as Button?
             viewHd = ThisViewHd()
             viewHd?.tit = tit
             viewHd?.sub = sub

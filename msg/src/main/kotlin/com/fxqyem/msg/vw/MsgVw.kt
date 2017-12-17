@@ -13,7 +13,8 @@ val COLOR_TRANS=0x00000000.toInt()
 val COLOR_GREEN=0xff00ff00.toInt()
 val COLOR_LIGHTGREEN=0xff77aa77.toInt()
 val COLOR_LIGHTGREEN1=0xff32CD32.toInt()
-val COLOR_ORANGE=0xffFFA500.toInt()
+val COLOR_ORANGE=0xFFFFA500.toInt()
+val COLOR_RED=0xFFFF0000.toInt()
 val COLOR_LIGHTGREY=0xffaaaaaa.toInt()
 val COLOR_LIGHTGREY1=0xffcdcdcd.toInt()
 val COLOR_LIGHTGREY2=0xffececec.toInt()
@@ -82,7 +83,7 @@ fun utilIsEmpty(str: String?): Boolean {
 }
 
 fun utilHex2Int(str: String?): Int? {
-    var rei: Int? = null
+    var rei: Int?
     try{
         rei = str?.toInt(16)
     }catch (e: Exception){
@@ -91,7 +92,7 @@ fun utilHex2Int(str: String?): Int? {
     return rei
 }
 fun utilStr2Int(str: String?): Int? {
-    var rei: Int? = null
+    var rei: Int?
     try{
         rei = str?.toInt(10)
     }catch (e: Exception){
@@ -101,7 +102,7 @@ fun utilStr2Int(str: String?): Int? {
 }
 
 fun utilHex2Long(str: String?): Long? {
-    var rei: Long? = null
+    var rei: Long?
     try{
         rei = str?.toLong(16)
     }catch (e: Exception){
@@ -110,7 +111,7 @@ fun utilHex2Long(str: String?): Long? {
     return rei
 }
 fun utilStr2Long(str: String?): Long? {
-    var rei: Long? = null
+    var rei: Long?
     try{
         rei = str?.toLong(10)
     }catch (e: Exception){

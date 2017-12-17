@@ -310,6 +310,7 @@ class MsgService : Service(){
                 var nos: OutputStream? =null
                 var inp: InputStream? = null
                 var fos: OutputStream? =null
+                val db = DbUtil(this@MsgService)
                 try {
                     socket = Socket(ip,AppConstants.MSG_GLOBAL_PORT)
                     val msg = MsgEnt(AppContext.instance?.utit, AppContext.instance?.usub, AppConstants.MSG_GETFILEDATA,
@@ -329,7 +330,7 @@ class MsgService : Service(){
                     var part=0L
                     var dnsz=len
                     val perclen = fsz/100
-                    while(len>0) {
+                    while(len!=-1) {
                         fos.write(rbuff, 0, len)
                         len = inp.read(rbuff)
                         if (perclen > 0){
@@ -338,14 +339,21 @@ class MsgService : Service(){
                             if (pct != part) {
                                 part = pct
                                 progressFun(id,ip,part)
+                                if(part>=100L){
+                                    if(len>0)fos.write(rbuff, 0, len)
+                                    break
+                                }
                             }
                         }
                     }
                     fos.flush()
+                    db.updMsgMtype(id,3)
                 }catch(e: Exception){
                     val msgs = getResString(this@MsgService,R.string.rcv_file_unknownerror)
                     loadAlert(msgs)
                     Log.e(TAG,"rcvTcpFile error!${e.message}")
+                    db.updMsgMtype(id,4)
+                    progressFun(id,ip,-1)
                 }finally {
                     fos?.close()
                     inp?.close()
@@ -365,6 +373,7 @@ class MsgService : Service(){
                 var nin: InputStream? = null
                 var fin: InputStream? = null
                 var nos: OutputStream? = null
+                val db = DbUtil(this@MsgService)
                 try {
                     val fname = file.name.replace(":","::")
                     val fsize = java.lang.Long.toHexString(file.length())
@@ -402,15 +411,19 @@ class MsgService : Service(){
                             }
                         }
                     }
+                    db.updMsgMtype(id,3)
                 }catch (ie: InterruptedIOException){
                     val msgs = getResString(this@MsgService,R.string.send_file_timeout)
                     loadAlert(msgs)
                     Log.d(TAG,msgs+ie.message)
-
+                    db.updMsgMtype(id,4)
+                    progressFun(id,ip,-1)
                 }catch(e: Exception) {
                     val msgs = getResString(this@MsgService,R.string.send_file_unknownerror)
                     loadAlert(msgs)
                     Log.d(TAG,msgs+e.message)
+                    db.updMsgMtype(id,4)
+                    progressFun(id,ip,-1)
                 }finally{
                     nin?.close()
                     nos?.close()

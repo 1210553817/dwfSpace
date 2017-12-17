@@ -295,6 +295,16 @@ class DbUtil(private val context: Context) {
         msg.id = rid
     }
 
+    fun updMsgMtype(id: Long?,mtype: Int?){
+        id?:return
+        mtype?:return
+        openMsgDb()
+        val cv = ContentValues()
+        cv.put("mtype", mtype)
+        update(AppConstants.DB_TBNAME_MSGLS,cv,"mid=?", arrayOf("$id"))
+        close()
+    }
+
     private fun rmMsgItm(ids: Array<Int>?) {
         rmItm(AppConstants.DB_TBNAME_MSGLS,"mid",ids)
     }

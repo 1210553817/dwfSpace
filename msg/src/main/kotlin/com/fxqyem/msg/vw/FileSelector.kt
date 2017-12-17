@@ -2,6 +2,7 @@ package com.fxqyem.msg.vw
 
 import android.content.Context
 import android.graphics.Bitmap
+import android.util.Log
 import android.util.Pair
 import android.view.*
 import android.widget.*
@@ -17,7 +18,8 @@ import com.fxqyem.msg.utl.AndUtil
 import com.fxqyem.msg.utl.BitMapUtil
 import com.fxqyem.msg.utl.SDCardUtils
 
-class FileSelector(private val context: Context) : OnBackListener {
+class FileSelector: OnBackListener {
+    private lateinit var context: Context
     private var tmpSldMenua: SldMenu? = null
     private var listView: ListView? = null
     private var contentView: View? = null
@@ -31,15 +33,26 @@ class FileSelector(private val context: Context) : OnBackListener {
     private var curFileo: File? = null
     private var fixed: Array<String>? = null
     private val scrollStack: Stack<Pair<Int,Int>> = Stack()
+    /*params*/
+    private var mtype = TYPE_FILE
+    private var stype = TYPE_NO_STARTP
+
+    private constructor()
+
+    constructor(context: Context,type: Int){
+        this.context = context
+        mtype = type and 0x0F
+        stype = type and 0xF0
+    }
 
     fun open(basePath: String, fixed: Array<String>?) {
         this.basePath = basePath
         this.fixed = fixed
         contentView = genFileSelectorLay()
         val upLvBtn = contentView?.findViewById(R.id.file_slector_holder_uplvBtn) as Button?
-        upLvBtn?.setOnClickListener(MoreButtonListener(-1))
+        upLvBtn?.setOnClickListener(BtnLsn(-1))
         val okBtn = contentView?.findViewById(R.id.file_slector_holder_okBtn) as Button?
-        okBtn?.setOnClickListener(MoreButtonListener(-1))
+        okBtn?.setOnClickListener(BtnLsn(-1))
         listView = contentView?.findViewById(R.id.file_slector_holder_scrVw) as ListView?
 
         curPath = basePath
@@ -84,10 +97,10 @@ class FileSelector(private val context: Context) : OnBackListener {
         val fls = mutableListOf<File>()
         val dls = mutableListOf<File>()
         for(f in fss) {
-            if(f.name.indexOf(".")==0)continue
+            if(TYPE_NO_STARTP == stype && f.name.startsWith("."))continue
             if (f.isDirectory) {
                 dls.add(f)
-            } else {
+            } else if(TYPE_DIR != mtype) {
                 var b = true
                 fixed?.map{
                     if (!(f.name.endsWith(it))) {
@@ -147,7 +160,7 @@ class FileSelector(private val context: Context) : OnBackListener {
             val cf = fsLs?.get(position)?:return convertView
             fName?.text = cf.name
             val prtly = fIcon?.parent as LinearLayout
-            prtly?.setOnClickListener(MoreButtonListener(position))
+            prtly?.setOnClickListener(BtnLsn(position))
 
             if (cf.isDirectory) {
                 fIcon?.setImageResource(R.mipmap.folder_default)
@@ -200,7 +213,7 @@ class FileSelector(private val context: Context) : OnBackListener {
         fun onSelectOk(fpath: String?,file: File?)
     }
 
-    internal inner class MoreButtonListener(private val pos: Int) : View.OnClickListener {
+    internal inner class BtnLsn(private val pos: Int) : View.OnClickListener {
 
         override fun onClick(v: View) {
             val vid = v.id
@@ -221,9 +234,6 @@ class FileSelector(private val context: Context) : OnBackListener {
                         setTitName(getResString(context,R.string.file_slector_holder_chsFile))
                         curFile = null
                         curFileo = null
-//                        listView?.onLayoutChange { v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom ->
-//                            listView?.setSelectionFromTop(0, 0)
-//                        }
                         adp?.notifyDataSetChanged()
                         listView?.setSelectionFromTop(0, 0)
                     } else {
@@ -249,13 +259,25 @@ class FileSelector(private val context: Context) : OnBackListener {
                     listView?.setSelectionFromTop(pair?.first?:0, pair?.second?:0)
                 }
                 R.id.file_slector_holder_okBtn -> {
-
-                    if (utilIsEmpty(curFile)) {
-                        Toast.makeText(context, getResString(context,R.string.file_slector_holder_nofileseleted), Toast.LENGTH_SHORT).show()
-                        return
+                    Log.d("File selector ","<<<<<<<<<<<<$mtype , $stype")
+                    var cpath: String? = null
+                    when(mtype) {
+                        TYPE_FILE ->{
+                            if (utilIsEmpty(curFile)) {
+                                Toast.makeText(context, getResString(context, R.string.file_slector_holder_nofileseleted), Toast.LENGTH_SHORT).show()
+                                return
+                            }
+                            cpath = curFile
+                        }
+                        TYPE_DIR -> {
+                            cpath = curPath
+                        }
+                        TYPE_ALL -> {
+                            cpath = curFile?:curPath
+                        }
                     }
                     if (onSelectOkListener != null) {
-                        onSelectOkListener?.onSelectOk(curFile,curFileo)
+                        onSelectOkListener?.onSelectOk(cpath,curFileo)
                     }
                     cancle()
                 }
@@ -425,5 +447,12 @@ class FileSelector(private val context: Context) : OnBackListener {
 
             }
         return itmVw
+    }
+
+    companion object {
+        val TYPE_FILE = 0x00
+        val TYPE_DIR = 0x01
+        val TYPE_ALL = 0x02
+        val TYPE_NO_STARTP = 0x10
     }
 }
