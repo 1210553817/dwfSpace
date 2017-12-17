@@ -119,8 +119,8 @@ class MsgService : Service(){
                             loadAlert(getResString(this@MsgService,R.string.err_pno_canNotRcvFile))
                         }else {
                             rcvTcpFile(id,ip, pnol, fno, fnm, utilHex2Long(fsz)?:0,{
-                                id,ip,per ->
-                                loadFilePrgrsMsg(id,ip,per)
+                                idd,ipp,perr ->
+                                loadFilePrgrsMsg(idd,ipp,perr)
 
                             })
                         }
@@ -142,8 +142,8 @@ class MsgService : Service(){
                     }else {
                         sendTcpFile(id,ip, file, { msg, str ->
                             true
-                        }, { id,ip,per ->
-                            loadFilePrgrsMsg(id,ip,per)
+                        }, { idd,ipp,perr ->
+                            loadFilePrgrsMsg(idd,ipp,perr)
 
                         })
                     }
