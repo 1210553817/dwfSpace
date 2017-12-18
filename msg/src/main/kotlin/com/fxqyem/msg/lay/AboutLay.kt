@@ -6,7 +6,6 @@ import android.widget.LinearLayout
 import com.fxqyem.msg.R
 import com.fxqyem.msg.act.AboutActivity
 import org.jetbrains.anko.*
-import android.support.v4.app.ActivityCompat.startActivity
 import android.content.Intent
 import android.net.Uri
 
