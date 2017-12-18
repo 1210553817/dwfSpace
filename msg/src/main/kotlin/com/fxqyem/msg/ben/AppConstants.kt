@@ -33,7 +33,9 @@ object AppConstants {
     val PREF_NAME_CHAT_NUMS = "chatdatas"
     val PREF_NAME_PARAMS = "params"
     /**pref keys*/
-    //val PREF_KEY_FAV_INDX = "k_favIndx"
+    val PREF_KEY_SELF_UNM = "k_SELF_UNM"
+    val PREF_KEY_SELF_TIT = "k_SELF_TIT"
+    val PREF_KEY_SELF_SUB = "k_SELF_SUB"
 
     /**Db Names*/
     val DB_NAME_MSGDATAS = "msgdatas.db"

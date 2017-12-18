@@ -13,6 +13,7 @@ import com.fxqyem.msg.R
 import com.fxqyem.msg.ben.AppConstants
 import com.fxqyem.msg.ent.MsgEnt
 import com.fxqyem.msg.lay.MsgPagerLay
+import com.fxqyem.msg.utl.BitMapUtil
 import com.fxqyem.msg.utl.DbUtil
 import com.fxqyem.msg.utl.StrUtil
 import com.fxqyem.msg.vw.*
@@ -86,6 +87,7 @@ class MemMsgLsAdapter(private val context: Context, var list: ArrayList<MsgEnt>?
             licon?.visibility = View.INVISIBLE
             ricon?.visibility = View.VISIBLE
             tlay?.backgroundResource = R.drawable.slkt_me
+            rbtn?.backgroundDrawable = BitMapUtil.getMatrixDrawableByRid(context,R.mipmap.default_hicon, appColorArrayLightGreen)
         }else{
             prtly.removeRule(RelativeLayout.ALIGN_PARENT_RIGHT)
             prtly.removeRule(RelativeLayout.ALIGN_PARENT_END)
@@ -96,6 +98,7 @@ class MemMsgLsAdapter(private val context: Context, var list: ArrayList<MsgEnt>?
             ricon?.visibility = View.INVISIBLE
             licon?.visibility = View.VISIBLE
             tlay?.backgroundResource = R.drawable.slkt_others
+            lbtn?.backgroundResource = R.mipmap.default_hicon
         }
         tlay.layoutParams = prtly
         val hdlay = tlay?.findViewById(R.id.msg_send_lay_msgls_itm_attalay) as FrameLayout?

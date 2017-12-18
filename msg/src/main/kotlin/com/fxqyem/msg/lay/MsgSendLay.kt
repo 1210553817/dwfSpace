@@ -8,10 +8,7 @@ import android.widget.LinearLayout
 import com.fxqyem.msg.R
 import com.fxqyem.msg.utl.AndUtil
 import com.fxqyem.msg.utl.BitMapUtil
-import com.fxqyem.msg.vw.COLOR_LIGHTGREEN
-import com.fxqyem.msg.vw.COLOR_LIGHTGREY
-import com.fxqyem.msg.vw.COLOR_TRANS
-import com.fxqyem.msg.vw.appColorArrayLightGreen
+import com.fxqyem.msg.vw.*
 import org.jetbrains.anko.*
 
 /**
@@ -82,13 +79,13 @@ class MsgSendLay(){
 
                 relativeLayout {
                     id = R.id.msg_send_lay_top
-                    backgroundResource = R.drawable.opt_menu_tit
+                    backgroundResource = R.drawable.pg_menu_tit
                     gravity =Gravity.CENTER
                     padding = dip(5)
 
                     imageButton {
                         id = R.id.msg_send_lay_backBtn
-                        backgroundDrawable = BitMapUtil.getMatrixDrawableByRid(ctx,R.mipmap.tit_tool_back, appColorArrayLightGreen)
+                        backgroundResource = R.mipmap.tit_tool_back
 
                     }.lparams{
                         width= dip(30)
@@ -101,7 +98,7 @@ class MsgSendLay(){
 
                     imageButton {
                         id = R.id.msg_send_lay_optBtn
-                        backgroundDrawable = BitMapUtil.getMatrixDrawableByRid(ctx,R.mipmap.tit_tool_opt, appColorArrayLightGreen)
+                        backgroundResource = R.mipmap.tit_tool_opt
 
                     }.lparams{
                         width= dip(30)
@@ -116,7 +113,7 @@ class MsgSendLay(){
                         id=R.id.msg_send_lay_tit
                         gravity =Gravity.CENTER
                         maxLines=1
-                        textColor = COLOR_LIGHTGREEN
+                        textColor = COLOR_WHITE
                         textSize = 16f
 
                     }.lparams{

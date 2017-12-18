@@ -1,6 +1,7 @@
 package com.fxqyem.msg.ben
 
 import android.app.Application
+import android.content.Context
 import android.util.Log
 import com.fxqyem.msg.ent.MsgEnt
 import com.fxqyem.msg.utl.PrefUtil
@@ -8,9 +9,9 @@ import com.fxqyem.msg.utl.PrefUtil
 
 class AppContext : Application() {
     var chatMp: HashMap<String,Int>? = null
-    var uname = "CUIHW"
-    var utit = "CUIHW_PC"
-    var usub = "CUIHW_PC2141231234"
+    var uname: String? = ""
+    var utit: String? = ""
+    var usub: String? = ""
     var hdicon = "17"
     var fileRcvPath="/sdcard/"
 
@@ -18,7 +19,7 @@ class AppContext : Application() {
         super.onCreate()
         AppContext.instance = this
         initChatMp()
-
+        initSelfInfo()
     }
 
     private fun initChatMp(){
@@ -47,6 +48,28 @@ class AppContext : Application() {
         ip?:return 0
         val o = chatMp?.get(ip)
         return o?:0
+    }
+
+
+    fun initSelfInfo(){
+        uname = PrefUtil.get(this,AppConstants.PREF_KEY_SELF_UNM,"MSG", AppConstants.PREF_NAME_PARAMS) as String
+        utit = PrefUtil.get(this,AppConstants.PREF_KEY_SELF_TIT,"androidPhone", AppConstants.PREF_NAME_PARAMS) as String
+        usub = PrefUtil.get(this,AppConstants.PREF_KEY_SELF_SUB,"m5", AppConstants.PREF_NAME_PARAMS) as String
+    }
+    fun setSelfInfo(unm: String?,tit: String?,sub: String?){
+        if(unm!=null){
+            this.uname = unm
+            PrefUtil.put(this, AppConstants.PREF_KEY_SELF_UNM,unm, AppConstants.PREF_NAME_PARAMS)
+        }
+        if(tit!=null){
+            this.utit = tit
+            PrefUtil.put(this, AppConstants.PREF_KEY_SELF_TIT,tit, AppConstants.PREF_NAME_PARAMS)
+        }
+        if(sub!=null){
+            this.usub = sub
+            PrefUtil.put(this, AppConstants.PREF_KEY_SELF_SUB,sub, AppConstants.PREF_NAME_PARAMS)
+        }
+
     }
 
     companion object{

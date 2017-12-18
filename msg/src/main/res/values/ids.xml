@@ -6,8 +6,6 @@
     <item name="msg_lay_core_btm_ly" type="id"/>
     <item name="msg_lay_core_btm_mem_img" type="id"/>
     <item name="msg_lay_core_btm_mem_txt" type="id"/>
-    <item name="msg_lay_core_btm_grp_img" type="id"/>
-    <item name="msg_lay_core_btm_grp_txt" type="id"/>
     <item name="msg_lay_core_btm_set_img" type="id"/>
     <item name="msg_lay_core_btm_set_txt" type="id"/>
     <!--cen-->
@@ -15,6 +13,8 @@
     <item name="msg_lay_core_cenhd_ly" type="id"/>
     <item name="msg_lay_core_cen_viewPager_ly" type="id"/>
     <item name="msg_lay_core_cenfrm_ly" type="id"/>
+    <item name="msg_lay_cen_mempg_toply" type="id"/>
+    <item name="msg_lay_cen_mempg_refresh_btn" type="id"/>
     <item name="msg_lay_cen_mempg_lsvw" type="id"/>
     <item name="msg_lay_cen_mempg_itm_hiconbtn" type="id"/>
     <item name="msg_lay_cen_mempg_itm_chatnumbtn" type="id"/>
@@ -69,4 +69,17 @@
     <item name="msg_send_lay_msgls_itm_mtit" type="id"/>
     <item name="msg_send_lay_msgls_itm_stit" type="id"/>
     <item name="msg_send_lay_msgls_itm_status" type="id"/>
+    <!-- setting pager -->
+    <item name="setting_pglay__toply" type="id"/>
+    <item name="setting_pglay_hdicon_btn" type="id"/>
+    <item name="setting_pglay_lsvw" type="id"/>
+    <item name="setting_pglay_item_himg" type="id"/>
+    <item name="setting_pglay_item_mtit" type="id"/>
+    <item name="setting_pglay_item_stit" type="id"/>
+
+    <item name="setting_pglay_slfdo_unm" type="id"/>
+    <item name="setting_pglay_slfdo_tit" type="id"/>
+    <item name="setting_pglay_slfdo_sub" type="id"/>
+    <item name="setting_pglay_slfdo_clbtn" type="id"/>
+    <item name="setting_pglay_slfdo_okbtn" type="id"/>
 </resources>

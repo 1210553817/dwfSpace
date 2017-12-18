@@ -1,0 +1,279 @@
+package com.fxqyem.msg.lay
+
+import android.content.Context
+import android.view.Gravity
+import android.view.View
+import android.view.ViewGroup
+import android.widget.LinearLayout
+import android.widget.TextView
+import com.fxqyem.msg.R
+import com.fxqyem.msg.act.MsgActivity
+import com.fxqyem.msg.vw.*
+import org.jetbrains.anko.*
+
+class SettingLay {
+
+    fun createSetVw(ctx: Context): View {
+        val setVw = ctx.linearLayout{
+            orientation = LinearLayout.VERTICAL
+
+            relativeLayout {
+                id = R.id.setting_pglay__toply
+                backgroundResource = R.drawable.pg_menu_tit
+                padding = dip(5)
+
+                imageButton {
+                    id = R.id.setting_pglay_hdicon_btn
+                    backgroundResource = R.mipmap.default_hicon
+
+                }.lparams{
+                    width= dip(30)
+                    height= dip(30)
+                    alignParentRight()
+                    alignParentEnd()
+                    rightMargin=dip(5)
+                    centerVertically()
+                }
+
+
+            }.lparams{
+                width= matchParent
+                height= dip(50)
+
+            }
+
+            listView {
+                id=R.id.setting_pglay_lsvw
+                dividerHeight = dip(1)
+                divider= getResDrawable(ctx,R.drawable.ls_divi_bkg)
+                isFocusable = false
+                isFocusableInTouchMode = false
+                cacheColorHint = COLOR_TRANS
+                //selector =
+            }.lparams{
+                width= matchParent
+                height= matchParent
+
+            }
+
+
+        }
+        return setVw
+
+    }
+
+    fun createSetItmVw(ctx:Context): View {
+
+        val itmVw = ctx.relativeLayout {
+            backgroundColor = 0xffffffff.toInt()
+            descendantFocusability = ViewGroup.FOCUS_BLOCK_DESCENDANTS
+            backgroundResource = R.drawable.ls_itm_bkg
+            padding = dip(15)
+
+            imageView {
+                id = R.id.setting_pglay_item_himg
+                backgroundColor = COLOR_LIGHTGREY2
+
+            }.lparams{
+                width=dip(20)
+                height=dip(20)
+                alignParentLeft()
+                alignParentStart()
+                centerVertically()
+            }
+
+            textView{
+                id=R.id.setting_pglay_item_mtit
+                textColor = 0xff444444.toInt()
+                textSize =  16f
+                gravity = Gravity.CENTER_VERTICAL
+
+            }.lparams{
+                width= matchParent
+                height= dip(20)
+                rightOf(R.id.setting_pglay_item_himg)
+                centerVertically()
+                leftMargin = dip(5)
+
+            }
+
+        }
+
+        return itmVw
+    }
+
+    fun createSelfVw(ctx: Context): View{
+        val reVw = ctx.linearLayout {
+            orientation = LinearLayout.VERTICAL
+            setBackgroundResource(R.drawable.opt_menu_ctn)
+
+            textView {
+                id= R.id.file_slector_holder_tit
+                backgroundResource = R.drawable.opt_menu_tit
+                maxLines = 1
+                textColor = COLOR_LIGHTGREEN
+                textSize = 14f
+                text = getResString(context,R.string.setting_pglay_slfdo)
+                gravity = Gravity.CENTER
+
+            }.lparams {
+                width= matchParent
+                height=dip(38)
+
+            }
+
+            linearLayout {
+                orientation = LinearLayout.HORIZONTAL
+                padding = dip(5)
+
+                textView {
+                    maxLines = 1
+                    textColor = 0xff888888.toInt()
+                    textSize = 12f
+                    text = getResString(context,R.string.setting_pglay_slfdo_unm)
+                    gravity = Gravity.CENTER
+
+                }.lparams{
+                    width= dip(60)
+                    height= wrapContent
+                    gravity= Gravity.CENTER_VERTICAL
+                }
+
+                editText {
+                    id=R.id.setting_pglay_slfdo_unm
+                    gravity =Gravity.LEFT
+                    textColor = 0xff555555.toInt()
+                    backgroundResource = R.drawable.opt_menu_edittxt
+
+                }.lparams{
+                    width= matchParent
+                    height= dip(36)
+                    gravity= Gravity.CENTER_VERTICAL
+                }
+
+            }.lparams{
+                width= matchParent
+                height= wrapContent
+
+            }
+
+            linearLayout {
+                orientation = LinearLayout.HORIZONTAL
+                padding = dip(5)
+
+                textView {
+                    maxLines = 1
+                    textColor = 0xff888888.toInt()
+                    textSize = 14f
+                    text = getResString(context,R.string.setting_pglay_slfdo_tit)
+                    gravity = Gravity.CENTER
+
+                }.lparams{
+                    width= dip(60)
+                    height= wrapContent
+                    gravity= Gravity.CENTER_VERTICAL
+                }
+
+                editText {
+                    id=R.id.setting_pglay_slfdo_tit
+                    gravity =Gravity.LEFT
+                    textColor = 0xff555555.toInt()
+                    backgroundResource = R.drawable.opt_menu_edittxt
+
+                }.lparams{
+                    width= matchParent
+                    height= dip(36)
+                    gravity= Gravity.CENTER_VERTICAL
+                }
+
+            }.lparams{
+                width= matchParent
+                height=wrapContent
+
+            }
+
+            linearLayout {
+                orientation = LinearLayout.HORIZONTAL
+                padding = dip(5)
+
+                textView {
+                    maxLines = 1
+                    textColor = 0xff888888.toInt()
+                    textSize = 14f
+                    text = getResString(context,R.string.setting_pglay_slfdo_sub)
+                    gravity = Gravity.CENTER
+
+                }.lparams{
+                    width= dip(60)
+                    height= wrapContent
+                    gravity= Gravity.CENTER_VERTICAL
+                }
+
+                editText {
+                    id=R.id.setting_pglay_slfdo_sub
+                    gravity =Gravity.LEFT
+                    textColor = 0xff555555.toInt()
+                    backgroundResource = R.drawable.opt_menu_edittxt
+
+                }.lparams{
+                    width= matchParent
+                    height= dip(36)
+                    gravity= Gravity.CENTER_VERTICAL
+                }
+
+            }.lparams{
+                width= matchParent
+                height=wrapContent
+
+            }
+
+            linearLayout {
+                orientation = LinearLayout.HORIZONTAL
+                setGravity(Gravity.CENTER)
+                padding=dip(10)
+
+                button{
+                    id=R.id.setting_pglay_slfdo_clbtn
+                    backgroundResource = R.drawable.opt_menu_mbtn
+                    textAlignment = TextView.TEXT_ALIGNMENT_CENTER
+                    textColor = COLOR_LIGHTGREEN
+                    textSize = 16f
+                    text = getResString(context,R.string.cancle)
+                    padding = 0
+
+                }.lparams{
+                    width = dip(120)
+                    height=dip(30)
+
+
+                }
+
+                button{
+                    id=R.id.setting_pglay_slfdo_okbtn
+                    backgroundResource = R.drawable.opt_menu_mbtn
+                    textColor = COLOR_LIGHTGREEN
+                    textSize = 16f
+                    text = getResString(context,R.string.file_slector_holder_confirm)
+                    padding = 0
+
+                }.lparams{
+                    width = dip(120)
+                    height=dip(30)
+                    leftMargin=dip(10)
+
+
+                }
+
+            }.lparams{
+                width= matchParent
+                height= wrapContent
+
+            }
+
+        }
+
+        return reVw
+    }
+
+
+}

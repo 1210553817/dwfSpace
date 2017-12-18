@@ -10,6 +10,7 @@ import java.util.*
 import java.util.regex.Pattern
 
 val COLOR_TRANS=0x00000000.toInt()
+val COLOR_WHITE=0xffffffff.toInt()
 val COLOR_GREEN=0xff00ff00.toInt()
 val COLOR_LIGHTGREEN=0xff77aa77.toInt()
 val COLOR_LIGHTGREEN1=0xff32CD32.toInt()
@@ -31,6 +32,7 @@ val appColorArrayLightGreen = floatArrayOf(
         0f,0.6f,0f,0.1f,0f,
         0f,0f,0.4f,0.1f,0f,
         0f,0f,0f,1f,0f)
+
 
 val appColorArrayLightGrey = floatArrayOf(
         0.7f,0f,0f,0.1f,0f,
@@ -151,10 +153,10 @@ fun utilGetRandomColorArray(): FloatArray{
     val g = utilRandInt(0, 40).toFloat()/100
     val b = utilRandInt(0, 40).toFloat()/100
     return floatArrayOf(
-            r,0f,0f,1f,0f,
-            0f,g,0f,1f,0f,
-            0f,0f,b,1f,0f,
-            0.2f,0.2f,0.2f,0.2f,0f)
+            r,0f,0f,0.1f,0f,
+            0f,g,0f,0.1f,0f,
+            0f,0f,b,0.1f,0f,
+            0f,0f,0f,0.5f,0f)
 }
 
 fun utilGetRandomColor(): Int{

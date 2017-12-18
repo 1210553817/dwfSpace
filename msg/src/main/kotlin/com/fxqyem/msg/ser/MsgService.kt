@@ -287,8 +287,11 @@ class MsgService : Service(){
     private fun sendMsg(msg: MsgEnt){
         if(!NetUtils.isConnected(this)){
             loadAlert(getResString(this,R.string.no_internet_connection))
+            msgServer?.close()
+            msgServer = null
             return
         }
+        msgServer?:return
         object: Thread() {
             override fun run() {
                 val addr = InetAddress.getByName(msg.ip)

@@ -7,11 +7,12 @@
     <string name="complete">完成</string>
     <string name="error">错误</string>
     <string name="timeout">超时</string>
-    <string name="msgbkg_set">界面背景</string>
-    <string name="peppic_set">头像设置</string>
+    <string name="cancle">取消</string>
+    <string name="no_sdcard_permission">没有存储卡访问权限，将无法保存消息记录！</string>
+    <string name="version_info">MSG_v0.1</string>
+    <string name="about_info">本软件开发基于IPMSG协议，用于和飞秋，飞鸽传书通信，支持发送消息，文件，点击上面图标打开github源码</string>
     <!--MsgLay / btm -->
     <string name="memls">好友</string>
-    <string name="grpls">群组</string>
     <string name="setting">设置</string>
     <!--file selecctor-->
     <string name="file_slector_holder_chsFile">选择文件</string>
@@ -28,4 +29,9 @@
     <string name="no_allInfo_canNotRcvFile">文件信息不完整，无法接收文件！</string>
     <string name="no_allInfo_canNotSendFile">文件信息不完整，无法发送文件！</string>
     <string name="err_pno_canNotRcvFile">包编号错误，无法接收文件！</string>
+    <!-- setting pager -->
+    <string name="setting_pglay_slfdo">个性化</string>
+    <string name="setting_pglay_slfdo_unm">昵称</string>
+    <string name="setting_pglay_slfdo_tit">标签</string>
+    <string name="setting_pglay_slfdo_sub">描述</string>
 </resources>

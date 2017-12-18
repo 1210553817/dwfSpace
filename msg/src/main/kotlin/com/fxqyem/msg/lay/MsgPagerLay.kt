@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import com.fxqyem.msg.R
 import com.fxqyem.msg.act.MsgActivity
+import com.fxqyem.msg.utl.BitMapUtil
 import com.fxqyem.msg.vw.*
 import org.jetbrains.anko.*
 
@@ -15,6 +16,31 @@ class MsgPagerLay {
     fun createMemVw(ctx: Context): View {
         val memVw = ctx.linearLayout{
             orientation = LinearLayout.VERTICAL
+
+            relativeLayout {
+                id = R.id.msg_lay_cen_mempg_toply
+                backgroundResource = R.drawable.pg_menu_tit
+                padding = dip(5)
+
+                imageButton {
+                    id = R.id.msg_lay_cen_mempg_refresh_btn
+                    backgroundResource = R.mipmap.red_thm_41
+
+                }.lparams{
+                    width= dip(30)
+                    height= dip(30)
+                    alignParentRight()
+                    alignParentEnd()
+                    rightMargin=dip(5)
+                    centerVertically()
+                }
+
+
+            }.lparams{
+                width= matchParent
+                height= dip(50)
+
+            }
 
             listView {
                 id=R.id.msg_lay_cen_mempg_lsvw
@@ -46,7 +72,7 @@ class MsgPagerLay {
 
             imageView {
                 id = R.id.msg_lay_cen_mempg_itm_hiconbtn
-                backgroundColor = COLOR_LIGHTGREY2
+                backgroundDrawable = BitMapUtil.getMatrixDrawableByRid(context,R.mipmap.default_hicon, appColorArrayLightGreen)
 
             }.lparams{
                 width=dip(50)
@@ -54,6 +80,7 @@ class MsgPagerLay {
                 alignParentLeft()
                 alignParentStart()
             }
+
             button{
                 id=R.id.msg_lay_cen_mempg_itm_chatnumbtn
                 backgroundResource = R.drawable.ls_count_num
@@ -82,7 +109,7 @@ class MsgPagerLay {
 
                 }.lparams{
                     width= matchParent
-                    height= wrapContent
+                    height= dip(30)
 
                 }
 
@@ -95,7 +122,7 @@ class MsgPagerLay {
 
                 }.lparams{
                     width= matchParent
-                    height= wrapContent
+                    height= dip(20)
 
                 }
 

@@ -31,6 +31,11 @@ class MsgEnt : Serializable {
         this.tit = tit
         this.sub = sub
     }
+    constructor(tit: String, sub: String,cmd: Int?) {
+        this.tit = tit
+        this.sub = sub
+        this.cmd = cmd?:0
+    }
     constructor(tit: String?, sub: String?,cmd: Int?,add: String?) {
         this.ver = "1"
         this.tit = tit?:""

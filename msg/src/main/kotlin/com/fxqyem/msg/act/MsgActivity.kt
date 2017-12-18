@@ -1,5 +1,6 @@
 package com.fxqyem.msg.act
 
+import android.Manifest
 import android.animation.Animator
 import android.animation.ValueAnimator
 import android.content.*
@@ -17,6 +18,7 @@ import android.widget.*
 import com.fxqyem.msg.R
 import com.fxqyem.msg.adp.MemLsAdapter
 import com.fxqyem.msg.adp.MemMsgLsAdapter
+import com.fxqyem.msg.adp.SetLsAdapter
 import com.fxqyem.msg.ben.AppConstants
 import com.fxqyem.msg.ben.AppContext
 import com.fxqyem.msg.ben.BackLsnHolder
@@ -24,9 +26,11 @@ import com.fxqyem.msg.ben.OnBackListener
 import com.fxqyem.msg.ent.MsgEnt
 import com.fxqyem.msg.lay.MsgLay
 import com.fxqyem.msg.lay.MsgPagerLay
+import com.fxqyem.msg.lay.SettingLay
 import com.fxqyem.msg.ser.MsgService
 import com.fxqyem.msg.utl.AndUtil
 import com.fxqyem.msg.utl.BitMapUtil
+import com.fxqyem.msg.utl.PermissionUtils
 import com.fxqyem.msg.vw.*
 import org.jetbrains.anko.*
 import java.util.Stack
@@ -40,8 +44,6 @@ class MsgActivity : MsgBaseActivity() , OnBackListener {
     var btmLy: android.widget.RelativeLayout? = null
     var btmMemImg: android.widget.ImageView? = null
     var btmMemTxt: android.widget.TextView? = null
-    var btmGrpImg: android.widget.ImageView? = null
-    var btmGrpTxt: android.widget.TextView? = null
     var btmSetImg: android.widget.ImageView? = null
     var btmSetTxt: android.widget.TextView? = null
     /*cen*/
@@ -49,22 +51,13 @@ class MsgActivity : MsgBaseActivity() , OnBackListener {
     var cenhdLy: android.widget.RelativeLayout? = null
     var cenfrmLy: android.widget.FrameLayout? = null
     var cenViewPager: ViewPager? = null
-        //pager
+    //pager
     var memVw: View? = null
-    var grpVw: View? = null
     var setVw: View? = null
-            //mem
+    //mem
     var memListVw: ListView? = null
-
-    /*sld*/
-    var sldBarLy: android.widget.LinearLayout? = null
-    var sldCovLy: android.widget.LinearLayout? = null
-    var sldLy: android.widget.RelativeLayout? = null
-    var sldLyImg: android.widget.ImageView? = null
-    var msgBkgSetBtn: android.widget.Button? = null
-    var pepPicSetBtn: android.widget.Button? = null
-    var appAboutBtn: android.widget.Button? = null
-    var appOverBtn: android.widget.Button? = null
+    //setting
+    var selfSldMn: SldMenu? = null
 
     /*ctn*/
     var oneCtnFrmLy: android.widget.FrameLayout? = null
@@ -80,8 +73,6 @@ class MsgActivity : MsgBaseActivity() , OnBackListener {
 
     /*params*/
     private var thisState: Int = 0
-    private var sldLyAniRun = false
-    private var sldLyState = 0
 
     //Keys
     private var backLsnStack: Stack<BackLsnHolder>? = null
@@ -89,6 +80,8 @@ class MsgActivity : MsgBaseActivity() , OnBackListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         MsgLay().setContentView(this)
+        //req permissions
+        requestPermissions()
         //keys
         backLsnStack = Stack()
         //views
@@ -140,15 +133,10 @@ class MsgActivity : MsgBaseActivity() , OnBackListener {
     private fun initViews() {
         //btm
         val btmMemBtnPly =  btmMemImg?.parent as LinearLayout
-        val btmGrpBtnPly =  btmGrpImg?.parent as LinearLayout
         val btmSetBtnPly =  btmSetImg?.parent as LinearLayout
         btmMemBtnPly.onClick {
             chooseBtmItem(0)
             cenViewPager?.currentItem=0
-        }
-        btmGrpBtnPly.onClick {
-            chooseBtmItem(1)
-            cenViewPager?.currentItem=1
         }
         btmSetBtnPly.onClick {
             chooseBtmItem(2)
@@ -156,75 +144,11 @@ class MsgActivity : MsgBaseActivity() , OnBackListener {
         }
         //pager
         initMsgPager()
-        //send Lay
-
-        //sld
-        sldBarLy?.setOnTouchListener(SldBarLyTouchListener())
-        sldCovLy?.setOnTouchListener(CovLyTouchListener())
-        sldLy?.setOnTouchListener(SldLyTouchListener())
-    }
-
-    private fun initMsgPager(){
-        val msgPagerLay = MsgPagerLay()
-        val memVw = msgPagerLay.createMemVw(this)
-        val grpVw = msgPagerLay.createMemVw(this)
-        val setVw = msgPagerLay.createMemVw(this)
-
-        this.memVw= memVw
-        this.grpVw= grpVw
-        this.setVw= setVw
-        val pagerVws = listOf(memVw,grpVw,setVw)
-        val mAdapter = MyPagerAdapter(pagerVws, listOf(
-                getResString(this,R.string.memls),
-                getResString(this,R.string.grpls),
-                getResString(this,R.string.setting)))
-        cenViewPager?.adapter = mAdapter
-        cenViewPager?.addOnPageChangeListener(object: ViewPager.OnPageChangeListener{
-            override fun onPageSelected(pos: Int) {
-                chooseBtmItem(pos)
-            }
-
-            override fun onPageScrollStateChanged(state: Int) {
-            }
-
-            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-            }
-        })
-        /*mem views*/
-        initPagerMemViews(memVw)
-
-
-    }
-    private fun initPagerMemViews(memVw: View){
-        memListVw = memVw.find(R.id.msg_lay_cen_mempg_lsvw)
-        val memAdapter = MemLsAdapter(this,null)
-        memListVw?.adapter = memAdapter
-        memListVw?.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
-            val adp = memListVw?.adapter as MemLsAdapter?
-            var itm = adp?.list?.get(position)
-            /*fragment*/
-            val bun = Bundle()
-            //bun.putInt("tp", 0)
-            bun.putSerializable("ITEM",itm)
-            msgLsFrgm = MsgSendFrgm()
-            msgLsFrgm?.arguments = bun
-            val transaction = fragmentManager.beginTransaction()
-            //transaction.setCustomAnimations(R.animator.right_sld_in,R.animator.right_sld_out)
-            transaction.add(R.id.msg_lay_core_cenfrm_ly, msgLsFrgm)
-            transaction.addToBackStack(null)
-            transaction.commit()
-        }
-
-    }
-
-    fun reloadMemList(){
-        val itt = Intent(AppConstants.ACTION_SER_LOAD_MEM_ITEMS)
-        mLocalBroadcastManager?.sendBroadcast(itt)
     }
     private fun chooseBtmItem(indx: Int){
-        val btnArr = arrayOf(btmMemImg,btmGrpImg,btmSetImg)
-        val txtArr = arrayOf(btmMemTxt,btmGrpTxt,btmSetTxt)
-        val iconArr = arrayOf(R.mipmap.red_thm_29,R.mipmap.red_thm_30,R.mipmap.red_thm_15)
+        val btnArr = arrayOf(btmMemImg,btmSetImg)
+        val txtArr = arrayOf(btmMemTxt,btmSetTxt)
+        val iconArr = arrayOf(R.mipmap.red_thm_29,R.mipmap.red_thm_15)
         for(i in 0 until btnArr.size){
             val btn = btnArr[i]
             val txt = txtArr[i]
@@ -238,6 +162,132 @@ class MsgActivity : MsgBaseActivity() , OnBackListener {
             }
         }
     }
+
+    private fun initMsgPager(){
+        val msgPagerLay = MsgPagerLay()
+        val memVw = msgPagerLay.createMemVw(this)
+        val setVw = SettingLay().createSetVw(this)
+
+        this.memVw= memVw
+        this.setVw= setVw
+        val pagerVws = listOf(memVw,setVw)
+        val mAdapter = MyPagerAdapter(pagerVws, listOf(
+                getResString(this,R.string.memls),
+                getResString(this,R.string.setting)))
+        cenViewPager?.adapter = mAdapter
+        cenViewPager?.addOnPageChangeListener(object: ViewPager.OnPageChangeListener{
+            override fun onPageSelected(pos: Int) {
+                chooseBtmItem(pos)
+            }
+
+            override fun onPageScrollStateChanged(state: Int) {
+            }
+
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+            }
+        })
+
+        initPagerMemViews(memVw)
+        initPagerSetViews(setVw)
+
+
+    }
+    /*mem pager*/
+    private fun initPagerMemViews(memVw: View){
+        memListVw = memVw.find(R.id.msg_lay_cen_mempg_lsvw)
+        val refreshBtn = memVw.find<ImageButton>(R.id.msg_lay_cen_mempg_refresh_btn)
+        val memAdapter = MemLsAdapter(this,null)
+        memListVw?.adapter = memAdapter
+        memListVw?.onItemClickListener = AdapterView.OnItemClickListener { pvw, _, position, _ ->
+            val lsVw = pvw as ListView
+            val adp = lsVw?.adapter as MemLsAdapter?
+            var itm = adp?.list?.get(position)
+            /*fragment*/
+            val bun = Bundle()
+            //bun.putInt("tp", 0)
+            bun.putSerializable("ITEM",itm)
+            msgLsFrgm = MsgSendFrgm()
+            msgLsFrgm?.arguments = bun
+            val transaction = fragmentManager.beginTransaction()
+            //transaction.setCustomAnimations(R.animator.right_sld_in,R.animator.right_sld_out)
+            transaction.add(R.id.msg_lay_core_cenfrm_ly, msgLsFrgm)
+            transaction.addToBackStack(null)
+            transaction.commit()
+        }
+        refreshBtn.onClick {
+            reloadMemList()
+        }
+
+    }
+
+    fun reloadMemList(){
+        val memAdp = memListVw?.adapter as MemLsAdapter?
+        memAdp?.list?.clear()
+        val itt = Intent(AppConstants.ACTION_SER_LOAD_MEM_ITEMS)
+        mLocalBroadcastManager?.sendBroadcast(itt)
+    }
+    /*setting pager*/
+    private fun initPagerSetViews(setVw: View){
+        val setListVw = setVw.find<ListView>(R.id.setting_pglay_lsvw)
+        val hiconBtn = setVw.find<ImageButton>(R.id.setting_pglay_hdicon_btn)
+        val setAdp = SetLsAdapter(this, arrayListOf(
+                MsgEnt(getResString(this,R.string.setting_pglay_slfdo),"",R.mipmap.cus),
+                MsgEnt(getResString(this,R.string.about),"",R.mipmap.about),
+                MsgEnt(getResString(this,R.string.exit),"",R.mipmap.exit)
+        ))
+        setListVw?.adapter = setAdp
+        setListVw?.onItemClickListener = AdapterView.OnItemClickListener { pvw, _, position, _ ->
+            val lsVw = pvw as ListView
+            val adp = lsVw?.adapter as SetLsAdapter?
+            var itm = adp?.list?.get(position)
+            when(itm?.cmd){
+                R.mipmap.cus -> {
+                    val hdvw = SettingLay().createSelfVw(this@MsgActivity)
+                    val unm = hdvw.find<EditText>(R.id.setting_pglay_slfdo_unm)
+                    val tit = hdvw.find<EditText>(R.id.setting_pglay_slfdo_tit)
+                    val sub = hdvw.find<EditText>(R.id.setting_pglay_slfdo_sub)
+                    val cbtn = hdvw.find<Button>(R.id.setting_pglay_slfdo_clbtn)
+                    val obtn = hdvw.find<Button>(R.id.setting_pglay_slfdo_okbtn)
+                    cbtn.onClick {
+                        selfSldMn?.cancle()
+                    }
+                    obtn.onClick {
+                        AppContext.instance?.setSelfInfo(unm.text.toString(),tit.text.toString(),sub.text.toString())
+                        selfSldMn?.cancle()
+                    }
+
+                    selfSldMn = SldMenu.create(this, hdvw, oneCtnFrmLy)
+                    selfSldMn?.setOnStateChangeListener(object: SldMenu.OnStateChangeListener{
+                        override fun onStateChange(state: Int) {
+                            if (state == SldMenu.MENU_STATE_GONE_START) {
+                                popBackLsnStack(BK_KEY_SELF_MN, this@MsgActivity)
+                            } else if (state == SldMenu.MENU_STATE_SHOW) {
+                                push2BackLsnStack(BackLsnHolder(BK_KEY_SELF_MN, this@MsgActivity))
+                            } else if (state == SldMenu.MENU_STATE_GONE) {
+                                selfSldMn = null
+                            }
+                        }
+                    })
+                    selfSldMn?.show(SldMenu.SHOW_TYPE_TOP)
+
+                }
+                R.mipmap.about -> {
+                    startActivity(Intent(this@MsgActivity,AboutActivity::class.java))
+                }
+                R.mipmap.exit -> {
+                    android.os.Process.killProcess(android.os.Process.myPid())
+                }
+
+            }
+
+
+        }
+        hiconBtn.onClick {
+
+        }
+
+    }
+
     internal inner class MyPagerAdapter(private val mViewList: List<View>,private val mViewTitles: List<String>) : PagerAdapter() {
 
         override fun getCount(): Int {
@@ -276,200 +326,9 @@ class MsgActivity : MsgBaseActivity() , OnBackListener {
         }
     }
 
-    private inner class SldBarLyTouchListener : View.OnTouchListener {
-        private var nx: Float = 0.toFloat()
-        private var nx1: Float = 0.toFloat()
-        private var magLft = -1
-        private var params: RelativeLayout.LayoutParams? = null
-        private var sldLyW: Int = 0
-        private var aniFlg = false
-
-        override fun onTouch(v: View, event: MotionEvent): Boolean {
-            if (sldLyAniRun) {
-                aniFlg = true
-                return aniFlg
-            }
-            if (aniFlg) {
-                if (event.action == MotionEvent.ACTION_UP || event.action == MotionEvent.ACTION_CANCEL) {
-                    aniFlg = false
-                }
-                return true
-            }
-            val cx = event.x
-            //Log.d(ACTIVITY_TAG,"###################### nx: "+nx+",nx1: "+nx1);
-            if (event.action == MotionEvent.ACTION_DOWN) {
-                sldCovLy?.visibility = View.VISIBLE
-                sldCovLy?.setWillNotDraw(false)
-                sldLy?.visibility = View.VISIBLE
-                sldLy?.setWillNotDraw(false)
-                params = sldLy?.layoutParams as RelativeLayout.LayoutParams
-                sldLyW = AndUtil.dp2Px(this@MsgActivity, SLD_MENU_WIDTH.toFloat())
-                magLft = -sldLyW
-                params?.leftMargin = magLft
-                sldLy?.layoutParams = params
-            } else if (event.action == MotionEvent.ACTION_UP || event.action == MotionEvent.ACTION_CANCEL) {
-                var b = false
-                if (nx >= nx1) {
-                    b = true
-                }
-                doSldLyAnimation(magLft, if (b) 0 else -sldLyW, 200, b)
-            } else if (event.action == MotionEvent.ACTION_MOVE) {
-                if (cx > sldLyW) {
-                    magLft = 0
-                } else {
-                    magLft = cx.toInt() - sldLyW
-                }
-                if (params != null) {
-                    params?.leftMargin = magLft
-                    sldLy?.layoutParams = params
-                }
-
-            }
-            nx1 = nx
-            nx = cx
-            return true
-        }
-    }
-
-    private inner class CovLyTouchListener : View.OnTouchListener {
-        private var nx: Float = 0.toFloat()
-        private var nx1: Float = 0.toFloat()
-        private var rx: Float = 0.toFloat()
-        private var magLft: Int = 0
-        private var mvf = false
-        private var params: RelativeLayout.LayoutParams? = null
-        private var sldLyW: Int = 0
-        private var aniFlg = false
-
-        override fun onTouch(v: View, event: MotionEvent): Boolean {
-            if (sldLyAniRun) {
-                aniFlg = true
-                return aniFlg
-            }
-            if (aniFlg) {
-                if (event.action == MotionEvent.ACTION_UP || event.action == MotionEvent.ACTION_CANCEL) {
-                    aniFlg = false
-                }
-                return true
-            }
-            rx = event.rawX.toInt().toFloat()
-            if (event.action == MotionEvent.ACTION_DOWN) {
-                mvf = false
-                magLft = 0
-                sldLyW = AndUtil.dp2Px(this@MsgActivity, SLD_MENU_WIDTH.toFloat())
-                params = sldLy?.layoutParams as RelativeLayout.LayoutParams
-            } else if (event.action == MotionEvent.ACTION_UP || event.action == MotionEvent.ACTION_CANCEL) {
-                if (mvf) {
-                    var b = false
-                    if (nx >= nx1) {
-                        b = true
-                    }
-                    doSldLyAnimation(magLft, if (b) 0 else -sldLyW, 250, b)
-                } else {
-                    doSldLyAnimation(0, -sldLyW, 200, false)
-                }
-            } else if (event.action == MotionEvent.ACTION_MOVE && Math.abs(rx - nx) > 5) {
-                mvf = true
-                magLft += (rx - nx).toInt()
-                if (magLft > 0) magLft = 0
-                if (params != null) {
-                    params?.leftMargin = magLft
-                    sldLy?.layoutParams = params
-                }
-            }
-            nx1 = nx
-            nx = rx
-            return true
-        }
-    }
-    private inner class SldLyTouchListener : View.OnTouchListener {
-
-        override fun onTouch(v: View, event: MotionEvent): Boolean {
-            return false
-        }
-    }
-    private fun doSldLyAnimation(begin: Int, end: Int, duration: Int, b: Boolean) {
-        val params = sldLy?.layoutParams as RelativeLayout.LayoutParams
-        if (b && begin < 0) {
-            sldCovLy?.visibility = View.VISIBLE
-            sldCovLy?.setWillNotDraw(false)
-            sldLy?.visibility = View.VISIBLE
-            sldCovLy?.setWillNotDraw(false)
-        }
-        //Log.d(ACTIVITY_TAG,"--------------"+begin+"-----------"+end);
-        sldLyAniRun = true
-        val mAnimator = ValueAnimator.ofInt(begin, end)
-        mAnimator.addUpdateListener { animation ->
-            val aniVal = animation.animatedValue as Int
-            params.leftMargin = aniVal
-            sldLy?.layoutParams = params
-        }
-        mAnimator.addListener(object : Animator.AnimatorListener {
-            internal var params = sldLy?.layoutParams as RelativeLayout.LayoutParams
-
-            override fun onAnimationStart(animation: Animator) {
-                if (!b && sldLyState == AppConstants.VW_STATE_SHOW) {
-                    sldLyState = AppConstants.VW_STATE_GONE_START
-                    OnSldLyStateChg(sldLyState)
-                } else if (b && sldLyState == AppConstants.VW_STATE_GONE) {
-                    sldLyState = AppConstants.VW_STATE_SHOW_START
-                    OnSldLyStateChg(sldLyState)
-                }
-            }
-
-            override fun onAnimationEnd(animation: Animator) {
-                setVal(end)
-
-                if (!b) {
-                    sldCovLy?.visibility = View.GONE
-                    sldCovLy?.setWillNotDraw(true)
-                    sldLy?.visibility = View.GONE
-                    sldLy?.setWillNotDraw(true)
-                    if (sldLyState == AppConstants.VW_STATE_GONE_START) {
-                        sldLyState = AppConstants.VW_STATE_GONE
-                        OnSldLyStateChg(sldLyState)
-                    }
-                } else if (b && sldLyState == AppConstants.VW_STATE_SHOW_START) {
-                    sldLyState = AppConstants.VW_STATE_SHOW
-                    OnSldLyStateChg(sldLyState)
-
-
-                }
-
-                sldLyAniRun = false
-            }
-
-            private fun setVal(av: Int) {
-                params.leftMargin = av
-                sldLy?.layoutParams = params
-            }
-
-            override fun onAnimationCancel(animation: Animator) {}
-
-            override fun onAnimationRepeat(animation: Animator) {}
-        })
-        mAnimator.interpolator = DecelerateInterpolator()
-        mAnimator.duration = duration.toLong()
-        mAnimator.start()
-    }
-
-    private fun OnSldLyStateChg(state: Int) {
-        when (state) {
-            AppConstants.VW_STATE_SHOW -> push2BackLsnStack(BackLsnHolder(BK_KEY_SLDLY, this@MsgActivity))
-            AppConstants.VW_STATE_SHOW_START -> { }
-            AppConstants.VW_STATE_GONE -> {}
-            AppConstants.VW_STATE_GONE_START -> popBackLsnStack(BK_KEY_SLDLY, this@MsgActivity)
-        }
-
-    }
-
     override fun onBackKeyUp(reqValue: Int, event: KeyEvent, reqCod: Int): Boolean {
         when (reqCod) {
-            BK_KEY_SLDLY -> {
-                if (sldLyAniRun) return true
-                val sldLyW = AndUtil.dp2Px(this, SLD_MENU_WIDTH.toFloat())
-                doSldLyAnimation(0, -sldLyW, 200, false)
-            }
+            BK_KEY_SELF_MN -> selfSldMn?.cancle()
         }
         return true
     }
@@ -553,6 +412,35 @@ class MsgActivity : MsgBaseActivity() , OnBackListener {
 
     }
 
+    private fun requestPermissions(): Boolean{
+        if (Build.VERSION.SDK_INT >= 23) {
+            if (!PermissionUtils.checkPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE, SDCARD_REQUEST_CODE)) {
+                Toast.makeText(this, getResString(this,R.string.no_sdcard_permission), Toast.LENGTH_SHORT).show()
+                return false
+            }
+        }
+        return true
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+        Log.d(TAG, "onRequestPermissionsResult requestCode: " + requestCode)
+        if (PermissionUtils.verifyPermissions(grantResults)) {//权限申请成功后根据请求码更新相关界面
+            when (requestCode) {
+                SDCARD_REQUEST_CODE ->{
+                    Log.w(TAG, "onRequestPermissionsResult  SDCARD_REQUEST return success")
+                }
+            }
+        } else {
+            when(requestCode) {
+                SDCARD_REQUEST_CODE ->{
+                    Toast.makeText(this, getResString(this,R.string.no_sdcard_permission), Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+    }
+
     override fun onKeyUp(keyCode: Int, event: KeyEvent): Boolean {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             if (!(backLsnStack?.isEmpty()?:true)) {
@@ -561,13 +449,7 @@ class MsgActivity : MsgBaseActivity() , OnBackListener {
                 return obkLsn?.onBackKeyUp(bkhd.requestValue, event, bkhd.requestCode)?:false
             }
         } else if (keyCode == KeyEvent.KEYCODE_MENU) {
-            if (sldLyAniRun) return true
-            val sldLyW = AndUtil.dp2Px(this, SLD_MENU_WIDTH.toFloat())
-            if (sldLyState == 1) {
-                doSldLyAnimation(0, -sldLyW, 200, false)
-            } else if (sldLyState == 0) {
-                doSldLyAnimation(-sldLyW, 0, 200, true)
-            }
+
             return true
         }
         return super.onKeyUp(keyCode, event)
@@ -604,11 +486,11 @@ class MsgActivity : MsgBaseActivity() , OnBackListener {
     }
     companion object {
         private val TAG = "MsgActivity"
-        private val SLD_MENU_WIDTH = 230
         /*back key*/
-        private val BK_KEY_SLDLY = 1
-        private val BK_KEY_MSG_SEND_SLDMENU = 2
+        private val BK_KEY_SELF_MN = 1
         /*What*/
-        private val WHAT_MEMLS_LOAD = 1
+        //private val WHAT_MEMLS_LOAD = 1
+        /*permisson req*/
+        private val SDCARD_REQUEST_CODE = 1
     }
 }

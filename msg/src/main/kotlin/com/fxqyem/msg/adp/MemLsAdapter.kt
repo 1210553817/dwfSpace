@@ -8,6 +8,7 @@ import com.fxqyem.msg.R
 import com.fxqyem.msg.ben.AppContext
 import com.fxqyem.msg.ent.MsgEnt
 import com.fxqyem.msg.lay.MsgPagerLay
+import com.fxqyem.msg.vw.utilNotNull
 import org.jetbrains.anko.find
 
 class MemLsAdapter(private val context: Context, var list: ArrayList<MsgEnt>?) : BaseAdapter(){
@@ -52,10 +53,9 @@ class MemLsAdapter(private val context: Context, var list: ArrayList<MsgEnt>?) :
         }
         val itm =list?.get(position)
         var titc=itm?.tit?:""
-        var subc = itm?.sub?:""
-
-        tit?.text = titc
-        sub?.text = subc
+        val ipc = if(utilNotNull(itm?.ip))"(${itm?.ip})" else ""
+        tit?.text = itm?.add?:""
+        sub?.text = String.format("%s%s",titc,ipc)
         val cnum = AppContext.instance?.getChat(itm?.ip)?:0
         if(cnum>0){
             btna?.text = cnum.toString()
