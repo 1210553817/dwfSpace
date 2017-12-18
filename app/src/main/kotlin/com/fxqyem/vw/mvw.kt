@@ -92,14 +92,14 @@ fun utilRandInt(min: Int, max: Int): Int {
     return randomNum
 }
 fun utilGetRandomColorArray(): FloatArray{
-    val r = utilRandInt(0, 40).toFloat()/100
-    val g = utilRandInt(0, 40).toFloat()/100
-    val b = utilRandInt(0, 40).toFloat()/100
+    val r = utilRandInt(0, 120).toFloat()/100
+    val g = utilRandInt(0, 120).toFloat()/100
+    val b = utilRandInt(0, 120).toFloat()/100
     return floatArrayOf(
-            r,0f,0f,1f,0f,
-            0f,g,0f,1f,0f,
-            0f,0f,b,1f,0f,
-            0.2f,0.2f,0.2f,0.2f,0f)
+            r,0f,0f,0.1f,0f,
+            0f,g,0f,0.1f,0f,
+            0f,0f,b,0.1f,0f,
+            0f,0f,0f,0.8f,0f)
 }
 
 fun utilGetRandomColor(): Int{
