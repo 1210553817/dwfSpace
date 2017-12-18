@@ -4,13 +4,13 @@
         <layer-list>
             <item>
                 <shape>
-                    <solid android:color="#ffcdcdcd" />
+                    <solid android:color="#ff888888" />
                     <corners android:radius="8dp"/>
                 </shape>
             </item>
             <item android:left="1px"  android:top="1px"  android:right="1px"  android:bottom="1px">
                 <shape>
-                    <solid android:color="#fff5f5f5" />
+                    <solid android:color="#fffefefe" />
                     <corners android:radius="8dp"/>
                 </shape>
             </item>
@@ -20,13 +20,13 @@
         <layer-list>
             <item>
                 <shape>
-                    <solid android:color="#ffcdcdcd" />
+                    <solid android:color="#ff888888" />
                     <corners android:radius="8dp"/>
                 </shape>
             </item>
             <item android:left="1px"  android:top="1px"  android:right="1px"  android:bottom="1px">
                 <shape>
-                    <solid android:color="#fff9f9f9" />
+                    <solid android:color="#ffeeeeee" />
                     <corners android:radius="8dp"/>
                 </shape>
             </item>
