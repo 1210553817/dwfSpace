@@ -10,7 +10,6 @@ import com.fxqyem.msg.ben.AppConstants
 import com.fxqyem.msg.ent.MsgEnt
 import com.fxqyem.msg.vw.utilIsEmpty
 import java.io.File
-import java.sql.Timestamp
 import java.util.*
 
 class DbUtil(private val context: Context) {
@@ -28,7 +27,7 @@ class DbUtil(private val context: Context) {
      * *
      * @return
      */
-    fun openSdDatabase(sdBasePath: String, dbPath: String, dbName: String): SQLiteDatabase? {
+    private fun openSdDatabase(sdBasePath: String, dbPath: String, dbName: String): SQLiteDatabase? {
         if (!SDCardUtils.isSDCardEnable) {
             return null
         }
@@ -62,7 +61,7 @@ class DbUtil(private val context: Context) {
      * *
      * @return
      */
-    fun openInnerDatabase(context: Context?, name: String, factory: SQLiteDatabase.CursorFactory?, version: Int): SQLiteDatabase? {
+    private fun openInnerDatabase(context: Context?, name: String, factory: SQLiteDatabase.CursorFactory?, version: Int): SQLiteDatabase? {
         dbHelper = DbHelper(context, name, factory, version)
         db = dbHelper?.writableDatabase
         return db
@@ -129,7 +128,7 @@ class DbUtil(private val context: Context) {
             cursor.moveToFirst()
             val inid = cursor.getInt(0)
             flag = inid
-            cursor?.close()
+            cursor.close()
         } catch (e: Exception) {
             Log.e(TAG, "insertUseMap Sql error! \n" + e.message)
         }
@@ -268,7 +267,7 @@ class DbUtil(private val context: Context) {
             ent.fname = c.getString(c.getColumnIndex("fname"))
             ent.fsize = c.getString(c.getColumnIndex("fsize"))
             ent.time = c.getString(c.getColumnIndex("time"))
-            msgLs?.add(ent)
+            msgLs.add(ent)
         }
         c?.close()
         close()

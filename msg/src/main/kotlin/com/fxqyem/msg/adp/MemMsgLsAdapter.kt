@@ -76,12 +76,12 @@ class MemMsgLsAdapter(private val context: Context, var list: ArrayList<MsgEnt>?
         }
         val itm =list?.get(position)
         tit?.text = itm?.add
-        val prtly = tlay?.layoutParams as RelativeLayout.LayoutParams
+        val prtly = tlay?.layoutParams as RelativeLayout.LayoutParams?
         if(itm?.type==1) {
-            prtly.removeRule(RelativeLayout.ALIGN_PARENT_LEFT)
-            prtly.removeRule(RelativeLayout.ALIGN_PARENT_START)
-            prtly.addRule(RelativeLayout.ALIGN_PARENT_RIGHT)
-            prtly.addRule(RelativeLayout.ALIGN_PARENT_END)
+            prtly?.removeRule(RelativeLayout.ALIGN_PARENT_LEFT)
+            prtly?.removeRule(RelativeLayout.ALIGN_PARENT_START)
+            prtly?.addRule(RelativeLayout.ALIGN_PARENT_RIGHT)
+            prtly?.addRule(RelativeLayout.ALIGN_PARENT_END)
             lbtn?.visibility = View.INVISIBLE
             rbtn?.visibility = View.VISIBLE
             licon?.visibility = View.INVISIBLE
@@ -89,10 +89,10 @@ class MemMsgLsAdapter(private val context: Context, var list: ArrayList<MsgEnt>?
             tlay?.backgroundResource = R.drawable.slkt_me
             rbtn?.backgroundDrawable = BitMapUtil.getMatrixDrawableByRid(context,R.mipmap.default_hicon, appColorArrayLightGreen)
         }else{
-            prtly.removeRule(RelativeLayout.ALIGN_PARENT_RIGHT)
-            prtly.removeRule(RelativeLayout.ALIGN_PARENT_END)
-            prtly.addRule(RelativeLayout.ALIGN_PARENT_LEFT)
-            prtly.addRule(RelativeLayout.ALIGN_PARENT_START)
+            prtly?.removeRule(RelativeLayout.ALIGN_PARENT_RIGHT)
+            prtly?.removeRule(RelativeLayout.ALIGN_PARENT_END)
+            prtly?.addRule(RelativeLayout.ALIGN_PARENT_LEFT)
+            prtly?.addRule(RelativeLayout.ALIGN_PARENT_START)
             rbtn?.visibility = View.INVISIBLE
             lbtn?.visibility = View.VISIBLE
             ricon?.visibility = View.INVISIBLE
@@ -100,7 +100,7 @@ class MemMsgLsAdapter(private val context: Context, var list: ArrayList<MsgEnt>?
             tlay?.backgroundResource = R.drawable.slkt_others
             lbtn?.backgroundResource = R.mipmap.default_hicon
         }
-        tlay.layoutParams = prtly
+        tlay?.layoutParams = prtly
         val hdlay = tlay?.findViewById(R.id.msg_send_lay_msgls_itm_attalay) as FrameLayout?
         val prgrs = hdlay?.findViewById(R.id.msg_send_lay_msgls_itm_attaprgrs) as ProgressBar?
         val atttxt = hdlay?.findViewById(R.id.msg_send_lay_msgls_itm_attatxt) as TextView?
@@ -144,7 +144,7 @@ class MemMsgLsAdapter(private val context: Context, var list: ArrayList<MsgEnt>?
                         itt.putExtra("FNO", itm.path)
                         itt.putExtra("FNM", itm.fname)
                         itt.putExtra("FSZ", itm.fsize)
-                        mLocalBroadcastManager?.sendBroadcast(itt)
+                        mLocalBroadcastManager.sendBroadcast(itt)
                     }
                 }
 

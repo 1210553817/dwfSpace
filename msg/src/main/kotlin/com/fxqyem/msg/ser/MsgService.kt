@@ -16,7 +16,6 @@ import com.fxqyem.msg.ent.MsgEnt
 import com.fxqyem.msg.utl.DbUtil
 import com.fxqyem.msg.utl.NetUtils
 import com.fxqyem.msg.vw.getResString
-import com.fxqyem.msg.vw.utilHex2Int
 import com.fxqyem.msg.vw.utilHex2Long
 import com.fxqyem.msg.vw.utilStr2Long
 import java.nio.charset.Charset
@@ -48,9 +47,7 @@ class MsgService : Service(){
         initSocket()
     }
 
-    override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
-        return super.onStartCommand(intent, flags, startId)
-    }
+    override fun onStartCommand(intent: Intent, flags: Int, startId: Int) = super.onStartCommand(intent, flags, startId)
 
     override fun onDestroy() {
         super.onDestroy()
@@ -140,7 +137,7 @@ class MsgService : Service(){
                     if(ip==null||!file.exists()){
                         loadAlert(getResString(this@MsgService,R.string.no_allInfo_canNotSendFile))
                     }else {
-                        sendTcpFile(id,ip, file, { msg, str ->
+                        sendTcpFile(id,ip, file, { _, _ ->
                             true
                         }, { idd,ipp,perr ->
                             loadFilePrgrsMsg(idd,ipp,perr)
@@ -401,7 +398,7 @@ class MsgService : Service(){
                     val remsg = String(rbuff, 0, length, Charset.forName("GBK"))
                     if(ckFun(pmsg,remsg)) {
                         nos = socket.getOutputStream()
-                        val fin = FileInputStream(file)
+                        fin = FileInputStream(file)
                         val buf = ByteArray(4096)
                         var len = fin.read(buf)
                         var part=0L
@@ -453,9 +450,9 @@ class MsgService : Service(){
     private fun onActResume() {
         initSocket()
     }
-    override fun onBind(intent: Intent): IBinder? {
-        return null
-    }
+
+    override fun onBind(intent: Intent): IBinder?  = null
+
     companion object {
         private val TAG = "MsgService"
     }

@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.app.Fragment
 import android.content.Intent
 import android.support.v4.content.LocalBroadcastManager
-import android.util.Log
 import android.view.*
 import android.widget.*
 import com.fxqyem.msg.R
@@ -18,7 +17,6 @@ import com.fxqyem.msg.lay.MsgSendLay
 import com.fxqyem.msg.utl.DbUtil
 import com.fxqyem.msg.vw.utilNotNull
 import org.jetbrains.anko.onClick
-import android.widget.Toast
 import android.widget.AbsListView
 import com.fxqyem.msg.utl.SDCardUtils
 import com.fxqyem.msg.vw.FileSelector
@@ -41,9 +39,8 @@ class MsgSendFrgm : Fragment() , OnBackListener {
         mLocalBroadcastManager = LocalBroadcastManager.getInstance(activity)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return initViews()
-    }
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?) = initViews()
 
     private fun initViews(): View? {
        // Log.d(TAG,"MsgSendFrgm initViews..........")
@@ -82,7 +79,7 @@ class MsgSendFrgm : Fragment() , OnBackListener {
 
     private fun initListView(){
         val db = DbUtil(this.activity)
-        var list = db.getMsgls(citem?.ip,poffset,plimit)
+        val list = db.getMsgls(citem?.ip,poffset,plimit)
         val msgLsAdapter = MemMsgLsAdapter(activity,list)
         memMsgLsView?.adapter = msgLsAdapter
         memMsgLsView?.setSelectionFromTop(list.size-1,0)
@@ -103,7 +100,7 @@ class MsgSendFrgm : Fragment() , OnBackListener {
             override fun onScroll(view: AbsListView, firstVisibleItem: Int, visibleItemCount: Int, totalItemCount: Int) {
                 if (firstVisibleItem == 0) {
                     val  fitm = view.getChildAt(0)
-                    if(fitm!=null && fitm.top == 0){
+                    if(fitm!=null && fitm?.top == 0){
                         scrtp = 1
                     }else{
                         scrtp=0
@@ -123,7 +120,7 @@ class MsgSendFrgm : Fragment() , OnBackListener {
         val db = DbUtil(this.activity)
         poffset += plimit
         plimit = pmorelmt
-        var list = db.getMsgls(citem?.ip,poffset,plimit)
+        val list = db.getMsgls(citem?.ip,poffset,plimit)
         if(list.isEmpty()){
             pmoreld = false
         }else {
@@ -140,7 +137,7 @@ class MsgSendFrgm : Fragment() , OnBackListener {
             val msgAdp = memMsgLsView?.adapter as MemMsgLsAdapter?
             var list = msgAdp?.list
             if (null == list) {
-                list = ArrayList<MsgEnt>()
+                list = ArrayList()
             }
             list.add(msg)
             msgAdp?.load2Btm = 1

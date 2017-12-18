@@ -1,8 +1,6 @@
 package com.fxqyem.msg.act
 
 import android.Manifest
-import android.animation.Animator
-import android.animation.ValueAnimator
 import android.content.*
 import android.os.*
 import android.support.v4.content.LocalBroadcastManager
@@ -10,14 +8,11 @@ import android.support.v4.view.PagerAdapter
 import android.support.v4.view.ViewPager
 import android.util.Log
 import android.view.KeyEvent
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.DecelerateInterpolator
 import android.widget.*
 import com.fxqyem.msg.R
 import com.fxqyem.msg.adp.MemLsAdapter
-import com.fxqyem.msg.adp.MemMsgLsAdapter
 import com.fxqyem.msg.adp.SetLsAdapter
 import com.fxqyem.msg.ben.AppConstants
 import com.fxqyem.msg.ben.AppContext
@@ -28,7 +23,6 @@ import com.fxqyem.msg.lay.MsgLay
 import com.fxqyem.msg.lay.MsgPagerLay
 import com.fxqyem.msg.lay.SettingLay
 import com.fxqyem.msg.ser.MsgService
-import com.fxqyem.msg.utl.AndUtil
 import com.fxqyem.msg.utl.BitMapUtil
 import com.fxqyem.msg.utl.PermissionUtils
 import com.fxqyem.msg.vw.*
@@ -200,8 +194,8 @@ class MsgActivity : MsgBaseActivity() , OnBackListener {
         memListVw?.adapter = memAdapter
         memListVw?.onItemClickListener = AdapterView.OnItemClickListener { pvw, _, position, _ ->
             val lsVw = pvw as ListView
-            val adp = lsVw?.adapter as MemLsAdapter?
-            var itm = adp?.list?.get(position)
+            val adp = lsVw.adapter as MemLsAdapter?
+            val itm = adp?.list?.get(position)
             /*fragment*/
             val bun = Bundle()
             //bun.putInt("tp", 0)
@@ -235,11 +229,11 @@ class MsgActivity : MsgBaseActivity() , OnBackListener {
                 MsgEnt(getResString(this,R.string.about),"",R.mipmap.about),
                 MsgEnt(getResString(this,R.string.exit),"",R.mipmap.exit)
         ))
-        setListVw?.adapter = setAdp
-        setListVw?.onItemClickListener = AdapterView.OnItemClickListener { pvw, _, position, _ ->
+        setListVw.adapter = setAdp
+        setListVw.onItemClickListener = AdapterView.OnItemClickListener { pvw, _, position, _ ->
             val lsVw = pvw as ListView
-            val adp = lsVw?.adapter as SetLsAdapter?
-            var itm = adp?.list?.get(position)
+            val adp = lsVw.adapter as SetLsAdapter?
+            val itm = adp?.list?.get(position)
             when(itm?.cmd){
                 R.mipmap.cus -> {
                     val hdvw = SettingLay().createSelfVw(this@MsgActivity)
@@ -290,13 +284,10 @@ class MsgActivity : MsgBaseActivity() , OnBackListener {
 
     internal inner class MyPagerAdapter(private val mViewList: List<View>,private val mViewTitles: List<String>) : PagerAdapter() {
 
-        override fun getCount(): Int {
-            return mViewList.size//页卡数
-        }
+        override fun getCount() = mViewList.size
 
-        override fun isViewFromObject(view: View, oobject: Any): Boolean {
-            return view === oobject//官方推荐写法
-        }
+        override fun isViewFromObject(view: View, oobject: Any) = view === oobject
+
 
         override fun instantiateItem(container: ViewGroup, position: Int): Any {
             container.addView(mViewList[position])//添加页卡
@@ -307,9 +298,7 @@ class MsgActivity : MsgBaseActivity() , OnBackListener {
             container.removeView(mViewList[position])//删除页卡
         }
 
-        override fun getPageTitle(position: Int): CharSequence {
-            return mViewTitles[position]//页卡标题
-        }
+        override fun getPageTitle(position: Int) = mViewTitles[position]
 
     }
 
