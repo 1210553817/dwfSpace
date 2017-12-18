@@ -11,7 +11,7 @@ import android.net.Uri
 
 
 /**
- * Created by Dwf on 2017/6/7.
+ * Created by Dwf on 2017-12-18.
  */
 class AboutLay : AnkoComponent<AboutActivity> {
     override fun createView(ui: AnkoContext<AboutActivity>): View {

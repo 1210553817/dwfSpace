@@ -6,7 +6,7 @@ import org.jetbrains.anko.setContentView
 import com.fxqyem.msg.lay.AboutLay
 
 /**
- * Created by Dwf on 2017/9/13.
+ * Created by Dwf on 2017-12-18
  */
 class AboutActivity : Activity(){
 
