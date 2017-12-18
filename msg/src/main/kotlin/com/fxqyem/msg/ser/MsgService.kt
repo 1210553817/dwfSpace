@@ -334,7 +334,7 @@ class MsgService : Service(){
                     var part=0L
                     var dnsz=len
                     val perclen = fsz/100
-                    while(len != -1 ) {
+                    while(len > 0) {
                         fos.write(rbuff, 0, len)
                         if(fsz>0 && dnsz>=fsz) break
                         len = inp.read(rbuff)
@@ -407,7 +407,7 @@ class MsgService : Service(){
                         var part=0L
                         var dnsz=len
                         val perclen = file.length()/100
-                        while (len != -1) {
+                        while (len > 0) {
                             nos.write(buf, 0, len)
                             len = fin.read(buf)
                             if (perclen > 0){
