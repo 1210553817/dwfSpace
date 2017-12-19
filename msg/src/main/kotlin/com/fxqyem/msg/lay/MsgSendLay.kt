@@ -14,39 +14,41 @@ import org.jetbrains.anko.*
 /**
  * Created by Dwf on 2017/6/15.
  */
-class MsgSendLay(){
+class MsgSendLay{
     fun createView(ctx:Context): View {
 
-        val coreVw = ctx.relativeLayout{
+        return  ctx.relativeLayout{
             setBackgroundResource(R.drawable.opt_menu_ctn)
-
-
 
             relativeLayout {
                 id = R.id.msg_send_lay_btm
                 backgroundResource = R.drawable.opt_menu_tit
                 padding = dip(2)
 
-                imageButton {
+                button {
                     id = R.id.msg_send_lay_sendBtn
-                    backgroundDrawable = BitMapUtil.getMatrixDrawableByRid(ctx,R.mipmap.red_thm_44, appColorArrayLightGreen)
-                    scaleType = ImageView.ScaleType.FIT_XY
+                    backgroundResource = R.drawable.opt_menu_edittxt
+                    textResource = R.string.send
+                    textSize = 14f
+                    textColor = COLOR_LIGHTGREEN
 
                 }.lparams{
-                    width= dip(46)
-                    height= dip(46)
+                    width= dip(50)
+                    height= dip(38)
                     alignParentRight()
                     alignParentEnd()
                     centerVertically()
                 }
-                imageButton {
+                button {
                     id = R.id.msg_send_lay_attaBtn
-                    backgroundDrawable = BitMapUtil.getMatrixDrawableByRid(ctx,R.mipmap.red_thm_46, appColorArrayLightGreen)
-                    scaleType = ImageView.ScaleType.FIT_XY
+                    backgroundResource = R.drawable.opt_menu_edittxt
+                    textResource = R.string.file
+                    textSize = 14f
+                    textColor = COLOR_LIGHTGREEN
 
                 }.lparams{
-                    width= dip(46)
-                    height= dip(46)
+                    width= dip(50)
+                    height= dip(38)
                     alignParentLeft()
                     alignParentStart()
                     centerVertically()
@@ -65,6 +67,7 @@ class MsgSendLay(){
                     leftOf(R.id.msg_send_lay_sendBtn)
                     rightOf(R.id.msg_send_lay_attaBtn)
                     centerVertically()
+                    setMargins(dip(2),0,dip(2),0)
                 }
 
             }.lparams{
@@ -149,10 +152,8 @@ class MsgSendLay(){
                 above(R.id.msg_send_lay_btm)
             }
 
-
         }
 
-        return coreVw
     }
 
 }

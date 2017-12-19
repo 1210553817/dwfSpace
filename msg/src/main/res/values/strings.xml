@@ -4,13 +4,14 @@
     <string name="about">关于</string>
     <string name="exit">退出</string>
     <string name="file">文件</string>
+    <string name="send">发送</string>
     <string name="complete">完成</string>
     <string name="error">错误</string>
     <string name="timeout">超时</string>
     <string name="cancle">取消</string>
     <string name="no_sdcard_permission">没有存储卡访问权限，将无法保存消息记录！</string>
     <string name="version_info">MSG_v0.1</string>
-    <string name="about_info">本软件开发基于IPMSG协议，用于和飞秋，飞鸽传书通信，支持发送消息，文件，点击上面图标打开github源码</string>
+    <string name="about_info">本软件开发基于IPMSG协议，用于和飞秋，飞鸽传书通信，支持发送消息，文件</string>
     <!--MsgLay / btm -->
     <string name="memls">好友</string>
     <string name="setting">设置</string>

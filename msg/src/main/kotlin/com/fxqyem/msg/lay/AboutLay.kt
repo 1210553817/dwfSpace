@@ -26,9 +26,10 @@ class AboutLay : AnkoComponent<AboutActivity> {
                 width = wrapContent
                 height = wrapContent
                 gravity = Gravity.CENTER_HORIZONTAL
-            }.onClick {
-                ui.owner.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/dwfHub/dwfSpace/")))
             }
+//            .onClick {
+//                ui.owner.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/dwfHub/dwfSpace/")))
+//            }
             textView{
                 textColor = 0xff444444.toInt()
                 textSize = 16f

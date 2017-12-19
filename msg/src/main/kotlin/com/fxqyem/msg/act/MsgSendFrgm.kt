@@ -51,8 +51,8 @@ class MsgSendFrgm : Fragment() , OnBackListener {
         memMsgLsView = hdvw.findViewById(R.id.msg_send_lay_msgls) as ListView
         val backBtn = hdvw.findViewById(R.id.msg_send_lay_backBtn) as ImageButton
         //val optBtn = hdvw.findViewById(R.id.msg_send_lay_optBtn) as ImageButton
-        val sendBtn = hdvw.findViewById(R.id.msg_send_lay_sendBtn) as ImageButton
-        val attaBtn = hdvw.findViewById(R.id.msg_send_lay_attaBtn) as ImageButton
+        val sendBtn = hdvw.findViewById(R.id.msg_send_lay_sendBtn) as Button
+        val attaBtn = hdvw.findViewById(R.id.msg_send_lay_attaBtn) as Button
         val msgTxt = hdvw.findViewById(R.id.msg_send_lay_editTxt) as EditText
         tit.text = citem?.add
         backBtn.onClick {
