@@ -2,7 +2,6 @@ package com.fxqyem.msg.vw
 
 import android.content.Context
 import android.graphics.Bitmap
-import android.util.Log
 import android.util.Pair
 import android.view.*
 import android.widget.*
@@ -259,7 +258,6 @@ class FileSelector: OnBackListener {
                     listView?.setSelectionFromTop(pair?.first?:0, pair?.second?:0)
                 }
                 R.id.file_slector_holder_okBtn -> {
-                    Log.d("File selector ","<<<<<<<<<<<<$mtype , $stype")
                     var cpath: String? = null
                     when(mtype) {
                         TYPE_FILE ->{

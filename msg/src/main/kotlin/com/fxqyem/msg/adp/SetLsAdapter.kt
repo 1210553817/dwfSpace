@@ -5,18 +5,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import com.fxqyem.msg.R
-import com.fxqyem.msg.ben.AppContext
 import com.fxqyem.msg.ent.MsgEnt
-import com.fxqyem.msg.lay.MsgPagerLay
 import com.fxqyem.msg.lay.SettingLay
 import com.fxqyem.msg.utl.BitMapUtil
 import com.fxqyem.msg.vw.appColorArrayLightGreen
 import org.jetbrains.anko.backgroundDrawable
-import org.jetbrains.anko.backgroundResource
-import org.jetbrains.anko.find
 
 class SetLsAdapter(private val context: Context, var list: ArrayList<MsgEnt>?) : BaseAdapter(){
-    private var viewHd: ThisViewHd? = null
 
     override fun getCount(): Int {
         return list?.size?:0
@@ -32,20 +27,21 @@ class SetLsAdapter(private val context: Context, var list: ArrayList<MsgEnt>?) :
 
     override fun getView(position: Int, convert: View?, arg2: ViewGroup): View {
         var convertView = convert
+        val vwHolder: VwHolder
         val tit: TextView?
         val img: ImageView?
         if (convertView == null) {
             convertView = SettingLay().createSetItmVw(context)
             tit = convertView.findViewById(R.id.setting_pglay_item_mtit) as TextView?
             img = convertView.findViewById(R.id.setting_pglay_item_himg) as ImageView?
-            viewHd = ThisViewHd()
-            viewHd?.tit = tit
-            viewHd?.img = img
-            convertView.tag = viewHd
+            vwHolder = VwHolder()
+            vwHolder?.tit = tit
+            vwHolder?.img = img
+            convertView.tag = vwHolder
         } else {
-            viewHd = convertView.tag as ThisViewHd
-            tit = viewHd?.tit
-            img = viewHd?.img
+            vwHolder = convertView.tag as VwHolder
+            tit = vwHolder?.tit
+            img = vwHolder?.img
         }
         val itm =list?.get(position)
         var titc=itm?.tit?:""
@@ -57,7 +53,7 @@ class SetLsAdapter(private val context: Context, var list: ArrayList<MsgEnt>?) :
     }
 
 
-    internal inner class ThisViewHd {
+    internal inner class VwHolder {
         var tit: TextView? = null
         var img: ImageView? = null
     }

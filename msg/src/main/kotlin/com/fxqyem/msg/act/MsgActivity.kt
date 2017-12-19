@@ -242,6 +242,9 @@ class MsgActivity : MsgBaseActivity() , OnBackListener {
                     val sub = hdvw.find<EditText>(R.id.setting_pglay_slfdo_sub)
                     val cbtn = hdvw.find<Button>(R.id.setting_pglay_slfdo_clbtn)
                     val obtn = hdvw.find<Button>(R.id.setting_pglay_slfdo_okbtn)
+                    unm.setText(AppContext.instance?.uname,TextView.BufferType.NORMAL)
+                    tit.setText(AppContext.instance?.utit,TextView.BufferType.NORMAL)
+                    sub.setText(AppContext.instance?.usub,TextView.BufferType.NORMAL)
                     cbtn.onClick {
                         selfSldMn?.cancle()
                     }

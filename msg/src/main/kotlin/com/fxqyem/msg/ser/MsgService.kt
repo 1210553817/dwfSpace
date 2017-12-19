@@ -209,8 +209,9 @@ class MsgService : Service(){
                     try {
                         msgServer?.receive(packet)
                         val msg = String(packet.data, 0, packet.length, Charset.forName("GBK"))
-                        Log.d(TAG, "initSocket receive------>$msg")
+                        //Log.d(TAG, "initSocket receive------>$msg")
                         processMessage(msg, packet.address.hostName, packet.address.hostAddress)
+
 
                     }catch (e: Exception){
                         Log.d(TAG,"msgServer closed")
@@ -333,7 +334,7 @@ class MsgService : Service(){
                     val perclen = fsz/100
                     while(len > 0) {
                         fos.write(rbuff, 0, len)
-                        if(fsz>0 && dnsz>=fsz) break
+                        if(fsz in 1 .. dnsz) break
                         len = inp.read(rbuff)
                         dnsz += len
                         if (perclen > 0){

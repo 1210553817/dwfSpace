@@ -31,7 +31,7 @@
     <string name="no_allInfo_canNotSendFile">文件信息不完整，无法发送文件！</string>
     <string name="err_pno_canNotRcvFile">包编号错误，无法接收文件！</string>
     <!-- setting pager -->
-    <string name="setting_pglay_slfdo">个性化</string>
+    <string name="setting_pglay_slfdo">自定义</string>
     <string name="setting_pglay_slfdo_unm">昵称</string>
     <string name="setting_pglay_slfdo_tit">标签</string>
     <string name="setting_pglay_slfdo_sub">描述</string>

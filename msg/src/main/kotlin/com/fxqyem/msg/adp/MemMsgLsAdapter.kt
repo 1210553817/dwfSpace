@@ -2,9 +2,7 @@ package com.fxqyem.msg.adp
 
 import android.content.Context
 import android.content.Intent
-import android.media.Image
 import android.support.v4.content.LocalBroadcastManager
-import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
@@ -12,16 +10,12 @@ import android.widget.*
 import com.fxqyem.msg.R
 import com.fxqyem.msg.ben.AppConstants
 import com.fxqyem.msg.ent.MsgEnt
-import com.fxqyem.msg.lay.MsgPagerLay
 import com.fxqyem.msg.utl.BitMapUtil
-import com.fxqyem.msg.utl.DbUtil
-import com.fxqyem.msg.utl.StrUtil
 import com.fxqyem.msg.vw.*
 import org.jetbrains.anko.*
 
 class MemMsgLsAdapter(private val context: Context, var list: ArrayList<MsgEnt>?) : BaseAdapter(){
     var load2Btm = 1
-    private var viewHd: ThisViewHd? = null
     private var mLocalBroadcastManager: LocalBroadcastManager = LocalBroadcastManager.getInstance(context)
 
     override fun getCount(): Int {
@@ -38,6 +32,7 @@ class MemMsgLsAdapter(private val context: Context, var list: ArrayList<MsgEnt>?
 
     override fun getView(position: Int, convert: View?, arg2: ViewGroup): View {
         var convertView = convert
+        val vwHolder: VwHolder
         val tlay: LinearLayout?
         val tit: TextView?
         val sub: TextView?
@@ -54,25 +49,25 @@ class MemMsgLsAdapter(private val context: Context, var list: ArrayList<MsgEnt>?
             rbtn = convertView.findViewById(R.id.msg_send_lay_msgls_itm_riconbtn) as ImageButton?
             licon = convertView.findViewById(R.id.msg_send_lay_msgls_itm_licon) as ImageView?
             ricon = convertView.findViewById(R.id.msg_send_lay_msgls_itm_ricon) as ImageView?
-            viewHd = ThisViewHd()
-            //viewHd?.unm = unm
-            viewHd?.tlay = tlay
-            viewHd?.tit = tit
-            viewHd?.sub = sub
-            viewHd?.lbtn = lbtn
-            viewHd?.rbtn = rbtn
-            viewHd?.licon = licon
-            viewHd?.ricon = ricon
-            convertView.tag = viewHd
+            vwHolder = VwHolder()
+            //vwHolder?.unm = unm
+            vwHolder?.tlay = tlay
+            vwHolder?.tit = tit
+            vwHolder?.sub = sub
+            vwHolder?.lbtn = lbtn
+            vwHolder?.rbtn = rbtn
+            vwHolder?.licon = licon
+            vwHolder?.ricon = ricon
+            convertView.tag = vwHolder
         } else {
-            viewHd = convertView.tag as ThisViewHd
-            tlay = viewHd?.tlay
-            tit = viewHd?.tit
-            sub = viewHd?.sub
-            lbtn = viewHd?.lbtn
-            rbtn = viewHd?.rbtn
-            licon = viewHd?.licon
-            ricon = viewHd?.ricon
+            vwHolder = convertView.tag as VwHolder
+            tlay = vwHolder?.tlay
+            tit = vwHolder?.tit
+            sub = vwHolder?.sub
+            lbtn = vwHolder?.lbtn
+            rbtn = vwHolder?.rbtn
+            licon = vwHolder?.licon
+            ricon = vwHolder?.ricon
         }
         val itm =list?.get(position)
         tit?.text = itm?.add
@@ -169,7 +164,7 @@ class MemMsgLsAdapter(private val context: Context, var list: ArrayList<MsgEnt>?
         if(pos<0)return
         val item = list?.get(pos)
         val itm = listVw.getChildAt(pos-fir)
-        val vwhd = itm.tag as ThisViewHd
+        val vwhd = itm.tag as VwHolder
         val tlay = vwhd.tlay
         val hdlay = tlay?.findViewById(R.id.msg_send_lay_msgls_itm_attalay) as FrameLayout?
         val prgrs = hdlay?.findViewById(R.id.msg_send_lay_msgls_itm_attaprgrs) as ProgressBar?
@@ -200,7 +195,7 @@ class MemMsgLsAdapter(private val context: Context, var list: ArrayList<MsgEnt>?
 
     }
 
-    internal inner class ThisViewHd {
+    internal inner class VwHolder {
         var tlay: LinearLayout? = null
         var tit: TextView? = null
         var sub: TextView? = null

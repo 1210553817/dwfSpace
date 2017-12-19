@@ -11,7 +11,6 @@ import com.fxqyem.msg.lay.MsgPagerLay
 import com.fxqyem.msg.vw.utilNotNull
 
 class MemLsAdapter(private val context: Context, var list: ArrayList<MsgEnt>?) : BaseAdapter(){
-    private var viewHd: ThisViewHd? = null
 
     override fun getCount(): Int {
         return list?.size?:0
@@ -27,6 +26,7 @@ class MemLsAdapter(private val context: Context, var list: ArrayList<MsgEnt>?) :
 
     override fun getView(position: Int, convert: View?, arg2: ViewGroup): View {
         var convertView = convert
+        val vwHolder: VwHolder
         val tit: TextView?
         val sub: TextView?
         val btn: ImageView?
@@ -37,18 +37,18 @@ class MemLsAdapter(private val context: Context, var list: ArrayList<MsgEnt>?) :
             sub = convertView.findViewById(R.id.msg_lay_cen_mempg_itm_stit) as TextView?
             btn = convertView.findViewById(R.id.msg_lay_cen_mempg_itm_hiconbtn) as ImageView?
             btna = convertView.findViewById(R.id.msg_lay_cen_mempg_itm_chatnumbtn) as Button?
-            viewHd = ThisViewHd()
-            viewHd?.tit = tit
-            viewHd?.sub = sub
-            viewHd?.btn = btn
-            viewHd?.btna = btna
-            convertView.tag = viewHd
+            vwHolder = VwHolder()
+            vwHolder?.tit = tit
+            vwHolder?.sub = sub
+            vwHolder?.btn = btn
+            vwHolder?.btna = btna
+            convertView.tag = vwHolder
         } else {
-            viewHd = convertView.tag as ThisViewHd
-            tit = viewHd?.tit
-            sub = viewHd?.sub
-            btn = viewHd?.btn
-            btna = viewHd?.btna
+            vwHolder = convertView.tag as VwHolder
+            tit = vwHolder?.tit
+            sub = vwHolder?.sub
+            btn = vwHolder?.btn
+            btna = vwHolder?.btna
         }
         val itm =list?.get(position)
         val titc=itm?.tit?:""
@@ -78,7 +78,7 @@ class MemLsAdapter(private val context: Context, var list: ArrayList<MsgEnt>?) :
         }
     }
 
-    internal inner class ThisViewHd {
+    internal inner class VwHolder {
         var tit: TextView? = null
         var sub: TextView? = null
         var btn: ImageView? = null

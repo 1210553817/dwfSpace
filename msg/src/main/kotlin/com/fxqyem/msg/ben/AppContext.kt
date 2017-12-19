@@ -1,17 +1,15 @@
 package com.fxqyem.msg.ben
 
 import android.app.Application
-import android.content.Context
-import android.util.Log
-import com.fxqyem.msg.ent.MsgEnt
 import com.fxqyem.msg.utl.PrefUtil
+import com.fxqyem.msg.vw.utilIsEmpty
 
 
 class AppContext : Application() {
     var chatMp: HashMap<String,Int>? = null
-    var uname: String? = ""
-    var utit: String? = ""
-    var usub: String? = ""
+    var uname: String = ""
+    var utit: String = ""
+    var usub: String = ""
     var hdicon = "17"
     var fileRcvPath="/sdcard/"
 
@@ -52,28 +50,24 @@ class AppContext : Application() {
 
 
     fun initSelfInfo(){
-        uname = PrefUtil.get(this,AppConstants.PREF_KEY_SELF_UNM,"MSG", AppConstants.PREF_NAME_PARAMS) as String
-        utit = PrefUtil.get(this,AppConstants.PREF_KEY_SELF_TIT,"androidPhone", AppConstants.PREF_NAME_PARAMS) as String
-        usub = PrefUtil.get(this,AppConstants.PREF_KEY_SELF_SUB,"m5", AppConstants.PREF_NAME_PARAMS) as String
+        uname = PrefUtil.get(this,AppConstants.PREF_KEY_SELF_UNM,D_UNM, AppConstants.PREF_NAME_PARAMS) as String
+        utit = PrefUtil.get(this,AppConstants.PREF_KEY_SELF_TIT,D_TIT, AppConstants.PREF_NAME_PARAMS) as String
+        usub = PrefUtil.get(this,AppConstants.PREF_KEY_SELF_SUB,D_SUB, AppConstants.PREF_NAME_PARAMS) as String
     }
     fun setSelfInfo(unm: String?,tit: String?,sub: String?){
-        if(unm!=null){
-            this.uname = unm
-            PrefUtil.put(this, AppConstants.PREF_KEY_SELF_UNM,unm, AppConstants.PREF_NAME_PARAMS)
-        }
-        if(tit!=null){
-            this.utit = tit
-            PrefUtil.put(this, AppConstants.PREF_KEY_SELF_TIT,tit, AppConstants.PREF_NAME_PARAMS)
-        }
-        if(sub!=null){
-            this.usub = sub
-            PrefUtil.put(this, AppConstants.PREF_KEY_SELF_SUB,sub, AppConstants.PREF_NAME_PARAMS)
-        }
-
+        this.uname = if(utilIsEmpty(unm)) D_UNM else unm?:D_UNM
+        this.utit = if(utilIsEmpty(tit)) D_TIT else tit?:D_TIT
+        this.usub = if(utilIsEmpty(unm)) D_SUB else sub?:D_SUB
+        PrefUtil.put(this, AppConstants.PREF_KEY_SELF_UNM,this.uname, AppConstants.PREF_NAME_PARAMS)
+        PrefUtil.put(this, AppConstants.PREF_KEY_SELF_TIT,this.utit, AppConstants.PREF_NAME_PARAMS)
+        PrefUtil.put(this, AppConstants.PREF_KEY_SELF_SUB,this.usub, AppConstants.PREF_NAME_PARAMS)
     }
 
     companion object{
         val TAG = "AppContext"
+        val D_UNM = "flix"
+        val D_TIT = "AndroidPhone"
+        val D_SUB = "m5"
         var instance: AppContext?=null
     }
 }

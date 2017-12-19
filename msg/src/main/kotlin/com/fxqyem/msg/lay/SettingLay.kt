@@ -124,26 +124,14 @@ class SettingLay {
 
             linearLayout {
                 orientation = LinearLayout.HORIZONTAL
-                padding = dip(5)
-
-                textView {
-                    maxLines = 1
-                    textColor = 0xff888888.toInt()
-                    textSize = 12f
-                    text = getResString(context,R.string.setting_pglay_slfdo_unm)
-                    gravity = Gravity.CENTER
-
-                }.lparams{
-                    width= dip(60)
-                    height= wrapContent
-                    gravity= Gravity.CENTER_VERTICAL
-                }
+                setPadding(dip(10),dip(5),dip(10),dip(5))
 
                 editText {
                     id=R.id.setting_pglay_slfdo_unm
                     gravity =Gravity.LEFT
                     textColor = 0xff555555.toInt()
                     backgroundResource = R.drawable.opt_menu_edittxt
+                    hintResource = R.string.setting_pglay_slfdo_unm
 
                 }.lparams{
                     width= matchParent
@@ -159,26 +147,14 @@ class SettingLay {
 
             linearLayout {
                 orientation = LinearLayout.HORIZONTAL
-                padding = dip(5)
-
-                textView {
-                    maxLines = 1
-                    textColor = 0xff888888.toInt()
-                    textSize = 14f
-                    text = getResString(context,R.string.setting_pglay_slfdo_tit)
-                    gravity = Gravity.CENTER
-
-                }.lparams{
-                    width= dip(60)
-                    height= wrapContent
-                    gravity= Gravity.CENTER_VERTICAL
-                }
+                setPadding(dip(10),dip(5),dip(10),dip(5))
 
                 editText {
                     id=R.id.setting_pglay_slfdo_tit
                     gravity =Gravity.LEFT
                     textColor = 0xff555555.toInt()
                     backgroundResource = R.drawable.opt_menu_edittxt
+                    hintResource = R.string.setting_pglay_slfdo_tit
 
                 }.lparams{
                     width= matchParent
@@ -194,26 +170,14 @@ class SettingLay {
 
             linearLayout {
                 orientation = LinearLayout.HORIZONTAL
-                padding = dip(5)
-
-                textView {
-                    maxLines = 1
-                    textColor = 0xff888888.toInt()
-                    textSize = 14f
-                    text = getResString(context,R.string.setting_pglay_slfdo_sub)
-                    gravity = Gravity.CENTER
-
-                }.lparams{
-                    width= dip(60)
-                    height= wrapContent
-                    gravity= Gravity.CENTER_VERTICAL
-                }
+                setPadding(dip(10),dip(5),dip(10),dip(5))
 
                 editText {
                     id=R.id.setting_pglay_slfdo_sub
                     gravity =Gravity.LEFT
                     textColor = 0xff555555.toInt()
                     backgroundResource = R.drawable.opt_menu_edittxt
+                    hintResource = R.string.setting_pglay_slfdo_sub
 
                 }.lparams{
                     width= matchParent

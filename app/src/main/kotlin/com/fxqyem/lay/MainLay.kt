@@ -44,8 +44,8 @@ class MainLay : AnkoComponent<MainActivity> {
                         width= matchParent
                         height=dip(1)
                     }
-                    //main_btm_ly
-                    val mainBtmLy = relativeLayout {
+
+                    relativeLayout {
                         id=R.id.main_btm_ly
                         padding=0
 
