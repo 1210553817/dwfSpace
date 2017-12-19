@@ -4,6 +4,7 @@ import android.app.Application
 import com.fxqyem.msg.utl.PrefUtil
 import com.fxqyem.msg.utl.SDCardUtils
 import com.fxqyem.msg.vw.utilIsEmpty
+import java.io.File
 
 
 class AppContext : Application() {
@@ -12,7 +13,7 @@ class AppContext : Application() {
     var utit: String = ""
     var usub: String = ""
     //var hdicon = "17"
-    var fileRcvPath=SDCardUtils.sdCardPath
+    var fileRcvPath=SDCardUtils.sdCardPath+File.separator
 
     override fun onCreate() {
         super.onCreate()

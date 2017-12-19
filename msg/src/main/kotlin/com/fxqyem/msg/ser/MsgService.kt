@@ -327,7 +327,7 @@ class MsgService : Service(){
                     inp = socket.getInputStream()
                     val rcvPath = AppContext.instance?.fileRcvPath
                     fos = FileOutputStream("$rcvPath$fnm")
-                    val rbuff = ByteArray(4096)
+                    val rbuff = ByteArray(2097152)
                     var len=inp.read(rbuff)
                     var part=0L
                     var dnsz=len
@@ -400,7 +400,7 @@ class MsgService : Service(){
                     if(ckFun(pmsg,remsg)) {
                         nos = socket.getOutputStream()
                         fin = FileInputStream(file)
-                        val buf = ByteArray(4096)
+                        val buf = ByteArray(2097152)
                         var len = fin.read(buf)
                         var part=0L
                         var dnsz=len
