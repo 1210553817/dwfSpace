@@ -42,7 +42,7 @@ class MainLay : AnkoComponent<MainActivity> {
 
                     }.lparams {
                         width= matchParent
-                        height=dip(2)
+                        height=dip(1)
                     }
                     //main_btm_ly
                     val mainBtmLy = relativeLayout {
