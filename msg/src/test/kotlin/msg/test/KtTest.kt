@@ -79,7 +79,9 @@ class KtTest {
         var nos: OutputStream? = null
         try {
             server = ServerSocket(AppConstants.MSG_GLOBAL_PORT)
+            server.soTimeout = 10000
             socket = server.accept()
+
 
             println("read start...")
             nin = socket.getInputStream()
@@ -124,7 +126,7 @@ class KtTest {
 
 
     @Test
-    fun testAll(){
+    fun testAllMSG(){
 
         sendUdpFileAttr()
 
