@@ -65,6 +65,7 @@ class MemMsgLsAdapter(private val context: Context, var list: ArrayList<MsgEnt>?
         }
         val itm =list?.get(position)
         tit?.text = itm?.add
+        /*ajust position*/
         val prtly = tlay?.layoutParams as RelativeLayout.LayoutParams?
         val hdlay = tlay?.findViewById(R.id.msg_send_lay_msgls_itm_attalay) as FrameLayout?
         val mprt = tit?.parent as LinearLayout?
@@ -176,7 +177,7 @@ class MemMsgLsAdapter(private val context: Context, var list: ArrayList<MsgEnt>?
         prgrs?.max = 100
         prgrs?.progress = percent.toInt()
         atttxt?.text = String.format("%d%s",percent,"%")
-        if(percent<100&&percent>=0){
+        if(percent in 0 .. 99){
             hdlay?.visibility = View.VISIBLE
             prgrs?.visibility = View.VISIBLE
             atttxt?.textColor = COLOR_ORANGE
