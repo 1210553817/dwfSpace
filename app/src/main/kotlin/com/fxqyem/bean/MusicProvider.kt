@@ -32,7 +32,7 @@ object MusicProvider {
 			if (songs != null && songs.size() > 0) songResults = getWyLsByJson(songs)
 			return songResults
 		} catch (e: Exception) {
-			e.printStackTrace()
+			Log.d(TAG,"getWyLs ${e.message}")
 		}
         return null
 	}
@@ -254,18 +254,18 @@ object MusicProvider {
 			val songItm: JsonObject? = gson.fromJson(albumSongs?.get(0), JsonObject::class.java)
 			return songItm?.getAsJsonObject("al")?.getAsJsonPrimitive("id")?.asString
 		} catch (e: Exception) {
-			e.printStackTrace()
+			Log.d(TAG,"getWyLostAlbumId ${e.message}")
 		}
         return null
 	}
 
 	//通过sid去搜索真实播放地址
 	private fun getWyUrlBySid(dfsId: String): String {
-		val encryptPath = EncryptId(dfsId)
+		val encryptPath = encryptId(dfsId)
 		return "http://m2.music.126.net/$encryptPath/$dfsId.mp3"
 	}
 
-	private fun EncryptId(id: String): String {
+	private fun encryptId(id: String): String {
 		val byte1 = "3go8&$8*3*3h0k(2)2".toByteArray()
 		val byte2 = id.toByteArray()
 		val byte1Length = byte1.size
@@ -278,7 +278,7 @@ object MusicProvider {
 		try {
 			md5 = MessageDigest.getInstance("MD5")
 		} catch (e: Exception) {
-			e.printStackTrace()
+			Log.d(TAG,"EncryptId ${e.message}")
 			return ""
 		}
 		val md5Bytes = md5.digest(byte2)
@@ -338,25 +338,82 @@ object MusicProvider {
 		return list
 	}
 
+//	fun getXmUrl(ids: String?,quality: Int, format: String): String? {
+//		ids?:return null
+//		val typ=0
+//		val albumUrl = "http://www.xiami.com/song/playlist/id/$ids/type/$typ/cat/json"
+//		val html = doGetWithCookie(albumUrl)
+//		html?:return null
+//		if (html.contains("应版权方")) {
+//			return null
+//		}
+//		try {
+//			val gson = Gson()
+//			val xiamiIds: JsonObject? = gson.fromJson(html, JsonObject::class.java)
+//			val trackList = xiamiIds?.getAsJsonObject("data")?.getAsJsonArray("trackList")
+//            trackList?:return null
+//			val xmEnt = trackList.get(0)
+//			val xmbean: JsonObject? = gson.fromJson(xmEnt, JsonObject::class.java)
+//
+//            val songId = xmbean?.getAsJsonPrimitive("song_id")?.asString
+//
+//            when(format){
+//                "mp3"->{
+//                    if(0==quality) {
+//                        val location = xmbean?.getAsJsonPrimitive("location")?.asString
+//						location?: return null
+//						return getXiaMp3Url(location)
+//                    }else {
+//						songId?:return null
+//                        val hqUrl = getXmPlayUrl(songId)
+//						hqUrl?:return null
+//						return getXiaMp3Url(hqUrl)
+//
+//                    }
+//                }
+//                "jpg"->{
+//					return xmbean?.getAsJsonPrimitive("pic")?.asString
+//
+//                }
+//                "lrc"->{
+//                    return xmbean?.getAsJsonPrimitive("lyric")?.asString
+//                }
+//
+//            }
+//		} catch (e: Exception) {
+//			Log.d(TAG,"getXmUrl ${e.message}")
+//		}
+//		return null
+//	}
+
 	fun getXmUrl(ids: String?,quality: Int, format: String): String? {
 		ids?:return null
-		val typ=0
-		val albumUrl = "http://www.xiami.com/song/playlist/id/$ids/type/$typ/cat/json"
-		val html = doGetWithCookie(albumUrl)
-		html?:return null
-		if (html.contains("应版权方")) {
+		val host = "www.xiami.com"
+		val referer = "http://www.xiami.com/play?ids=/song/playlist/id/$ids/object_name/default/object_id/0"
+		val tms = java.util.Date().time
+		val url = "http://www.xiami.com/song/playlist/id/$ids/object_name/default/object_id/0/cat/json?_ksTS=${tms}_692&callback=jsonp693"
+
+		val reqHeaders = HashMap<String, String>()
+		reqHeaders.put("Host", host)
+		reqHeaders.put("User-agent", userAgent)
+		reqHeaders.put("Referer", referer)
+		val restr = HttpUtils.doPost(url, "", reqHeaders)
+		if(!restr.contains("jsonp693(")){
 			return null
 		}
+		var html = restr.replace("jsonp693(","")
+		html = html.substring(0,html.length-1)
+		if (html.isEmpty())return null
 		try {
 			val gson = Gson()
 			val xiamiIds: JsonObject? = gson.fromJson(html, JsonObject::class.java)
 			val trackList = xiamiIds?.getAsJsonObject("data")?.getAsJsonArray("trackList")
             trackList?:return null
+			if(trackList.size()<1)return null
 			val xmEnt = trackList.get(0)
 			val xmbean: JsonObject? = gson.fromJson(xmEnt, JsonObject::class.java)
 
-            val songId = xmbean?.getAsJsonPrimitive("song_id")?.asString
-			println("songId: $songId")
+            val songId = xmbean?.getAsJsonPrimitive("songId")?.asString
 
             when(format){
                 "mp3"->{
@@ -382,7 +439,7 @@ object MusicProvider {
 
             }
 		} catch (e: Exception) {
-			e.printStackTrace()
+			Log.e(TAG,"getXmUrl error! ${e.message}")
 		}
 		return null
 	}
@@ -583,7 +640,7 @@ object MusicProvider {
 	//腾讯支持无损和mv解析
 	@Throws(Exception::class)
 	fun getQqLs(key: String, page: Int, size: Int): List<SongResult>? {
-		val url = "http://soso.music.qq.com/fcgi-bin/search_cp?aggr=0&catZhida=0&lossless=1&sem=1&w=" + UrlEncode(key) + "&n=" + size + "&t=0&p=" + page + "&remoteplace=sizer.yqqlist.song&g_tk=5381&loginUin=0&hostUin=0&format=jsonp&inCharset=GB2312&outCharset=utf-8&notice=0&platform=yqq&needNewCode=0"
+		val url = "http://soso.music.qq.com/fcgi-bin/search_cp?aggr=0&catZhida=0&lossless=1&sem=1&w=" + urlEncode(key) + "&n=" + size + "&t=0&p=" + page + "&remoteplace=sizer.yqqlist.song&g_tk=5381&loginUin=0&hostUin=0&format=jsonp&inCharset=GB2312&outCharset=utf-8&notice=0&platform=yqq&needNewCode=0"
 		var html = doGetWithCookie(url)
 		html?:return null
 		html = html.substring(0, html.length - 1).replace("callback(", "")
@@ -793,7 +850,7 @@ object MusicProvider {
 	 * ********baidu start**********
      */
     fun getBdLs(key: String, page: Int, size: Int): List<SongResult>? {
-        val enck = UrlEncode(key)
+        val enck = urlEncode(key)
         val url = "http://tingapi.ting.baidu.com/v1/restserver/ting?from=qianqian&version=2.1.0&method=baidu.ting.search.common&format=json&page_no=$page&page_size=$size&query=$enck"
         val html = HttpUtils.doGetEncoding(url,null,"utf-8")
 		html?:return null
@@ -862,7 +919,7 @@ object MusicProvider {
 
             }
         } catch (e: Exception) {
-            e.printStackTrace()
+			Log.d(TAG,"getBdUrl ${e.message}")
         }
         return null
     }
@@ -881,7 +938,7 @@ object MusicProvider {
      * ********5sing ws start**********
      */
     fun getWsLs(key: String, page: Int, size: Int): List<SongResult>? {
-        val enck = UrlEncode(key)
+        val enck = urlEncode(key)
         val url = "http://goapi.5sing.kugou.com/search/search?t=0&filterType=3&sortType=0&version=6.0.3&ps=$size&pn=$page&k=$enck"
         val html = HttpUtils.doGetEncoding(url,null,"utf-8")
         html?:return null
@@ -930,7 +987,7 @@ object MusicProvider {
             furl=furl?:finfo.getAsJsonPrimitive("hqurl")?.asString
             return furl
         } catch (e: Exception) {
-            e.printStackTrace()
+			Log.d(TAG,"getWsPlayUrl ${e.message}")
         }
         return null
     }
@@ -958,7 +1015,6 @@ object MusicProvider {
 		return HttpUtils.doPost(url, param, reqHeaders)
 	}
 
-	//@JvmOverloads
 	private fun doGetWithCookie(url: String, needCookie: Boolean = false): String? {
 		val reqHeaders = HashMap<String, String>()
 		reqHeaders.put("User-agent", userAgent)
@@ -1033,9 +1089,7 @@ object MusicProvider {
 	}
 
 	//based on [darknessomi/musicbox](https://github.com/darknessomi/musicbox)
-	private fun createSecretKey(i: Int): String {
-		return getRandomString(i)
-	}
+	private fun createSecretKey(i: Int) = getRandomString(i)
 
 	private fun getRandom(count: Int)=Math.round(Math.random() * (count)).toInt()
 
@@ -1064,7 +1118,7 @@ object MusicProvider {
 		return sb.toString()
 	}
 
-	private fun UrlEncode(str: String): String {
+	private fun urlEncode(str: String): String {
 		try {
 			return URLEncoder.encode(str, "UTF-8")
 		} catch (e: Exception) {
@@ -1121,7 +1175,7 @@ object MusicProvider {
 				return two.replace(("\\.mp$").toRegex(), ".mp3")
 			}
 		} catch (e: Exception) {
-			e.printStackTrace()
+			Log.d(TAG,"getXiaMp3Url ${e.message}")
 		}
 
 		return url
