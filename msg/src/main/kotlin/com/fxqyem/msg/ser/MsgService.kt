@@ -47,8 +47,6 @@ class MsgService : Service(){
         initSocket()
     }
 
-    override fun onStartCommand(intent: Intent, flags: Int, startId: Int) = super.onStartCommand(intent, flags, startId)
-
     override fun onDestroy() {
         super.onDestroy()
         mLocalBroadcastManager?.unregisterReceiver(mReceiver)
@@ -203,7 +201,9 @@ class MsgService : Service(){
                 msgServer = DatagramSocket(AppConstants.MSG_GLOBAL_PORT)
                 sendOnlineMsg()
                 /*receive*/
-                while(!(msgServer?.isClosed?:true)){
+                while(true){
+                    val bol = msgServer?.isClosed?:true
+                    if(bol) break
                     val buffer = ByteArray(4096)
                     val packet = DatagramPacket(buffer, buffer.size)
                     try {

@@ -1,16 +1,11 @@
 package com.fxqyem.msg.lay
 
-import android.content.Context
-import android.os.Bundle
-import android.os.Message
-import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import com.fxqyem.msg.R
 import com.fxqyem.msg.act.MsgActivity
-import com.fxqyem.msg.ben.AppConstants
 import com.fxqyem.msg.utl.BitMapUtil
 import com.fxqyem.msg.vw.*
 import org.jetbrains.anko.*

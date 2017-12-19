@@ -6,17 +6,12 @@ import android.widget.LinearLayout
 import com.fxqyem.msg.R
 import com.fxqyem.msg.act.AboutActivity
 import org.jetbrains.anko.*
-import android.content.Intent
-import android.net.Uri
 
 
-/**
- * Created by Dwf on 2017-12-18.
- */
 class AboutLay : AnkoComponent<AboutActivity> {
     override fun createView(ui: AnkoContext<AboutActivity>): View {
 
-        val coreVw = ui.linearLayout{
+        return ui.linearLayout{
             orientation = LinearLayout.VERTICAL
             padding = dip(10)
             imageView {
@@ -51,8 +46,6 @@ class AboutLay : AnkoComponent<AboutActivity> {
                 height = matchParent
             }
         }
-
-        return coreVw
 
     }
 

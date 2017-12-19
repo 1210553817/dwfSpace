@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import com.fxqyem.msg.R
-import com.fxqyem.msg.act.MsgActivity
 import com.fxqyem.msg.utl.BitMapUtil
 import com.fxqyem.msg.vw.*
 import org.jetbrains.anko.*
@@ -14,7 +13,7 @@ import org.jetbrains.anko.*
 class MsgPagerLay {
 
     fun createMemVw(ctx: Context): View {
-        val memVw = ctx.linearLayout{
+        return ctx.linearLayout{
             orientation = LinearLayout.VERTICAL
 
             relativeLayout {
@@ -58,13 +57,12 @@ class MsgPagerLay {
 
 
         }
-        return memVw
 
     }
 
     fun createMemItmVw(ctx:Context): View {
 
-        val itmVw = ctx.relativeLayout {
+        return ctx.relativeLayout {
             backgroundColor = 0xffffffff.toInt()
             descendantFocusability = ViewGroup.FOCUS_BLOCK_DESCENDANTS
             backgroundResource = R.drawable.ls_itm_bkg
@@ -135,7 +133,6 @@ class MsgPagerLay {
             }
         }
 
-        return itmVw
     }
 
 

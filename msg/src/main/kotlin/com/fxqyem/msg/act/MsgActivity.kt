@@ -46,8 +46,8 @@ class MsgActivity : MsgBaseActivity() , OnBackListener {
     var cenfrmLy: android.widget.FrameLayout? = null
     var cenViewPager: ViewPager? = null
     //pager
-    var memVw: View? = null
-    var setVw: View? = null
+    private var memVw: View? = null
+    private var setVw: View? = null
     //mem
     var memListVw: ListView? = null
     //setting
@@ -62,7 +62,7 @@ class MsgActivity : MsgBaseActivity() , OnBackListener {
     /*service*/
     /*datas*/
 //    private var msgHandler: MsgHandler? = null
-    var mLocalBroadcastManager: LocalBroadcastManager? = null
+    private var mLocalBroadcastManager: LocalBroadcastManager? = null
     private var mReceiver: BroadcastReceiver? = null
 
     /*params*/
@@ -214,7 +214,7 @@ class MsgActivity : MsgBaseActivity() , OnBackListener {
 
     }
 
-    fun reloadMemList(){
+    private fun reloadMemList(){
         val memAdp = memListVw?.adapter as MemLsAdapter?
         memAdp?.list?.clear()
         val itt = Intent(AppConstants.ACTION_SER_LOAD_MEM_ITEMS)
@@ -256,12 +256,16 @@ class MsgActivity : MsgBaseActivity() , OnBackListener {
                     selfSldMn = SldMenu.create(this, hdvw, oneCtnFrmLy)
                     selfSldMn?.setOnStateChangeListener(object: SldMenu.OnStateChangeListener{
                         override fun onStateChange(state: Int) {
-                            if (state == SldMenu.MENU_STATE_GONE_START) {
-                                popBackLsnStack(BK_KEY_SELF_MN, this@MsgActivity)
-                            } else if (state == SldMenu.MENU_STATE_SHOW) {
-                                push2BackLsnStack(BackLsnHolder(BK_KEY_SELF_MN, this@MsgActivity))
-                            } else if (state == SldMenu.MENU_STATE_GONE) {
-                                selfSldMn = null
+                            when(state){
+                                SldMenu.MENU_STATE_GONE_START -> {
+                                    popBackLsnStack(BK_KEY_SELF_MN, this@MsgActivity)
+                                }
+                                SldMenu.MENU_STATE_SHOW -> {
+                                    push2BackLsnStack(BackLsnHolder(BK_KEY_SELF_MN, this@MsgActivity))
+                                }
+                                SldMenu.MENU_STATE_GONE -> {
+                                    selfSldMn = null
+                                }
                             }
                         }
                     })
@@ -305,18 +309,18 @@ class MsgActivity : MsgBaseActivity() , OnBackListener {
 
     }
 
-    private inner class BtnClickLsn: View.OnClickListener {
-        override fun onClick(v: View) {
-            when (v.id) {
-                R.id.msg_lay_core_btm_mem_img -> {
-
-                }
-
-                else -> return
-            }
-
-        }
-    }
+//    private inner class BtnClickLsn: View.OnClickListener {
+//        override fun onClick(v: View) {
+//            when (v.id) {
+//                R.id.msg_lay_core_btm_mem_img -> {
+//
+//                }
+//
+//                else -> return
+//            }
+//
+//        }
+//    }
 
     override fun onBackKeyUp(reqValue: Int, event: KeyEvent, reqCod: Int): Boolean {
         when (reqCod) {
@@ -330,7 +334,8 @@ class MsgActivity : MsgBaseActivity() , OnBackListener {
     }
 
     override fun popBackLsnStack(reqCod: Int, bkLsn: OnBackListener):BackLsnHolder?{
-        if (!(backLsnStack?.isEmpty()?:true)) {
+        val bol = backLsnStack?.isEmpty()?:true
+        if (!bol) {
             val bkhd = backLsnStack?.peek()
             if (bkhd != null && bkhd.onBackListener === bkLsn && bkhd.requestCode == reqCod)
                 return backLsnStack?.pop()
@@ -361,7 +366,7 @@ class MsgActivity : MsgBaseActivity() , OnBackListener {
                     if(ent!=null) {
                         val memAdp = memListVw?.adapter as MemLsAdapter?
                         var list = memAdp?.list
-                        if (null == list) list = ArrayList<MsgEnt>()
+                        if (null == list) list = ArrayList()
                         if (!list.contains(ent)) {
                             list.add(ent)
                         }
@@ -435,7 +440,8 @@ class MsgActivity : MsgBaseActivity() , OnBackListener {
 
     override fun onKeyUp(keyCode: Int, event: KeyEvent): Boolean {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            if (!(backLsnStack?.isEmpty()?:true)) {
+            val bol = backLsnStack?.isEmpty()?:true
+            if (!bol) {
                 val bkhd = backLsnStack?.pop()
                 val obkLsn = bkhd?.onBackListener
                 return obkLsn?.onBackKeyUp(bkhd.requestValue, event, bkhd.requestCode)?:false
@@ -473,9 +479,6 @@ class MsgActivity : MsgBaseActivity() , OnBackListener {
 
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-    }
     companion object {
         private val TAG = "MsgActivity"
         /*back key*/

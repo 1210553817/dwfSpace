@@ -5,13 +5,13 @@
             <item>
                 <shape>
                     <corners android:radius="3dp"/>
-                    <solid android:color="#88bb88"/>
+                    <solid android:color="#ff88bb88"/>
                 </shape>
             </item>
             <item android:bottom="2px" android:top="2px" android:left="2px" android:right="2px">
                 <shape>
                     <corners android:radius="3dp"/>
-                    <gradient android:angle="40" android:startColor="#efefef" android:endColor="#ffffff"/>
+                    <gradient android:angle="45" android:startColor="#ffefefef" android:endColor="#ffffffff"/>
                 </shape>
             </item>
         </layer-list>
@@ -21,13 +21,13 @@
             <item>
                 <shape>
                     <corners android:radius="3dp"/>
-                    <solid android:color="#88bb88"/>
+                    <solid android:color="#ff88bb88"/>
                 </shape>
             </item>
             <item android:bottom="2px" android:top="2px" android:left="2px" android:right="2px">
                 <shape>
                     <corners android:radius="3dp"/>
-                    <gradient android:angle="40" android:startColor="#ececec" android:endColor="#fefefe"/>
+                    <gradient android:angle="45" android:startColor="#ffececec" android:endColor="#fffefefe"/>
                 </shape>
             </item>
         </layer-list>

@@ -13,17 +13,11 @@ import org.jetbrains.anko.backgroundDrawable
 
 class SetLsAdapter(private val context: Context, var list: ArrayList<MsgEnt>?) : BaseAdapter(){
 
-    override fun getCount(): Int {
-        return list?.size?:0
-    }
+    override fun getCount() = list?.size?:0
 
-    override fun getItem(indx: Int): String? {
-        return list?.get(indx)?.tit
-    }
+    override fun getItem(indx: Int) = list?.get(indx)?.tit
 
-    override fun getItemId(arg0: Int): Long {
-        return arg0.toLong()
-    }
+    override fun getItemId(indx: Int) = indx.toLong()
 
     override fun getView(position: Int, convert: View?, arg2: ViewGroup): View {
         var convertView = convert
@@ -35,17 +29,17 @@ class SetLsAdapter(private val context: Context, var list: ArrayList<MsgEnt>?) :
             tit = convertView.findViewById(R.id.setting_pglay_item_mtit) as TextView?
             img = convertView.findViewById(R.id.setting_pglay_item_himg) as ImageView?
             vwHolder = VwHolder()
-            vwHolder?.tit = tit
-            vwHolder?.img = img
+            vwHolder.tit = tit
+            vwHolder.img = img
             convertView.tag = vwHolder
         } else {
             vwHolder = convertView.tag as VwHolder
-            tit = vwHolder?.tit
-            img = vwHolder?.img
+            tit = vwHolder.tit
+            img = vwHolder.img
         }
         val itm =list?.get(position)
-        var titc=itm?.tit?:""
-        var imgi = itm?.cmd
+        val titc=itm?.tit?:""
+        val imgi = itm?.cmd
 
         tit?.text = titc
         if(imgi!=null)img?.backgroundDrawable = BitMapUtil.getMatrixDrawableByRid(context,imgi, appColorArrayLightGreen)
@@ -59,7 +53,7 @@ class SetLsAdapter(private val context: Context, var list: ArrayList<MsgEnt>?) :
     }
 
     companion object {
-        private val TAG = "SetLsAdapter"
+        //private val TAG = "SetLsAdapter"
     }
 
 }

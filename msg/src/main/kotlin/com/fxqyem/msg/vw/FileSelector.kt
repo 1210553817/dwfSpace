@@ -17,8 +17,7 @@ import com.fxqyem.msg.utl.AndUtil
 import com.fxqyem.msg.utl.BitMapUtil
 import com.fxqyem.msg.utl.SDCardUtils
 
-class FileSelector: OnBackListener {
-    private lateinit var context: Context
+class FileSelector(val context: Context,type: Int): OnBackListener {
     private var tmpSldMenua: SldMenu? = null
     private var listView: ListView? = null
     private var contentView: View? = null
@@ -36,10 +35,7 @@ class FileSelector: OnBackListener {
     private var mtype = TYPE_FILE
     private var stype = TYPE_NO_STARTP
 
-    private constructor()
-
-    constructor(context: Context,type: Int){
-        this.context = context
+    init{
         mtype = type and 0x0F
         stype = type and 0xF0
     }
@@ -61,14 +57,20 @@ class FileSelector: OnBackListener {
         this.tmpSldMenua = SldMenu.create(context, contentView, null)
         this.tmpSldMenua?.setOnStateChangeListener(object: SldMenu.OnStateChangeListener{
             override fun onStateChange(state: Int) {
-                 val mact = context as MsgBaseActivity
-                if (state == SldMenu.MENU_STATE_GONE_START) {
-                    mact.popBackLsnStack(1, this@FileSelector)
-                } else if (state == SldMenu.MENU_STATE_SHOW) {
-                    mact.push2BackLsnStack(BackLsnHolder(1, this@FileSelector))
-                } else if (state == SldMenu.MENU_STATE_GONE) {
-                    tmpSldMenua = null
+                 val act = context as MsgBaseActivity
+                when(state){
+                    SldMenu.MENU_STATE_GONE_START -> {
+                        act.popBackLsnStack(1, this@FileSelector)
+                    }
+                    SldMenu.MENU_STATE_SHOW -> {
+                        act.push2BackLsnStack(BackLsnHolder(1, this@FileSelector))
+                    }
+                    SldMenu.MENU_STATE_GONE -> {
+                        tmpSldMenua = null
+                    }
+
                 }
+
             }
         })
 
@@ -118,35 +120,24 @@ class FileSelector: OnBackListener {
     }
 
 
-    inner class FileSelectorAdapter: BaseAdapter {
-        var fsLs: List<File>?
-
-        constructor(fsLs: List<File>?){
-            this.fsLs = fsLs
-        }
+    inner class FileSelectorAdapter(var fsLs: List<File>?): BaseAdapter() {
 
         private var viewHd: ThisViewHd? = null
 
-        override fun getCount(): Int {
-            return fsLs?.size?:0
-        }
+        override fun getCount() = fsLs?.size?:0
 
-        override fun getItem(inx: Int): Any? {
-            return fsLs?.get(inx)
-        }
+        override fun getItem(inx: Int) = fsLs?.get(inx)
 
-        override fun getItemId(arg0: Int): Long {
-            return arg0.toLong()
-        }
+        override fun getItemId(indx: Int) = indx.toLong()
 
-        override fun getView(position: Int, convertView: View?, arg2: ViewGroup): View {
-            var convertView = convertView
+        override fun getView(position: Int, convert: View?, arg2: ViewGroup): View {
+            var convertView = convert
             val fIcon: ImageView?
             val fName: TextView?
             if (convertView == null) {
                 convertView = genFileSelectorItemLay()
-                fIcon = convertView?.findViewById(R.id.file_slector_item_ico) as ImageView?
-                fName = convertView?.findViewById(R.id.file_slector_item_fname) as TextView?
+                fIcon = convertView.findViewById(R.id.file_slector_item_ico) as ImageView?
+                fName = convertView.findViewById(R.id.file_slector_item_fname) as TextView?
                 viewHd = ThisViewHd()
                 viewHd?.ficon = fIcon
                 viewHd?.fname = fName
@@ -158,7 +149,7 @@ class FileSelector: OnBackListener {
             }
             val cf = fsLs?.get(position)?:return convertView
             fName?.text = cf.name
-            val prtly = fIcon?.parent as LinearLayout
+            val prtly = fIcon?.parent as LinearLayout?
             prtly?.setOnClickListener(BtnLsn(position))
 
             if (cf.isDirectory) {
@@ -224,8 +215,8 @@ class FileSelector: OnBackListener {
                     val cf = adp.fsLs?.get(pos)?:return
                     if (cf.isDirectory) {
                         val indx = listView?.firstVisiblePosition?:0
-                        val v = listView?.getChildAt(0)
-                        val top = v?.top?:0
+                        val itmv = listView?.getChildAt(0)
+                        val top = itmv?.top?:0
                         scrollStack.add(Pair(indx,top))
                         curPath = cf.absolutePath
                         adp.fsLs = getFileLs(curPath) ?: return
@@ -233,7 +224,7 @@ class FileSelector: OnBackListener {
                         setTitName(getResString(context,R.string.file_slector_holder_chsFile))
                         curFile = null
                         curFileo = null
-                        adp?.notifyDataSetChanged()
+                        adp.notifyDataSetChanged()
                         listView?.setSelectionFromTop(0, 0)
                     } else {
                         setTitName(cf.name)
@@ -242,7 +233,7 @@ class FileSelector: OnBackListener {
                     }
                 }
                 R.id.file_slector_holder_uplvBtn -> {
-                    val df = File(curPath!!)
+                    val df = File(curPath)
                     if ("/" == df.absolutePath) {
                         return
                     }
@@ -254,7 +245,7 @@ class FileSelector: OnBackListener {
                     curFile = null
                     curFileo = null
                     val pair=if(!scrollStack.isEmpty())scrollStack.pop() else null
-                    adp?.notifyDataSetChanged()
+                    adp.notifyDataSetChanged()
                     listView?.setSelectionFromTop(pair?.first?:0, pair?.second?:0)
                 }
                 R.id.file_slector_holder_okBtn -> {
@@ -284,7 +275,7 @@ class FileSelector: OnBackListener {
     }
 
 
-    override fun onBackKeyUp(keyCode: Int, event: KeyEvent, reqCod: Int): Boolean {
+    override fun onBackKeyUp(reqValue: Int, event: KeyEvent, reqCod: Int): Boolean {
         tmpSldMenua?.cancle()
         return false
     }
@@ -294,9 +285,7 @@ class FileSelector: OnBackListener {
     }
 
     private fun genFileSelectorLay(): View{
-        val ankoCtx = context.UI{
-
-            linearLayout {
+        return context.linearLayout {
                 orientation = LinearLayout.VERTICAL
                 setBackgroundResource(R.drawable.opt_menu_ctn)
 
@@ -341,7 +330,7 @@ class FileSelector: OnBackListener {
                     }.lparams{
                         width= wrapContent
                         height= wrapContent
-                        setHorizontalGravity(Gravity.LEFT)
+                        setHorizontalGravity(Gravity.START)
                         setVerticalGravity(Gravity.CENTER_VERTICAL)
                     }
 
@@ -354,7 +343,7 @@ class FileSelector: OnBackListener {
                 listView {
                     id=R.id.file_slector_holder_scrVw
                     dividerHeight = dip(1)
-                    divider= getResDrawable(ctx,R.drawable.ls_divi_bkg)
+                    divider= getResDrawable(context,R.drawable.ls_divi_bkg)
                     isFocusable = false
                     isFocusableInTouchMode = false
                     cacheColorHint = COLOR_TRANS
@@ -408,12 +397,10 @@ class FileSelector: OnBackListener {
                 }
 
             }
-        }
-        val reVw = ankoCtx.view
-        return reVw
+
     }
     private fun genFileSelectorItemLay(): View{
-        val itmVw = context.linearLayout {
+        return context.linearLayout {
                 id = R.id.file_slector_item_hdly
                 orientation = LinearLayout.HORIZONTAL
                 descendantFocusability = ViewGroup.FOCUS_BLOCK_DESCENDANTS
@@ -444,7 +431,7 @@ class FileSelector: OnBackListener {
                 }
 
             }
-        return itmVw
+
     }
 
     companion object {

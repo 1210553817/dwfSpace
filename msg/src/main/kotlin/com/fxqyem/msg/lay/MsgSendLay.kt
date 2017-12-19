@@ -3,18 +3,13 @@ package com.fxqyem.msg.lay
 import android.content.Context
 import android.view.Gravity
 import android.view.View
-import android.widget.ImageView
 import android.widget.LinearLayout
 import com.fxqyem.msg.R
-import com.fxqyem.msg.utl.AndUtil
-import com.fxqyem.msg.utl.BitMapUtil
 import com.fxqyem.msg.vw.*
 import org.jetbrains.anko.*
 
-/**
- * Created by Dwf on 2017/6/15.
- */
 class MsgSendLay{
+
     fun createView(ctx:Context): View {
 
         return  ctx.relativeLayout{
@@ -56,7 +51,7 @@ class MsgSendLay{
 
                 editText {
                     id=R.id.msg_send_lay_editTxt
-                    gravity =Gravity.LEFT
+                    gravity =Gravity.START
                     textColor = 0xff555555.toInt()
                     backgroundResource = R.drawable.opt_menu_edittxt
                     minimumHeight = dip(38)

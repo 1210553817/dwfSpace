@@ -1,7 +1,5 @@
 package com.fxqyem.msg.ben
 
-import java.nio.charset.Charset
-
 
 object AppConstants {
     val VW_STATE_GONE = 0

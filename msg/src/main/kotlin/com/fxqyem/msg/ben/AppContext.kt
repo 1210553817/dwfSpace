@@ -2,16 +2,17 @@ package com.fxqyem.msg.ben
 
 import android.app.Application
 import com.fxqyem.msg.utl.PrefUtil
+import com.fxqyem.msg.utl.SDCardUtils
 import com.fxqyem.msg.vw.utilIsEmpty
 
 
 class AppContext : Application() {
-    var chatMp: HashMap<String,Int>? = null
+    private var chatMp: HashMap<String,Int>? = null
     var uname: String = ""
     var utit: String = ""
     var usub: String = ""
-    var hdicon = "17"
-    var fileRcvPath="/sdcard/"
+    //var hdicon = "17"
+    var fileRcvPath=SDCardUtils.sdCardPath
 
     override fun onCreate() {
         super.onCreate()
@@ -49,7 +50,7 @@ class AppContext : Application() {
     }
 
 
-    fun initSelfInfo(){
+    private fun initSelfInfo(){
         uname = PrefUtil.get(this,AppConstants.PREF_KEY_SELF_UNM,D_UNM, AppConstants.PREF_NAME_PARAMS) as String
         utit = PrefUtil.get(this,AppConstants.PREF_KEY_SELF_TIT,D_TIT, AppConstants.PREF_NAME_PARAMS) as String
         usub = PrefUtil.get(this,AppConstants.PREF_KEY_SELF_SUB,D_SUB, AppConstants.PREF_NAME_PARAMS) as String

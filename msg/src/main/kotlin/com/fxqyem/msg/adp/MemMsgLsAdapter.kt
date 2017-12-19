@@ -18,17 +18,11 @@ class MemMsgLsAdapter(private val context: Context, var list: ArrayList<MsgEnt>?
     var load2Btm = 1
     private var mLocalBroadcastManager: LocalBroadcastManager = LocalBroadcastManager.getInstance(context)
 
-    override fun getCount(): Int {
-        return list?.size?:0
-    }
+    override fun getCount() = list?.size?:0
 
-    override fun getItem(indx: Int): String? {
-        return list?.get(indx)?.tit
-    }
+    override fun getItem(indx: Int) = list?.get(indx)?.tit
 
-    override fun getItemId(arg0: Int): Long {
-        return arg0.toLong()
-    }
+    override fun getItemId(indx: Int) = indx.toLong()
 
     override fun getView(position: Int, convert: View?, arg2: ViewGroup): View {
         var convertView = convert
@@ -51,23 +45,23 @@ class MemMsgLsAdapter(private val context: Context, var list: ArrayList<MsgEnt>?
             ricon = convertView.findViewById(R.id.msg_send_lay_msgls_itm_ricon) as ImageView?
             vwHolder = VwHolder()
             //vwHolder?.unm = unm
-            vwHolder?.tlay = tlay
-            vwHolder?.tit = tit
-            vwHolder?.sub = sub
-            vwHolder?.lbtn = lbtn
-            vwHolder?.rbtn = rbtn
-            vwHolder?.licon = licon
-            vwHolder?.ricon = ricon
+            vwHolder.tlay = tlay
+            vwHolder.tit = tit
+            vwHolder.sub = sub
+            vwHolder.lbtn = lbtn
+            vwHolder.rbtn = rbtn
+            vwHolder.licon = licon
+            vwHolder.ricon = ricon
             convertView.tag = vwHolder
         } else {
             vwHolder = convertView.tag as VwHolder
-            tlay = vwHolder?.tlay
-            tit = vwHolder?.tit
-            sub = vwHolder?.sub
-            lbtn = vwHolder?.lbtn
-            rbtn = vwHolder?.rbtn
-            licon = vwHolder?.licon
-            ricon = vwHolder?.ricon
+            tlay = vwHolder.tlay
+            tit = vwHolder.tit
+            //sub = vwHolder.sub
+            lbtn = vwHolder.lbtn
+            rbtn = vwHolder.rbtn
+            licon = vwHolder.licon
+            ricon = vwHolder.ricon
         }
         val itm =list?.get(position)
         tit?.text = itm?.add
@@ -268,7 +262,7 @@ class MemMsgLsAdapter(private val context: Context, var list: ArrayList<MsgEnt>?
 
                     textView{
                         id=R.id.msg_send_lay_msgls_itm_stit
-                        gravity = Gravity.RIGHT or Gravity.CENTER_VERTICAL
+                        gravity = Gravity.END or Gravity.CENTER_VERTICAL
                         textColor = 0xffdddddd.toInt()
                         textSize =  12f
                         maxLines= 1
@@ -335,7 +329,7 @@ class MemMsgLsAdapter(private val context: Context, var list: ArrayList<MsgEnt>?
 
                         textView{
                             id=R.id.msg_send_lay_msgls_itm_mtit
-                            gravity = Gravity.LEFT or Gravity.CENTER_VERTICAL
+                            gravity = Gravity.START or Gravity.CENTER_VERTICAL
                             padding = dip(10)
                             textColor = 0xff333333.toInt()
                             textSize =  16f
@@ -391,7 +385,7 @@ class MemMsgLsAdapter(private val context: Context, var list: ArrayList<MsgEnt>?
     }
 
     companion object {
-        private val TAG = "MemMsgLsAdapter"
+        //private val TAG = "MemMsgLsAdapter"
     }
 
 

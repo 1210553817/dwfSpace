@@ -1,11 +1,7 @@
 package com.fxqyem.msg.ent
 
-import android.util.Log
 import com.fxqyem.msg.ben.AppConstants
-import com.fxqyem.msg.ben.AppContext
-import com.fxqyem.msg.utl.StrUtil
 import java.io.Serializable
-import java.util.Date
 
 class AttaEnt : Serializable{
     var useful = 0
@@ -15,8 +11,6 @@ class AttaEnt : Serializable{
     var time: String? = null
     var type: String? = null
 
-
-    constructor() {}
 
     constructor(id: String,tit: String?, size: String) {
         this.id = id
@@ -31,7 +25,7 @@ class AttaEnt : Serializable{
         val inx = astr.indexOf(AppConstants.MSG_GLOBAL_ZERO)
         if(inx<0)return
         val inxs = inx.plus(1)
-        val attaStr = astr?.substring(inxs)
+        val attaStr = astr.substring(inxs)
         this.useful = 0
         val itms = attaStr.split(":")
         if(itms.isEmpty())return
@@ -47,9 +41,7 @@ class AttaEnt : Serializable{
 
     }
 
-    fun genAttaStr(): String{
-        return "$id:$tit:$size:$time:$type"
-    }
+    fun genAttaStr() = "$id:$tit:$size:$time:$type"
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -62,13 +54,9 @@ class AttaEnt : Serializable{
         return true
     }
 
-    override fun hashCode(): Int {
-        return id?.hashCode() ?: 0
-    }
+    override fun hashCode() = id?.hashCode() ?: 0
 
-    override fun toString(): String {
-        return "AttaEnt(id=$id, tit=$tit, size=$size, time=$time, type=$type)"
-    }
+    override fun toString() = "AttaEnt(id=$id, tit=$tit, size=$size, time=$time, type=$type)"
 
 
 }

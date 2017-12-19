@@ -7,14 +7,13 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.fxqyem.msg.R
-import com.fxqyem.msg.act.MsgActivity
 import com.fxqyem.msg.vw.*
 import org.jetbrains.anko.*
 
 class SettingLay {
 
     fun createSetVw(ctx: Context): View {
-        val setVw = ctx.linearLayout{
+        return ctx.linearLayout{
             orientation = LinearLayout.VERTICAL
 
             relativeLayout {
@@ -58,13 +57,12 @@ class SettingLay {
 
 
         }
-        return setVw
 
     }
 
     fun createSetItmVw(ctx:Context): View {
 
-        val itmVw = ctx.relativeLayout {
+        return ctx.relativeLayout {
             backgroundColor = 0xffffffff.toInt()
             descendantFocusability = ViewGroup.FOCUS_BLOCK_DESCENDANTS
             backgroundResource = R.drawable.ls_itm_bkg
@@ -99,11 +97,10 @@ class SettingLay {
 
         }
 
-        return itmVw
     }
 
     fun createSelfVw(ctx: Context): View{
-        val reVw = ctx.linearLayout {
+        return ctx.linearLayout {
             orientation = LinearLayout.VERTICAL
             setBackgroundResource(R.drawable.opt_menu_ctn)
 
@@ -128,7 +125,7 @@ class SettingLay {
 
                 editText {
                     id=R.id.setting_pglay_slfdo_unm
-                    gravity =Gravity.LEFT
+                    gravity =Gravity.START
                     textColor = 0xff555555.toInt()
                     backgroundResource = R.drawable.opt_menu_edittxt
                     hintResource = R.string.setting_pglay_slfdo_unm
@@ -151,7 +148,7 @@ class SettingLay {
 
                 editText {
                     id=R.id.setting_pglay_slfdo_tit
-                    gravity =Gravity.LEFT
+                    gravity =Gravity.START
                     textColor = 0xff555555.toInt()
                     backgroundResource = R.drawable.opt_menu_edittxt
                     hintResource = R.string.setting_pglay_slfdo_tit
@@ -174,7 +171,7 @@ class SettingLay {
 
                 editText {
                     id=R.id.setting_pglay_slfdo_sub
-                    gravity =Gravity.LEFT
+                    gravity =Gravity.START
                     textColor = 0xff555555.toInt()
                     backgroundResource = R.drawable.opt_menu_edittxt
                     hintResource = R.string.setting_pglay_slfdo_sub
@@ -236,7 +233,6 @@ class SettingLay {
 
         }
 
-        return reVw
     }
 
 

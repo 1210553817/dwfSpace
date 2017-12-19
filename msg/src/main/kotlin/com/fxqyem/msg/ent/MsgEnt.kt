@@ -25,12 +25,8 @@ class MsgEnt : Serializable {
     var add: String? = null
 
 
-    constructor() {}
+    constructor()
 
-    constructor(tit: String, sub: String) {
-        this.tit = tit
-        this.sub = sub
-    }
     constructor(tit: String, sub: String,cmd: Int?) {
         this.tit = tit
         this.sub = sub
@@ -49,7 +45,7 @@ class MsgEnt : Serializable {
         this.useful = 0
         msgStr?:return
         val itms = msgStr.split(":")
-        if(itms.size>4&&itms[4]!=null&&StrUtil.isInt(itms[4])){
+        if(itms.size>4&&StrUtil.isInt(itms[4])){
             this.ver = itms[0]
             this.pno = itms[1]
             this.tit = itms[2]
@@ -69,9 +65,7 @@ class MsgEnt : Serializable {
 
     }
 
-    fun genMsgStr(): String{
-        return "$ver:$pno:$tit:$sub:$cmd:$add"
-    }
+    fun genMsgStr() = "$ver:$pno:$tit:$sub:$cmd:$add"
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -84,9 +78,7 @@ class MsgEnt : Serializable {
         return true
     }
 
-    override fun hashCode(): Int {
-        return ip?.hashCode() ?: 0
-    }
+    override fun hashCode() = ip?.hashCode() ?: 0
 
 
 }

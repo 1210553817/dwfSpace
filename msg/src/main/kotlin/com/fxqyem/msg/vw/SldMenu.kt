@@ -148,7 +148,6 @@ class SldMenu private constructor() {
     }
 
     private inner class MyOnTouchLsn : View.OnTouchListener {
-        private val contexta = context
         private var ny: Float = 0.toFloat()
         private var ny1: Float = 0.toFloat()
         private var ry: Float = 0.toFloat() //y坐标历史和最新y坐标

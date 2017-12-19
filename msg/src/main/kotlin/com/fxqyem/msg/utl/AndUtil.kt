@@ -12,24 +12,24 @@ import android.view.WindowManager
 import java.security.MessageDigest
 
 object AndUtil {
-    fun dp2Px(context: Context, dp: Float): Int {
-        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
-                dp, context.resources.displayMetrics).toInt()
-    }
-
-    fun px2Dp(context: Context, px: Float): Float {
-        val scale = context.resources.displayMetrics.density
-        return px / scale
-    }
-
-    fun sp2px(context: Context, spVal: Float): Int {
-        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,
-                spVal, context.resources.displayMetrics).toInt()
-    }
-
-    fun px2sp(context: Context, pxVal: Float): Float {
-        return pxVal / context.resources.displayMetrics.scaledDensity
-    }
+//    fun dp2Px(context: Context, dp: Float): Int {
+//        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
+//                dp, context.resources.displayMetrics).toInt()
+//    }
+//
+//    fun px2Dp(context: Context, px: Float): Float {
+//        val scale = context.resources.displayMetrics.density
+//        return px / scale
+//    }
+//
+//    fun sp2px(context: Context, spVal: Float): Int {
+//        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,
+//                spVal, context.resources.displayMetrics).toInt()
+//    }
+//
+//    fun px2sp(context: Context, pxVal: Float): Float {
+//        return pxVal / context.resources.displayMetrics.scaledDensity
+//    }
 
 
     /**
