@@ -81,9 +81,8 @@ class MemMsgLsAdapter(private val context: Context, var list: ArrayList<MsgEnt>?
             tlay?.backgroundResource = R.drawable.slkt_me
             rbtn?.backgroundDrawable = BitMapUtil.getMatrixDrawableByRid(context,R.mipmap.default_hicon, appColorArrayLightGreen)
 
-            mprt?.removeView(tit)
-            mprt?.addView(tit,0)
             hdlay?.backgroundResource = R.drawable.file_prgrs_bkgr
+            mprt?.layoutDirection = View.LAYOUT_DIRECTION_RTL
         }else{
             prtly?.removeRule(RelativeLayout.ALIGN_PARENT_RIGHT)
             prtly?.removeRule(RelativeLayout.ALIGN_PARENT_END)
@@ -96,9 +95,8 @@ class MemMsgLsAdapter(private val context: Context, var list: ArrayList<MsgEnt>?
             tlay?.backgroundResource = R.drawable.slkt_others
             lbtn?.backgroundResource = R.mipmap.default_hicon
 
-            mprt?.removeView(tit)
-            mprt?.addView(tit)
             hdlay?.backgroundResource = R.drawable.file_prgrs_bkg
+            mprt?.layoutDirection = View.LAYOUT_DIRECTION_LTR
         }
         tlay?.layoutParams = prtly
 
@@ -212,8 +210,8 @@ class MemMsgLsAdapter(private val context: Context, var list: ArrayList<MsgEnt>?
 
     fun createItmVw(ctx:Context): View {
 
-        val itmVw = ctx.relativeLayout {
-            backgroundResource = R.drawable.empty_itm_bkg
+        return ctx.relativeLayout {
+            backgroundColor = COLOR_WHITE
             descendantFocusability = ViewGroup.FOCUS_BLOCK_DESCENDANTS
             padding = dip(8)
 
@@ -340,7 +338,7 @@ class MemMsgLsAdapter(private val context: Context, var list: ArrayList<MsgEnt>?
 
                         textView{
                             id=R.id.msg_send_lay_msgls_itm_mtit
-                            gravity = Gravity.START or Gravity.CENTER_VERTICAL
+                            gravity = Gravity.LEFT or Gravity.CENTER_VERTICAL
                             padding = dip(10)
                             textColor = 0xff333333.toInt()
                             textSize =  16f
@@ -392,7 +390,6 @@ class MemMsgLsAdapter(private val context: Context, var list: ArrayList<MsgEnt>?
             }
         }
 
-        return itmVw
     }
 
     companion object {

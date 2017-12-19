@@ -55,6 +55,7 @@ class MsgSendLay{
                     textColor = 0xff555555.toInt()
                     backgroundResource = R.drawable.opt_menu_edittxt
                     minimumHeight = dip(38)
+                    padding = dip(8)
 
                 }.lparams{
                     width= matchParent
