@@ -14,6 +14,7 @@ class AppContext : Application() {
     var usub: String = ""
     //var hdicon = "17"
     var fileRcvPath="/"
+    var cpath="/"
 
     override fun onCreate() {
         super.onCreate()
@@ -68,6 +69,7 @@ class AppContext : Application() {
     private fun initFileRcvPath(){
         val path = if(SDCardUtils.sdCardPath.endsWith(File.separator))SDCardUtils.sdCardPath
                 else SDCardUtils.sdCardPath+File.separator
+        cpath = path
         fileRcvPath = PrefUtil.get(this,AppConstants.PREF_KEY_FILE_RCV_PATH,
                 path, AppConstants.PREF_NAME_PARAMS) as String
     }

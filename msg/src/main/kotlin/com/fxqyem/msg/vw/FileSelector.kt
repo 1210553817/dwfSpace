@@ -40,8 +40,9 @@ class FileSelector(val context: Context,type: Int): OnBackListener {
         stype = type and 0xF0
     }
 
-    fun open(basePath: String, fixed: Array<String>?) {
-        this.basePath = basePath
+    fun open(basePath: String?, fixed: Array<String>?) {
+        val cpath= basePath?:SDCardUtils.sdCardPath
+        this.basePath = cpath
         this.fixed = fixed
         contentView = genFileSelectorLay()
         val upLvBtn = contentView?.findViewById(R.id.file_slector_holder_uplvBtn) as Button?
@@ -50,7 +51,7 @@ class FileSelector(val context: Context,type: Int): OnBackListener {
         okBtn?.setOnClickListener(BtnLsn(-1))
         listView = contentView?.findViewById(R.id.file_slector_holder_scrVw) as ListView?
 
-        curPath = basePath
+        curPath = cpath
         val list = getFileLs(curPath)
         mAdapter = FileSelectorAdapter(list)
         listView?.adapter = mAdapter
@@ -76,7 +77,7 @@ class FileSelector(val context: Context,type: Int): OnBackListener {
 
 
         tmpSldMenua?.show(SldMenu.SHOW_TYPE_BOTTOM)
-        setTitPath(basePath)
+        setTitPath(cpath)
     }
 
     fun cancle() {
@@ -200,7 +201,7 @@ class FileSelector(val context: Context,type: Int): OnBackListener {
     }
 
     interface OnSelectOkListener {
-        fun onSelectOk(fpath: String?,file: File?)
+        fun onSelectOk(fpath: String?,file: File?,path: String)
     }
 
     internal inner class BtnLsn(private val pos: Int) : View.OnClickListener {
@@ -266,7 +267,7 @@ class FileSelector(val context: Context,type: Int): OnBackListener {
                         }
                     }
                     if (onSelectOkListener != null) {
-                        onSelectOkListener?.onSelectOk(cpath,curFileo)
+                        onSelectOkListener?.onSelectOk(cpath,curFileo,curPath)
                     }
                     cancle()
                 }

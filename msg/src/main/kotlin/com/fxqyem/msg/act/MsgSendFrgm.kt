@@ -161,10 +161,10 @@ class MsgSendFrgm : Fragment() , OnBackListener {
 
     private fun openFileSelector(){
         val fileSelector = FileSelector(activity,FileSelector.TYPE_FILE or FileSelector.TYPE_NO_STARTP)
-        val sdpth = SDCardUtils.sdCardPath
-        fileSelector.open(if (utilIsEmpty(sdpth)) "/" else sdpth, null)
+        val sdpth = AppContext.instance?.cpath
+        fileSelector.open(sdpth, null)
         fileSelector.setOnSelectOkListener(object: FileSelector.OnSelectOkListener{
-            override fun onSelectOk(fpath: String?,file: File?) {
+            override fun onSelectOk(fpath: String?,file: File?,path: String) {
                 val fbol = file?.exists()?:false
                 if(fbol&&fpath!=null) {
                     val itt = Intent(AppConstants.ACTION_SER_SEND_FILE)
@@ -172,6 +172,7 @@ class MsgSendFrgm : Fragment() , OnBackListener {
                     itt.putExtra("FPATH", fpath)
                     itt.putExtra("FNAME", file?.name)
                     mLocalBroadcastManager?.sendBroadcast(itt)
+                    AppContext.instance?.cpath = path
                 }
             }
         })

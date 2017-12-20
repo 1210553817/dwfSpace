@@ -240,10 +240,10 @@ class MsgActivity : MsgBaseActivity() , OnBackListener {
             when(itm?.cmd){
                 R.mipmap.folder_vtcl -> {
                     val pathSelector = FileSelector(this@MsgActivity,FileSelector.TYPE_DIR or FileSelector.TYPE_NO_STARTP)
-                    val sdpth = SDCardUtils.sdCardPath
+                    val sdpth = AppContext.instance?.fileRcvPath
                     pathSelector.open(sdpth, null)
                     pathSelector.setOnSelectOkListener(object: FileSelector.OnSelectOkListener{
-                        override fun onSelectOk(fpath: String?,file: File?) {
+                        override fun onSelectOk(fpath: String?,file: File?,path: String) {
                             if(fpath!=null) {
                                 AppContext.instance?.setRcvPath(fpath)
                             }
