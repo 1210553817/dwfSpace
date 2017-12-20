@@ -104,7 +104,7 @@ class KtTest {
 
     @Test
     fun testAllAPP(){
-        testB()
+        testC()
 
         //littleTest()
 

@@ -61,11 +61,10 @@ object LrcParser {
             if (inputReader != null) {
                 bufferReader = BufferedReader(inputReader)
             }
-            var temp: String? = null
             val p = Pattern.compile("(\\[[\\d:\\.\\[\\]]+\\])(.*)")
-            var lrcContent: String=""
+            var lrcContent=""
             var addCount = 0
-            temp = bufferReader!!.readLine()
+            var temp = bufferReader?.readLine()
             while (temp != null) {
                 val m = p.matcher(temp!!)
                 if (m.find()) {
@@ -87,10 +86,10 @@ object LrcParser {
                     lrcContent = lrcContent + temp
 
                 }
-                temp = bufferReader!!.readLine()
+                temp = bufferReader?.readLine()
             }
-            for (j in 0..addCount - 1) {
-                mes.add(lrcContent!!.trim { it <= ' ' })
+            for (j in 0 until addCount) {
+                mes.add(lrcContent.trim { it <= ' ' })
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -115,23 +114,23 @@ object LrcParser {
             timemills[i] = tims[i]
             messages[i] = mes[i]
         }
-        // sort()
-        var b = false
-        var tim = 0
-        var msg: String? = null
+        /*sort*/
+        var b = false //sort is over flag
         var m = 0
         while (m < timemills.size && !b) {
             b = true
-            for (n in 0..timemills.size - m - 1 - 1) {
+            var n = m
+            while(n<timemills.size-1){
                 if (timemills[n] > timemills[n + 1]) {
-                    tim = timemills[n]
-                    msg = messages[n]
+                    val tim = timemills[n]
+                    val msg = messages[n]
                     timemills[n] = timemills[n + 1]
                     timemills[n + 1] = tim
                     messages[n] = messages[n + 1]
                     messages[n + 1] = msg
                     b = false
                 }
+                n++
             }
             m++
         }
@@ -149,16 +148,18 @@ object LrcParser {
      */
     fun judgeEncode(bs: ByteArray): String {
         val ln = if (bs.size > 128) 128 else bs.size
-        for (i in 0..ln - 1) {
+        for (i in 0 until ln) {
             if (bs[i].toInt() and 240  == 240)
                 return "GBK"
             if (bs[i].toInt() and 224 == 192) {
+                if(i + 1>bs.size-1) return "utf-8"
                 if (bs[i + 1].toInt() and 192 == 128)
                     continue
                 else
                     return "GBK"
             }
             if (bs[i].toInt() and 240 == 224) {
+                if(i + 2>bs.size-1) return "utf-8"
                 if (bs[i + 1].toInt() and 192 == 128 && bs[i + 2] .toInt() and 192  == 128 ) {
                     continue
                 } else {
