@@ -13,13 +13,14 @@ class AppContext : Application() {
     var utit: String = ""
     var usub: String = ""
     //var hdicon = "17"
-    var fileRcvPath=SDCardUtils.sdCardPath+File.separator
+    var fileRcvPath="/"
 
     override fun onCreate() {
         super.onCreate()
         AppContext.instance = this
         initChatMp()
         initSelfInfo()
+        initFileRcvPath()
     }
 
     private fun initChatMp(){
@@ -63,6 +64,18 @@ class AppContext : Application() {
         PrefUtil.put(this, AppConstants.PREF_KEY_SELF_UNM,this.uname, AppConstants.PREF_NAME_PARAMS)
         PrefUtil.put(this, AppConstants.PREF_KEY_SELF_TIT,this.utit, AppConstants.PREF_NAME_PARAMS)
         PrefUtil.put(this, AppConstants.PREF_KEY_SELF_SUB,this.usub, AppConstants.PREF_NAME_PARAMS)
+    }
+    private fun initFileRcvPath(){
+        val path = if(SDCardUtils.sdCardPath.endsWith(File.separator))SDCardUtils.sdCardPath
+                else SDCardUtils.sdCardPath+File.separator
+        fileRcvPath = PrefUtil.get(this,AppConstants.PREF_KEY_FILE_RCV_PATH,
+                path, AppConstants.PREF_NAME_PARAMS) as String
+    }
+
+    fun setRcvPath(path: String?){
+        path?:return
+        fileRcvPath = if(path.endsWith(File.separator))path else path+File.separator
+        PrefUtil.put(this, AppConstants.PREF_KEY_FILE_RCV_PATH,fileRcvPath, AppConstants.PREF_NAME_PARAMS)
     }
 
     companion object{

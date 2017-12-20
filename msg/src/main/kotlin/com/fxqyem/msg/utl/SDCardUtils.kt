@@ -30,7 +30,7 @@ class SDCardUtils private constructor() {
                 if (isSDCardEnable)
                     return Environment.getExternalStorageDirectory().absolutePath
                 else
-                    return ""
+                    return "/"
             }
 
         /**

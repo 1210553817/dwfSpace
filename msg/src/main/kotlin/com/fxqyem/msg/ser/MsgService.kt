@@ -325,41 +325,42 @@ class MsgService : Service(){
                     nos.flush()
                     //start receive
                     inp = socket.getInputStream()
-                    val rcvPath = AppContext.instance?.fileRcvPath
-                    fos = FileOutputStream("$rcvPath$fnm")
+                    socket.soTimeout = 10000
                     val rbuff = ByteArray(2097152)
                     var len=inp.read(rbuff)
                     var part=0L
                     var dnsz=len
                     val perclen = fsz/100
                     progressFun(id,ip,0)
-                    while(len > 0) {
-                        fos.write(rbuff, 0, len)
-                        if(fsz in 1 .. dnsz) break
-                        len = inp.read(rbuff)
-                        dnsz += len
-                        if (perclen > 0){
-                            val pct = dnsz / perclen
-                            if (pct != part) {
-                                part = pct
-                                progressFun(id,ip,part)
+                    if(len>0) {
+                        val rcvPath = AppContext.instance?.fileRcvPath
+                        fos = FileOutputStream("$rcvPath$fnm")
+                        while (len > 0) {
+                            fos.write(rbuff, 0, len)
+                            if (fsz in 1..dnsz) break
+                            len = inp.read(rbuff)
+                            dnsz += len
+                            if (perclen > 0) {
+                                val pct = dnsz / perclen
+                                if (pct != part) {
+                                    part = pct
+                                    progressFun(id, ip, part)
+                                }
                             }
-                        }
 
+                        }
+                        fos.flush()
+                        db.updMsgMtype(id,3)
+                    }else{
+                        db.updMsgMtype(id,5)
+                        progressFun(id,ip,-2)
                     }
-                    if(dnsz>0)fos.flush()
-                    db.updMsgMtype(id,3)
                 }catch (te: SocketTimeoutException){
-                    val msgs = getResString(this@MsgService,R.string.rcv_file_timeout)
-                    loadAlert(msgs)
-                    Log.e(TAG,"rcvTcpFile error!${te.message}")
+                    Log.e(TAG,"rcvTcpFile timeout! ${te.message}")
                     db.updMsgMtype(id,4)
                     progressFun(id,ip,-1)
-
                 }catch(e: Exception){
-                    val msgs = getResString(this@MsgService,R.string.rcv_file_unknownerror)
-                    loadAlert(msgs)
-                    Log.e(TAG,"rcvTcpFile error!${e.message}")
+                    Log.e(TAG,"rcvTcpFile error! ${e.message}")
                     db.updMsgMtype(id,5)
                     progressFun(id,ip,-2)
                 }finally {
@@ -423,15 +424,11 @@ class MsgService : Service(){
                     }
                     db.updMsgMtype(id,3)
                 }catch (te: SocketTimeoutException){
-                    val msgs = getResString(this@MsgService,R.string.send_file_timeout)
-                    loadAlert(msgs)
-                    Log.d(TAG,msgs+te.message)
+                    Log.e(TAG,"sendTcpFile timeout! ${te.message}")
                     db.updMsgMtype(id,4)
                     progressFun(id,ip,-1)
                 }catch(e: Exception) {
-                    val msgs = getResString(this@MsgService,R.string.send_file_unknownerror)
-                    loadAlert(msgs)
-                    Log.d(TAG,msgs+e.message)
+                    Log.e(TAG,"sendTcpFile error! ${e.message}")
                     db.updMsgMtype(id,5)
                     progressFun(id,ip,-2)
                 }finally{

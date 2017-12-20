@@ -34,6 +34,7 @@ object AppConstants {
     val PREF_KEY_SELF_UNM = "k_SELF_UNM"
     val PREF_KEY_SELF_TIT = "k_SELF_TIT"
     val PREF_KEY_SELF_SUB = "k_SELF_SUB"
+    val PREF_KEY_FILE_RCV_PATH = "k_FILE_RCV_PATH"
 
     /**Db Names*/
     val DB_NAME_MSGDATAS = "msgdatas.db"

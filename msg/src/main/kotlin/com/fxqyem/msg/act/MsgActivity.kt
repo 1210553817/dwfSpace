@@ -25,8 +25,10 @@ import com.fxqyem.msg.lay.SettingLay
 import com.fxqyem.msg.ser.MsgService
 import com.fxqyem.msg.utl.BitMapUtil
 import com.fxqyem.msg.utl.PermissionUtils
+import com.fxqyem.msg.utl.SDCardUtils
 import com.fxqyem.msg.vw.*
 import org.jetbrains.anko.*
+import java.io.File
 import java.util.Stack
 
 /**
@@ -225,6 +227,7 @@ class MsgActivity : MsgBaseActivity() , OnBackListener {
         val setListVw = setVw.find<ListView>(R.id.setting_pglay_lsvw)
         val hiconBtn = setVw.find<ImageButton>(R.id.setting_pglay_hdicon_btn)
         val setAdp = SetLsAdapter(this, arrayListOf(
+                MsgEnt(getResString(this,R.string.setting_pglay_svpath),"",R.mipmap.folder_vtcl),
                 MsgEnt(getResString(this,R.string.setting_pglay_slfdo),"",R.mipmap.cus),
                 MsgEnt(getResString(this,R.string.about),"",R.mipmap.about),
                 MsgEnt(getResString(this,R.string.exit),"",R.mipmap.exit)
@@ -235,6 +238,18 @@ class MsgActivity : MsgBaseActivity() , OnBackListener {
             val adp = lsVw.adapter as SetLsAdapter?
             val itm = adp?.list?.get(position)
             when(itm?.cmd){
+                R.mipmap.folder_vtcl -> {
+                    val pathSelector = FileSelector(this@MsgActivity,FileSelector.TYPE_DIR or FileSelector.TYPE_NO_STARTP)
+                    val sdpth = SDCardUtils.sdCardPath
+                    pathSelector.open(sdpth, null)
+                    pathSelector.setOnSelectOkListener(object: FileSelector.OnSelectOkListener{
+                        override fun onSelectOk(fpath: String?,file: File?) {
+                            if(fpath!=null) {
+                                AppContext.instance?.setRcvPath(fpath)
+                            }
+                        }
+                    })
+                }
                 R.mipmap.cus -> {
                     val hdvw = SettingLay().createSelfVw(this@MsgActivity)
                     val unm = hdvw.find<EditText>(R.id.setting_pglay_slfdo_unm)
