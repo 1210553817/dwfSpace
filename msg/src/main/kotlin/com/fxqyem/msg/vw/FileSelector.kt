@@ -220,12 +220,12 @@ class FileSelector(val context: Context,type: Int): OnBackListener {
                         val top = itmv?.top?:0
                         scrollStack.add(Pair(indx,top))
                         curPath = cf.absolutePath
-                        adp.fsLs = getFileLs(curPath) ?: return
+                        adp.fsLs = getFileLs(curPath)
+                        adp.notifyDataSetChanged()
                         setTitPath(curPath)
                         setTitName(getResString(context,R.string.file_slector_holder_chsFile))
                         curFile = null
                         curFileo = null
-                        adp.notifyDataSetChanged()
                         listView?.setSelectionFromTop(0, 0)
                     } else {
                         setTitName(cf.name)
@@ -239,14 +239,13 @@ class FileSelector(val context: Context,type: Int): OnBackListener {
                         return
                     }
                     curPath = df.parentFile.absolutePath
-                    adp.fsLs = getFileLs(curPath) ?: return
-
+                    adp.fsLs = getFileLs(curPath)
+                    adp.notifyDataSetChanged()
                     setTitPath(curPath)
                     setTitName(getResString(context,R.string.file_slector_holder_chsFile))
                     curFile = null
                     curFileo = null
                     val pair=if(!scrollStack.isEmpty())scrollStack.pop() else null
-                    adp.notifyDataSetChanged()
                     listView?.setSelectionFromTop(pair?.first?:0, pair?.second?:0)
                 }
                 R.id.file_slector_holder_okBtn -> {
@@ -274,7 +273,6 @@ class FileSelector(val context: Context,type: Int): OnBackListener {
             }
         }
     }
-
 
     override fun onBackKeyUp(reqValue: Int, event: KeyEvent, reqCod: Int): Boolean {
         tmpSldMenua?.cancle()
