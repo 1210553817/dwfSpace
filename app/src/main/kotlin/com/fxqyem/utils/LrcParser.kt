@@ -147,19 +147,19 @@ object LrcParser {
      * @return
      */
     fun judgeEncode(bs: ByteArray): String {
-        val ln = if (bs.size > 128) 128 else bs.size
+        val ln = if (bs.size > 64) 64 else bs.size
         for (i in 0 until ln) {
             if (bs[i].toInt() and 240  == 240)
                 return "GBK"
             if (bs[i].toInt() and 224 == 192) {
-                if(i + 1>bs.size-1) return "utf-8"
+                if(i + 1>ln-1) return "utf-8"
                 if (bs[i + 1].toInt() and 192 == 128)
                     continue
                 else
                     return "GBK"
             }
             if (bs[i].toInt() and 240 == 224) {
-                if(i + 2>bs.size-1) return "utf-8"
+                if(i + 2>ln-1) return "utf-8"
                 if (bs[i + 1].toInt() and 192 == 128 && bs[i + 2] .toInt() and 192  == 128 ) {
                     continue
                 } else {
