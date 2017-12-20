@@ -3,6 +3,7 @@
     <string name="app_name">音乐</string>
     <!--main-->
     <string name="sld_settings">关于</string>
+    <string name="version_info">唯乐JustMusic_v1.3171127</string>
     <string name="sld_quit">退出</string>
     <string name="sld_ls_lsbkgSetting">列表背景设置</string>
     <string name="sld_ls_ctrlbkgSetting">播放背景设置</string>
@@ -17,7 +18,7 @@
     <string name="sld_ls_ctrlPlayMode3">随机播放</string>
     <string name="sld_ls_musicEffectSetting">音效设置</string>
     <string name="sld_ls_nightModelSetting">夜间模式</string>
-    <string name="sld_about_text">唯乐\nJustMusic version1.3171127)\n欢迎使用,唯乐追求简洁方便的音乐播放体验！\n任何意见和建议请联系\nEmail: mymbox@126.com</string>
+    <string name="sld_about_text">欢迎使用,唯乐追求简洁方便的音乐播放体验！\n任何意见和建议请联系\nEmail: mymbox@126.com</string>
     <!--file_slector_holder-->
     <string name="file_slector_holder_chsFile">选择文件</string>
     <string name="file_slector_holder_curPath">当前路径:</string>

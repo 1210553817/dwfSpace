@@ -10,6 +10,7 @@ import java.util.*
 import java.util.regex.Pattern
 
 val COLOR_TRANS=0x00000000.toInt()
+val COLOR_WHITE=0xffffffff.toInt()
 val appColorArray = floatArrayOf(
         0.1f,0f,0f,0.1f,0f,
         0f,0.35f,0f,0.35f,0f,

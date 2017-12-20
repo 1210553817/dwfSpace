@@ -1,5 +1,6 @@
 package com.fxqyem.lay
 
+import android.view.Gravity
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -7,10 +8,7 @@ import android.widget.TextView
 import com.fxqyem.R
 import com.fxqyem.act.MainActivity
 import com.fxqyem.act.SubActivity
-import com.fxqyem.vw.COLOR_TRANS
-import com.fxqyem.vw.getResColor
-import com.fxqyem.vw.getResDrawable
-import com.fxqyem.vw.getResString
+import com.fxqyem.vw.*
 import org.jetbrains.anko.*
 
 /**
@@ -18,24 +16,44 @@ import org.jetbrains.anko.*
  */
 class SubLay : AnkoComponent<SubActivity> {
     override fun createView(ui: AnkoContext<SubActivity>): View {
-        //var act = ui.owner
 
-        val coreVw = ui.linearLayout{
+        return ui.linearLayout{
+            backgroundColor = COLOR_WHITE
             orientation = LinearLayout.VERTICAL
+            padding = dip(10)
+
+            imageView {
+                imageResource = R.mipmap.ic_launcher
+
+            }.lparams {
+                width = wrapContent
+                height = wrapContent
+                gravity = Gravity.CENTER_HORIZONTAL
+            }
+
+            textView{
+                textColor = 0xff444444.toInt()
+                textSize = 16f
+                textResource = R.string.version_info
+                gravity = Gravity.CENTER
+
+            }.lparams{
+                width = matchParent
+                height = wrapContent
+            }
+
             textView{
                 id=R.id.subact_main_test_textvw
-                backgroundColor = 0x55000000.toInt()
-                textColor = 0xffdddddd.toInt()
+                textColor = 0xff555555.toInt()
+                textSize = 14f
                 textResource = R.string.sld_about_text
-                textAlignment = TextView.TEXT_ALIGNMENT_CENTER
+                gravity = Gravity.CENTER_HORIZONTAL or Gravity.TOP
 
             }.lparams{
                 width = matchParent
                 height = matchParent
             }
         }
-
-        return coreVw
 
     }
 
