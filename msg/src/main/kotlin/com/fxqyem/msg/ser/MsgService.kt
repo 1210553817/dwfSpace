@@ -326,7 +326,7 @@ class MsgService : Service(){
                     //start receive
                     inp = BufferedInputStream(socket.getInputStream(),2097152)
                     socket.soTimeout = 10000
-                    val rbuff = ByteArray(1024)
+                    val rbuff = ByteArray(4096)
                     var len=inp.read(rbuff)
                     var part=0L
                     var dnsz=len
@@ -400,9 +400,9 @@ class MsgService : Service(){
                     val length = nin.read(rbuff)
                     val remsg = String(rbuff, 0, length, Charset.forName("GBK"))
                     if(ckFun(pmsg,remsg)) {
-                        nos = BufferedOutputStream(socket.getOutputStream(),2097152)
+                        nos = socket.getOutputStream()
                         fin = BufferedInputStream(FileInputStream(file),2097152)
-                        val buf = ByteArray(1024)
+                        val buf = ByteArray(4096)
                         var len = fin.read(buf)
                         var part=0L
                         var dnsz=len
