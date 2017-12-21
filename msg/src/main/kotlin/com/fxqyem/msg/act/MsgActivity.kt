@@ -25,7 +25,6 @@ import com.fxqyem.msg.lay.SettingLay
 import com.fxqyem.msg.ser.MsgService
 import com.fxqyem.msg.utl.BitMapUtil
 import com.fxqyem.msg.utl.PermissionUtils
-import com.fxqyem.msg.utl.SDCardUtils
 import com.fxqyem.msg.vw.*
 import org.jetbrains.anko.*
 import java.io.File
@@ -135,8 +134,8 @@ class MsgActivity : MsgBaseActivity() , OnBackListener {
             cenViewPager?.currentItem=0
         }
         btmSetBtnPly.onClick {
-            chooseBtmItem(2)
-            cenViewPager?.currentItem=2
+            chooseBtmItem(1)
+            cenViewPager?.currentItem=1
         }
         //pager
         initMsgPager()

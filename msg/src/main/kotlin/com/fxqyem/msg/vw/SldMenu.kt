@@ -43,7 +43,7 @@ class SldMenu private constructor() {
         showFlag = true
         this.showTp = showTp
         if (measureFlag) return
-        hdVw!!.setOnTouchListener(MyOnTouchLsn())
+        hdVw?.setOnTouchListener(MyOnTouchLsn())
         val hdoff = hdLyloc[1]
         if (showTp == SHOW_TYPE_BOTTOM) {
             doMenuAnimation(sHeight, sHeight - hdoff - sldVwHt!!, 500, true)
@@ -57,8 +57,8 @@ class SldMenu private constructor() {
      */
     fun cancle() {
         showFlag = false
-        val params = sldVw!!.layoutParams as FrameLayout.LayoutParams
-        val k = params.topMargin
+        val params = sldVw?.layoutParams as FrameLayout.LayoutParams
+        val k = params?.topMargin
         if (showTp == SHOW_TYPE_BOTTOM) {
             doMenuAnimation(k, sHeight, 400, false)
         } else {
