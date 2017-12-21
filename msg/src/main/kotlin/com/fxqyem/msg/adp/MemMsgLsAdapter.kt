@@ -14,6 +14,11 @@ import com.fxqyem.msg.utl.BitMapUtil
 import com.fxqyem.msg.utl.DbUtil
 import com.fxqyem.msg.vw.*
 import org.jetbrains.anko.*
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context.CLIPBOARD_SERVICE
+
+
 
 class MemMsgLsAdapter(private val context: Context, var list: ArrayList<MsgEnt>?) : BaseAdapter(){
     var load2Btm = 1
@@ -124,6 +129,7 @@ class MemMsgLsAdapter(private val context: Context, var list: ArrayList<MsgEnt>?
         }
         prgrs?.visibility = View.GONE
         tlay?.setOnClickListener(BtnListener(position))
+        tlay?.setOnLongClickListener(BtnLongLsn(position))
 
         return convertView
     }
@@ -149,12 +155,29 @@ class MemMsgLsAdapter(private val context: Context, var list: ArrayList<MsgEnt>?
                         val db = DbUtil(context)
                         db.updMsgMtype(itm.id,itm.mtype)
 
+                    }else{
+                        val myClipboard = context.getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
+                        val myClip = ClipData.newPlainText("text", itm.add)
+                        myClipboard.primaryClip = myClip
                     }
                 }
 
             }
 
 
+        }
+    }
+
+    internal  inner class BtnLongLsn(private val pos: Int): View.OnLongClickListener{
+        override fun onLongClick(v: View?): Boolean {
+            val itmid = list?.get(pos)?.id
+            list?.removeAt(pos)
+            if(itmid!=null) {
+                val db = DbUtil(context)
+                db.rmMsgItm(arrayOf(itmid))
+            }
+            notifyDataSetChanged()
+            return true
         }
     }
 

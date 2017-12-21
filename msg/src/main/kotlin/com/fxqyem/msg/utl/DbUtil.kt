@@ -302,11 +302,11 @@ class DbUtil(private val context: Context) {
         close()
     }
 
-    private fun rmMsgItm(ids: Array<Int>?) {
+    fun rmMsgItm(ids: Array<Long>?) {
         rmItm(AppConstants.DB_TBNAME_MSGLS,"mid",ids)
     }
 
-    private fun rmItm(tbnm: String,colnm: String,ids: Array<Int>?) {
+    private fun rmItm(tbnm: String,colnm: String,ids: Array<Long>?) {
         ids?:return
         if(ids.isEmpty())return
         val idsk = StringBuilder()

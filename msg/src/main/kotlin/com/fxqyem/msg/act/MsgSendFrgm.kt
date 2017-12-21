@@ -19,6 +19,7 @@ import com.fxqyem.msg.vw.utilNotNull
 import org.jetbrains.anko.onClick
 import android.widget.AbsListView
 import com.fxqyem.msg.vw.FileSelector
+import org.jetbrains.anko.onItemLongClick
 import java.io.File
 
 
