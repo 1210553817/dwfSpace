@@ -11,13 +11,12 @@ import java.util.Stack
 import com.fxqyem.msg.R
 import com.fxqyem.msg.act.MsgBaseActivity
 import com.fxqyem.msg.ben.AppConstants
-import com.fxqyem.msg.ben.BackLsnHolder
-import com.fxqyem.msg.ben.OnBackListener
+import com.fxqyem.msg.ben.BackKeyLsn
 import com.fxqyem.msg.utl.AndUtil
 import com.fxqyem.msg.utl.BitMapUtil
 import com.fxqyem.msg.utl.SDCardUtils
 
-class FileSelector(val context: Context,type: Int): OnBackListener {
+class FileSelector(val context: Context,type: Int): BackKeyLsn {
     private var tmpSldMenua: SldMenu? = null
     private var listView: ListView? = null
     private var contentView: View? = null
@@ -61,10 +60,10 @@ class FileSelector(val context: Context,type: Int): OnBackListener {
                  val act = context as MsgBaseActivity
                 when(state){
                     SldMenu.MENU_STATE_GONE_START -> {
-                        act.popBackLsnStack(1, this@FileSelector)
+                        act.popBack(null)
                     }
                     SldMenu.MENU_STATE_SHOW -> {
-                        act.push2BackLsnStack(BackLsnHolder(1, this@FileSelector))
+                        act.pushBack(1, this@FileSelector)
                     }
                     SldMenu.MENU_STATE_GONE -> {
                         tmpSldMenua = null
@@ -274,7 +273,7 @@ class FileSelector(val context: Context,type: Int): OnBackListener {
         }
     }
 
-    override fun onBackKeyUp(reqValue: Int, event: KeyEvent, reqCod: Int): Boolean {
+    override fun onBackKeyUp(event: KeyEvent?, holder: BackKeyLsn.BackHolder): Boolean {
         tmpSldMenua?.cancle()
         return false
     }
@@ -286,7 +285,7 @@ class FileSelector(val context: Context,type: Int): OnBackListener {
     private fun genFileSelectorLay(): View{
         return context.linearLayout {
                 orientation = LinearLayout.VERTICAL
-                setBackgroundResource(R.drawable.opt_menu_ctn)
+                backgroundColor = COLOR_WHITE
 
                 textView {
                     id= R.id.file_slector_holder_tit
@@ -354,6 +353,7 @@ class FileSelector(val context: Context,type: Int): OnBackListener {
 
                 linearLayout {
                     orientation = LinearLayout.HORIZONTAL
+                    backgroundResource = R.drawable.opt_menu_tit
                     setGravity(Gravity.CENTER)
                     padding=dip(7)
 

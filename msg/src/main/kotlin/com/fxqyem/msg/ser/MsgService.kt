@@ -324,9 +324,9 @@ class MsgService : Service(){
                     nos.write(buf,0,buf.size)
                     nos.flush()
                     //start receive
-                    inp = socket.getInputStream()
+                    inp = BufferedInputStream(socket.getInputStream(),2097152)
                     socket.soTimeout = 10000
-                    val rbuff = ByteArray(2097152)
+                    val rbuff = ByteArray(1024)
                     var len=inp.read(rbuff)
                     var part=0L
                     var dnsz=len
@@ -334,7 +334,7 @@ class MsgService : Service(){
                     progressFun(id,ip,0)
                     if(len>0) {
                         val rcvPath = AppContext.instance?.fileRcvPath
-                        fos = FileOutputStream("$rcvPath$fnm")
+                        fos = BufferedOutputStream(FileOutputStream("$rcvPath$fnm"),2097152)
                         while (len > 0) {
                             fos.write(rbuff, 0, len)
                             if (fsz in 1..dnsz) break
@@ -400,9 +400,9 @@ class MsgService : Service(){
                     val length = nin.read(rbuff)
                     val remsg = String(rbuff, 0, length, Charset.forName("GBK"))
                     if(ckFun(pmsg,remsg)) {
-                        nos = socket.getOutputStream()
-                        fin = FileInputStream(file)
-                        val buf = ByteArray(2097152)
+                        nos = BufferedOutputStream(socket.getOutputStream(),2097152)
+                        fin = BufferedInputStream(FileInputStream(file),2097152)
+                        val buf = ByteArray(1024)
                         var len = fin.read(buf)
                         var part=0L
                         var dnsz=len

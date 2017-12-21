@@ -18,7 +18,7 @@ class MsgLay : AnkoComponent<MsgActivity> {
 
         val coreVw = ui.relativeLayout {
             id = R.id.msg_lay_core_mainhd_ly
-            backgroundResource = R.drawable.opt_menu_tit
+            backgroundColor = COLOR_LIGHTGREY0
 
 
             act.btmLy = relativeLayout {

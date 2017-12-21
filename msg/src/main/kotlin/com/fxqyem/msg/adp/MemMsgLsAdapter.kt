@@ -11,6 +11,7 @@ import com.fxqyem.msg.R
 import com.fxqyem.msg.ben.AppConstants
 import com.fxqyem.msg.ent.MsgEnt
 import com.fxqyem.msg.utl.BitMapUtil
+import com.fxqyem.msg.utl.DbUtil
 import com.fxqyem.msg.vw.*
 import org.jetbrains.anko.*
 
@@ -113,7 +114,7 @@ class MemMsgLsAdapter(private val context: Context, var list: ArrayList<MsgEnt>?
         }else if(itm?.mtype == 4){
             hdlay?.visibility = View.VISIBLE
             atttxt?.textResource = R.string.timeout
-            atttxt?.textColor = COLOR_RED
+            atttxt?.textColor = COLOR_ORANGE
         }else if(itm?.mtype == 5){
             hdlay?.visibility = View.VISIBLE
             atttxt?.textResource = R.string.error
@@ -143,6 +144,11 @@ class MemMsgLsAdapter(private val context: Context, var list: ArrayList<MsgEnt>?
                         itt.putExtra("FNM", itm.fname)
                         itt.putExtra("FSZ", itm.fsize)
                         mLocalBroadcastManager.sendBroadcast(itt)
+                        //update status
+                        itm.mtype=4
+                        val db = DbUtil(context)
+                        db.updMsgMtype(itm.id,itm.mtype)
+
                     }
                 }
 
@@ -186,7 +192,7 @@ class MemMsgLsAdapter(private val context: Context, var list: ArrayList<MsgEnt>?
             item?.mtype = 3
         }else if(percent == -1L){
             prgrs?.visibility = View.INVISIBLE
-            atttxt?.textColor = COLOR_RED
+            atttxt?.textColor = COLOR_ORANGE
             atttxt?.textResource = R.string.timeout
             item?.mtype = 4
         }else{

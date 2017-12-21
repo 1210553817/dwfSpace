@@ -11,20 +11,18 @@ import com.fxqyem.msg.adp.MemLsAdapter
 import com.fxqyem.msg.adp.MemMsgLsAdapter
 import com.fxqyem.msg.ben.AppConstants
 import com.fxqyem.msg.ben.AppContext
-import com.fxqyem.msg.ben.OnBackListener
+import com.fxqyem.msg.ben.BackKeyLsn
 import com.fxqyem.msg.ent.MsgEnt
 import com.fxqyem.msg.lay.MsgSendLay
 import com.fxqyem.msg.utl.DbUtil
 import com.fxqyem.msg.vw.utilNotNull
 import org.jetbrains.anko.onClick
 import android.widget.AbsListView
-import com.fxqyem.msg.utl.SDCardUtils
 import com.fxqyem.msg.vw.FileSelector
-import com.fxqyem.msg.vw.utilIsEmpty
 import java.io.File
 
 
-class MsgSendFrgm : Fragment() , OnBackListener {
+class MsgSendFrgm : Fragment() , BackKeyLsn {
     private var mLocalBroadcastManager: LocalBroadcastManager? = null
     var memMsgLsView: ListView? = null
     var citem: MsgEnt? = null
@@ -178,7 +176,7 @@ class MsgSendFrgm : Fragment() , OnBackListener {
         })
     }
 
-    override fun onBackKeyUp(reqValue: Int, event: KeyEvent, reqCod: Int): Boolean {
+    override fun onBackKeyUp(event: KeyEvent?, holder: BackKeyLsn.BackHolder): Boolean {
 //        when (reqCod) {
 //
 //        }

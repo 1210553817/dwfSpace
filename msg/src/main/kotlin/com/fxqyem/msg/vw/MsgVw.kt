@@ -17,6 +17,7 @@ val COLOR_LIGHTGREEN1=0xff32CD32.toInt()
 val COLOR_ORANGE=0xFFFFA500.toInt()
 val COLOR_RED=0xFFFF0000.toInt()
 val COLOR_LIGHTGREY=0xffaaaaaa.toInt()
+val COLOR_LIGHTGREY0=0xffdddddd.toInt()
 val COLOR_LIGHTGREY1=0xffcdcdcd.toInt()
 val COLOR_LIGHTGREY2=0xffececec.toInt()
 

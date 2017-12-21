@@ -102,7 +102,7 @@ class SettingLay {
     fun createSelfVw(ctx: Context): View{
         return ctx.linearLayout {
             orientation = LinearLayout.VERTICAL
-            setBackgroundResource(R.drawable.opt_menu_ctn)
+            backgroundResource = R.drawable.opt_menu_tit
 
             textView {
                 id= R.id.file_slector_holder_tit

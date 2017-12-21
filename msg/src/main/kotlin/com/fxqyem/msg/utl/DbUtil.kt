@@ -71,9 +71,8 @@ class DbUtil(private val context: Context) {
               selectionArgs: Array<String>?, groupBy: String?, having: String?,
               orderBy: String,limit: String): Cursor? {
         var cursor: Cursor? = null
+        db?:return cursor
         try {
-            if (db == null)
-                return null
             cursor = db?.query(tableName, columns, selection, selectionArgs,
                     groupBy, having, orderBy,limit)
         } catch (e: Exception) {
@@ -85,9 +84,8 @@ class DbUtil(private val context: Context) {
 
     fun insert(tableName: String, values: ContentValues): Int {
         var flag = -1
+        db?:return flag
         try {
-            if (db == null)
-                return flag
             db!!.insert(tableName, null, values)
             val cursor = db?.rawQuery("select last_insert_rowid() from " + tableName, null)
             cursor?.moveToFirst()
@@ -104,6 +102,7 @@ class DbUtil(private val context: Context) {
 
     fun insertUseMap(tableName: String?, parameter: Map<*, *>): Int {
         var flag = -1
+        db?:return flag
         val columns = StringBuilder()
         val values = StringBuilder()
         var i = 0
@@ -139,9 +138,8 @@ class DbUtil(private val context: Context) {
     fun update(tableName: String, values: ContentValues,
                whereClause: String, whereArgs: Array<String>): Int {
         var count = -1
+        db?:return count
         try {
-            if (db == null)
-                return count
             count = db?.update(tableName, values, whereClause, whereArgs)?:count
             return count
         } catch (e: Exception) {
@@ -153,6 +151,7 @@ class DbUtil(private val context: Context) {
 
     fun delete(tableName: String?, whereClause: String?, whereArgs: Array<String>?): Int {
         var count = -1
+        db?:return count
         try {
             count = db?.delete(tableName, whereClause, whereArgs)?:count
         } catch (e: Exception) {
@@ -163,9 +162,8 @@ class DbUtil(private val context: Context) {
     }
 
     fun doForSql(sql: String) {
+        db?:return
         try {
-            if (db == null)
-                return
             db?.execSQL(sql)
         } catch (e: Exception) {
             Log.e(TAG, "doForSql error! \n" + e.message)
@@ -176,9 +174,8 @@ class DbUtil(private val context: Context) {
 
     fun queryForSql(sql: String, selectionArgs: Array<String>): Cursor? {
         var cursor: Cursor? = null
+        db?:return cursor
         try {
-            if (db == null)
-                return cursor
             cursor = db?.rawQuery(sql, selectionArgs)
         } catch (e: Exception) {
             e.printStackTrace()
@@ -188,12 +185,13 @@ class DbUtil(private val context: Context) {
     }
 
     fun close() {
-        if (db != null) db!!.close()
-        if (dbHelper != null) dbHelper!!.close()
+        db?.close()
+        dbHelper?.close()
     }
 
 
     fun OpenDbCommon(sdBasePath: String, dbPath: String, dbName: String, context: Context?, factory: SQLiteDatabase.CursorFactory?): SQLiteDatabase? {
+        context?:return db
         if (SDCardUtils.isSDCardEnable) {
             openSdDatabase(sdBasePath, dbPath, dbName)
         } else {
