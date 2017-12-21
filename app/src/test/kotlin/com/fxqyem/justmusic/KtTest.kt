@@ -104,13 +104,13 @@ class KtTest {
 
     @Test
     fun testAllAPP(){
-        testC()
+        testB()
 
-        //littleTest()
+        //littleTestXM()
 
     }
 
-    fun littleTest(){
+    fun littleTestXM(){
         /*
          *  {"songId":"1776156051","songName":"告白气球"}
          *  {"songId":"376049","songName":"晴天"}
