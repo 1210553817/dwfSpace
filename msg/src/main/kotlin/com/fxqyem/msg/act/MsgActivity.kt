@@ -16,8 +16,7 @@ import com.fxqyem.msg.adp.MemLsAdapter
 import com.fxqyem.msg.adp.SetLsAdapter
 import com.fxqyem.msg.ben.AppConstants
 import com.fxqyem.msg.ben.AppContext
-import com.fxqyem.msg.ben.BackLsnHolder
-import com.fxqyem.msg.ben.OnBackListener
+import com.fxqyem.msg.ben.BackKeyLsn
 import com.fxqyem.msg.ent.MsgEnt
 import com.fxqyem.msg.lay.MsgLay
 import com.fxqyem.msg.lay.MsgPagerLay
@@ -28,12 +27,11 @@ import com.fxqyem.msg.utl.PermissionUtils
 import com.fxqyem.msg.vw.*
 import org.jetbrains.anko.*
 import java.io.File
-import java.util.Stack
 
 /**
  * Created by Dwf on 2017-12-7
  */
-class MsgActivity : MsgBaseActivity() , OnBackListener {
+class MsgActivity : MsgBaseActivity() , BackKeyLsn {
     var msgHdLy: android.widget.RelativeLayout? = null
     /*btm*/
     var btmLy: android.widget.RelativeLayout? = null
@@ -69,16 +67,11 @@ class MsgActivity : MsgBaseActivity() , OnBackListener {
     /*params*/
     private var thisState: Int = 0
 
-    //Keys
-    private var backLsnStack: Stack<BackLsnHolder>? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         MsgLay().setContentView(this)
         //req permissions
         requestPermissions()
-        //keys
-        backLsnStack = Stack()
         //views
         initViews()
         initFragments()
@@ -272,10 +265,10 @@ class MsgActivity : MsgBaseActivity() , OnBackListener {
                         override fun onStateChange(state: Int) {
                             when(state){
                                 SldMenu.MENU_STATE_GONE_START -> {
-                                    popBackLsnStack(BK_KEY_SELF_MN, this@MsgActivity)
+                                    popBack(null)
                                 }
                                 SldMenu.MENU_STATE_SHOW -> {
-                                    push2BackLsnStack(BackLsnHolder(BK_KEY_SELF_MN, this@MsgActivity))
+                                    pushBack(BK_KEY_SELF_MN,this@MsgActivity)
                                 }
                                 SldMenu.MENU_STATE_GONE -> {
                                     selfSldMn = null
@@ -336,25 +329,11 @@ class MsgActivity : MsgBaseActivity() , OnBackListener {
 //        }
 //    }
 
-    override fun onBackKeyUp(reqValue: Int, event: KeyEvent, reqCod: Int): Boolean {
-        when (reqCod) {
+    override fun onBackKeyUp(event: KeyEvent?, holder: BackKeyLsn.BackHolder): Boolean {
+        when (holder.code) {
             BK_KEY_SELF_MN -> selfSldMn?.cancle()
         }
         return true
-    }
-
-    override fun push2BackLsnStack(obkLsnHd: BackLsnHolder) {
-        backLsnStack?.push(obkLsnHd)
-    }
-
-    override fun popBackLsnStack(reqCod: Int, bkLsn: OnBackListener):BackLsnHolder?{
-        val bol = backLsnStack?.isEmpty()?:true
-        if (!bol) {
-            val bkhd = backLsnStack?.peek()
-            if (bkhd != null && bkhd.onBackListener === bkLsn && bkhd.requestCode == reqCod)
-                return backLsnStack?.pop()
-        }
-        return null
     }
     /*Handler*/
 //    inner class MsgHandler: Handler(){
@@ -454,14 +433,8 @@ class MsgActivity : MsgBaseActivity() , OnBackListener {
 
     override fun onKeyUp(keyCode: Int, event: KeyEvent): Boolean {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            val bol = backLsnStack?.isEmpty()?:true
-            if (!bol) {
-                val bkhd = backLsnStack?.pop()
-                val obkLsn = bkhd?.onBackListener
-                return obkLsn?.onBackKeyUp(bkhd.requestValue, event, bkhd.requestCode)?:false
-            }
+            if(super.onBaseBackKeyUp(keyCode,event))return true
         } else if (keyCode == KeyEvent.KEYCODE_MENU) {
-
             return true
         }
         return super.onKeyUp(keyCode, event)
