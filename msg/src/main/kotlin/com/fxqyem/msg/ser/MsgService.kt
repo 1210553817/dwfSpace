@@ -37,10 +37,10 @@ class MsgService : Service(){
         //reHandler = ReHandler()
         mReceiver = MyBroadcastReceiver()
         val filter = IntentFilter()
-        filter.addAction(AppConstants.ACTION_SER_LOAD_MEM_ITEMS)
         filter.addAction(AppConstants.ACTION_SER_SEND_MSG)
         filter.addAction(AppConstants.ACTION_SER_GET_FILE)
         filter.addAction(AppConstants.ACTION_SER_SEND_FILE)
+        filter.addAction(AppConstants.ACTION_SER_RELOAD_MEMLS)
         filter.addAction(AppConstants.ACTION_SER_ACT_RESUME)
         filter.addAction(AppConstants.ACTION_SER_ACT_STOP)
         mLocalBroadcastManager?.registerReceiver(mReceiver, filter)
@@ -87,9 +87,6 @@ class MsgService : Service(){
         override fun onReceive(context: Context, intent: Intent) {
             val bun: Bundle? = intent.extras
             when(intent.action){
-                AppConstants.ACTION_SER_LOAD_MEM_ITEMS -> {
-                    sendOnlineMsg()
-                }
                 AppConstants.ACTION_SER_SEND_MSG -> {
                     val ip = bun?.getString("IP")
                     val txt = bun?.getString("TXT")
@@ -143,6 +140,9 @@ class MsgService : Service(){
                         })
                     }
                 }
+                AppConstants.ACTION_SER_RELOAD_MEMLS -> {
+                    initSocket()
+                }
                 AppConstants.ACTION_SER_ACT_RESUME -> {
                     onActResume()
                 }
@@ -192,9 +192,11 @@ class MsgService : Service(){
             loadAlert(getResString(this,R.string.no_internet_connection))
             return
         }
-        if(null!=msgServer){
+        if(msgServer?.isConnected == true){
             sendOnlineMsg()
             return
+        }else{
+            msgServer?.close()
         }
         object: Thread() {
             override fun run() {

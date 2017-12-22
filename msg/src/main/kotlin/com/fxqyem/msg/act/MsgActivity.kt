@@ -211,7 +211,7 @@ class MsgActivity : MsgBaseActivity() , BackKeyLsn {
     private fun reloadMemList(){
         val memAdp = memListVw?.adapter as MemLsAdapter?
         memAdp?.list?.clear()
-        val itt = Intent(AppConstants.ACTION_SER_LOAD_MEM_ITEMS)
+        val itt = Intent(AppConstants.ACTION_SER_RELOAD_MEMLS)
         mLocalBroadcastManager?.sendBroadcast(itt)
     }
     /*setting pager*/
