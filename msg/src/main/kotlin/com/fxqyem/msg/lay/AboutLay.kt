@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.LinearLayout
 import com.fxqyem.msg.R
 import com.fxqyem.msg.act.AboutActivity
+import com.fxqyem.msg.vw.COLOR_WHITE
 import org.jetbrains.anko.*
 
 
@@ -12,8 +13,9 @@ class AboutLay : AnkoComponent<AboutActivity> {
     override fun createView(ui: AnkoContext<AboutActivity>): View {
 
         return ui.linearLayout{
+            backgroundColor = COLOR_WHITE
             orientation = LinearLayout.VERTICAL
-            padding = dip(10)
+            padding = dip(20)
             imageView {
                 imageResource = R.mipmap.ic_launcher
 
@@ -21,6 +23,7 @@ class AboutLay : AnkoComponent<AboutActivity> {
                 width = wrapContent
                 height = wrapContent
                 gravity = Gravity.CENTER_HORIZONTAL
+                margin = dip(6)
             }
 //            .onClick {
 //                ui.owner.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/dwfHub/dwfSpace/")))
@@ -34,6 +37,7 @@ class AboutLay : AnkoComponent<AboutActivity> {
             }.lparams{
                 width = matchParent
                 height = wrapContent
+                margin = dip(6)
             }
             textView{
                 textColor = 0xff555555.toInt()
@@ -44,6 +48,7 @@ class AboutLay : AnkoComponent<AboutActivity> {
             }.lparams{
                 width = matchParent
                 height = matchParent
+                margin = dip(6)
             }
         }
 

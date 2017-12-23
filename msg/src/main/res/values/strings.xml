@@ -12,7 +12,7 @@
     <string name="cancle">取消</string>
     <string name="no_sdcard_permission">没有存储卡访问权限，将无法保存消息记录！</string>
     <string name="version_info">MSG_v0.1171220</string>
-    <string name="about_info">本软件开发基于IPMSG协议，用于和飞秋、飞鸽传书通信，支持发送消息，文件.\nEmail: mymbox@126.com</string>
+    <string name="about_info">本软件开发基于IPMSG协议，用于和飞秋、飞鸽传书通信，支持发送消息，文件.\n\nEmail: mymbox@126.com</string>
     <!--MsgLay / btm -->
     <string name="memls">好友</string>
     <string name="setting">设置</string>
