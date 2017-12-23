@@ -136,7 +136,6 @@ class MsgSendLay{
                     isFocusableInTouchMode = false
                     cacheColorHint = COLOR_TRANS
                     dividerHeight = 0
-                    visibility = View.VISIBLE
                 }.lparams {
                     width = matchParent
                     height = matchParent

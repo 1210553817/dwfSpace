@@ -56,19 +56,15 @@
     <item name="msg_send_lay_sendBtn" type="id"/>
     <item name="msg_send_lay_attaBtn" type="id"/>
     <item name="msg_send_lay_msgls" type="id"/>
+    <item name="msg_send_lay_msgls_itm_hd" type="id"/>
     <item name="msg_send_lay_msgls_itm_liconbtn" type="id"/>
-    <item name="msg_send_lay_msgls_itm_riconbtn" type="id"/>
     <item name="msg_send_lay_msgls_itm_licon" type="id"/>
-    <item name="msg_send_lay_msgls_itm_ricon" type="id"/>
-    <item name="msg_send_lay_msgls_itm_uname" type="id"/>
     <item name="msg_send_lay_msgls_itm_tlay" type="id"/>
     <item name="msg_send_lay_msgls_itm_attalay" type="id"/>
     <item name="msg_send_lay_msgls_itm_attaicon" type="id"/>
     <item name="msg_send_lay_msgls_itm_attaprgrs" type="id"/>
     <item name="msg_send_lay_msgls_itm_attatxt" type="id"/>
     <item name="msg_send_lay_msgls_itm_mtit" type="id"/>
-    <item name="msg_send_lay_msgls_itm_stit" type="id"/>
-    <item name="msg_send_lay_msgls_itm_status" type="id"/>
     <!-- setting pager -->
     <item name="setting_pglay__toply" type="id"/>
     <item name="setting_pglay_hdicon_btn" type="id"/>

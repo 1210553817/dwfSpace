@@ -10,14 +10,13 @@ import android.widget.*
 import com.fxqyem.msg.R
 import com.fxqyem.msg.ben.AppConstants
 import com.fxqyem.msg.ent.MsgEnt
-import com.fxqyem.msg.utl.BitMapUtil
 import com.fxqyem.msg.utl.DbUtil
 import com.fxqyem.msg.vw.*
 import org.jetbrains.anko.*
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context.CLIPBOARD_SERVICE
-
+import com.fxqyem.msg.utl.BitMapUtil
 
 
 class MemMsgLsAdapter(private val context: Context, var list: ArrayList<MsgEnt>?) : BaseAdapter(){
@@ -33,101 +32,84 @@ class MemMsgLsAdapter(private val context: Context, var list: ArrayList<MsgEnt>?
     override fun getView(position: Int, convert: View?, arg2: ViewGroup): View {
         var convertView = convert
         val vwHolder: VwHolder
+        val hd: LinearLayout?
         val tlay: LinearLayout?
         val tit: TextView?
-        val sub: TextView?
         val lbtn: ImageButton?
-        val rbtn: ImageButton?
         val licon: ImageView?
-        val ricon: ImageView?
+        val attalay: RelativeLayout?
+        val attaprgrs: ProgressBar?
+        val attatxt: TextView?
         if (convertView == null) {
             convertView = createItmVw(context)
+            hd = convertView.findViewById(R.id.msg_send_lay_msgls_itm_hd) as LinearLayout?
             tlay = convertView.findViewById(R.id.msg_send_lay_msgls_itm_tlay) as LinearLayout?
             tit = convertView.findViewById(R.id.msg_send_lay_msgls_itm_mtit) as TextView?
-            sub = convertView.findViewById(R.id.msg_send_lay_msgls_itm_stit) as TextView?
             lbtn = convertView.findViewById(R.id.msg_send_lay_msgls_itm_liconbtn) as ImageButton?
-            rbtn = convertView.findViewById(R.id.msg_send_lay_msgls_itm_riconbtn) as ImageButton?
             licon = convertView.findViewById(R.id.msg_send_lay_msgls_itm_licon) as ImageView?
-            ricon = convertView.findViewById(R.id.msg_send_lay_msgls_itm_ricon) as ImageView?
+            attalay = convertView?.findViewById(R.id.msg_send_lay_msgls_itm_attalay) as RelativeLayout?
+            attaprgrs = convertView?.findViewById(R.id.msg_send_lay_msgls_itm_attaprgrs) as ProgressBar?
+            attatxt = convertView?.findViewById(R.id.msg_send_lay_msgls_itm_attatxt) as TextView?
             vwHolder = VwHolder()
-            //vwHolder?.unm = unm
+            vwHolder.hd = hd
             vwHolder.tlay = tlay
             vwHolder.tit = tit
-            vwHolder.sub = sub
             vwHolder.lbtn = lbtn
-            vwHolder.rbtn = rbtn
             vwHolder.licon = licon
-            vwHolder.ricon = ricon
+            vwHolder.attalay = attalay
+            vwHolder.attaprgrs = attaprgrs
+            vwHolder.attatxt = attatxt
             convertView.tag = vwHolder
         } else {
             vwHolder = convertView.tag as VwHolder
+            hd = vwHolder.hd
             tlay = vwHolder.tlay
             tit = vwHolder.tit
-            //sub = vwHolder.sub
             lbtn = vwHolder.lbtn
-            rbtn = vwHolder.rbtn
             licon = vwHolder.licon
-            ricon = vwHolder.ricon
+            attalay = vwHolder.attalay
+            attaprgrs = vwHolder.attaprgrs
+            attatxt = vwHolder.attatxt
         }
         val itm =list?.get(position)
         tit?.text = itm?.add
-        /*ajust position*/
-        val prtly = tlay?.layoutParams as RelativeLayout.LayoutParams?
-        val hdlay = tlay?.findViewById(R.id.msg_send_lay_msgls_itm_attalay) as FrameLayout?
-        val mprt = tit?.parent as LinearLayout?
+        /*in out*/
         if(itm?.type==1) {
-            prtly?.removeRule(RelativeLayout.ALIGN_PARENT_LEFT)
-            prtly?.removeRule(RelativeLayout.ALIGN_PARENT_START)
-            prtly?.addRule(RelativeLayout.ALIGN_PARENT_RIGHT)
-            prtly?.addRule(RelativeLayout.ALIGN_PARENT_END)
-            lbtn?.visibility = View.INVISIBLE
-            rbtn?.visibility = View.VISIBLE
-            licon?.visibility = View.INVISIBLE
-            ricon?.visibility = View.VISIBLE
+            hd?.layoutDirection = View.LAYOUT_DIRECTION_RTL
+            lbtn?.backgroundDrawable = BitMapUtil.getMatrixDrawableByRid(context,R.mipmap.default_hicon, appColorArrayLightGreen)
+            licon?.imageResource = R.drawable.file_prgrs_bkgr
             tlay?.backgroundResource = R.drawable.slkt_me
-            rbtn?.backgroundDrawable = BitMapUtil.getMatrixDrawableByRid(context,R.mipmap.default_hicon, appColorArrayLightGreen)
-
-            hdlay?.backgroundResource = R.drawable.file_prgrs_bkgr
-            mprt?.layoutDirection = View.LAYOUT_DIRECTION_RTL
+            tlay?.layoutDirection = View.LAYOUT_DIRECTION_RTL
+            attalay?.backgroundResource = R.drawable.file_prgrs_bkgr
         }else{
-            prtly?.removeRule(RelativeLayout.ALIGN_PARENT_RIGHT)
-            prtly?.removeRule(RelativeLayout.ALIGN_PARENT_END)
-            prtly?.addRule(RelativeLayout.ALIGN_PARENT_LEFT)
-            prtly?.addRule(RelativeLayout.ALIGN_PARENT_START)
-            rbtn?.visibility = View.INVISIBLE
-            lbtn?.visibility = View.VISIBLE
-            ricon?.visibility = View.INVISIBLE
-            licon?.visibility = View.VISIBLE
-            tlay?.backgroundResource = R.drawable.slkt_others
+            hd?.layoutDirection = View.LAYOUT_DIRECTION_LTR
             lbtn?.backgroundResource = R.mipmap.default_hicon
-
-            hdlay?.backgroundResource = R.drawable.file_prgrs_bkg
-            mprt?.layoutDirection = View.LAYOUT_DIRECTION_LTR
+            licon?.imageResource = R.drawable.file_prgrs_bkg
+            tlay?.backgroundResource = R.drawable.slkt_others
+            tlay?.layoutDirection = View.LAYOUT_DIRECTION_LTR
+            attalay?.backgroundResource = R.drawable.file_prgrs_bkg
         }
-        tlay?.layoutParams = prtly
-
-        val prgrs = hdlay?.findViewById(R.id.msg_send_lay_msgls_itm_attaprgrs) as ProgressBar?
-        val atttxt = hdlay?.findViewById(R.id.msg_send_lay_msgls_itm_attatxt) as TextView?
+        /*atta*/
         if(itm?.mtype == 1 || itm?.mtype == 2 ){
-            hdlay?.visibility = View.VISIBLE
-            atttxt?.textResource = R.string.file
-            atttxt?.textColor = COLOR_ORANGE
+            attalay?.visibility = View.VISIBLE
+            attatxt?.textResource = R.string.file
+            attatxt?.textColor = COLOR_ORANGE
         }else if(itm?.mtype == 3 ){
-            hdlay?.visibility = View.VISIBLE
-            atttxt?.textResource = R.string.complete
-            atttxt?.textColor = COLOR_LIGHTGREEN
+            attalay?.visibility = View.VISIBLE
+            attatxt?.textResource = R.string.complete
+            attatxt?.textColor = COLOR_LIGHTGREEN
         }else if(itm?.mtype == 4){
-            hdlay?.visibility = View.VISIBLE
-            atttxt?.textResource = R.string.timeout
-            atttxt?.textColor = COLOR_ORANGE
+            attalay?.visibility = View.VISIBLE
+            attatxt?.textResource = R.string.timeout
+            attatxt?.textColor = COLOR_ORANGE
         }else if(itm?.mtype == 5){
-            hdlay?.visibility = View.VISIBLE
-            atttxt?.textResource = R.string.error
-            atttxt?.textColor = COLOR_RED
+            attalay?.visibility = View.VISIBLE
+            attatxt?.textResource = R.string.error
+            attatxt?.textColor = COLOR_RED
         }else{
-            hdlay?.visibility = View.GONE
+            attalay?.visibility = View.GONE
         }
-        prgrs?.visibility = View.GONE
+        attaprgrs?.visibility = View.GONE
         tlay?.setOnClickListener(BtnListener(position))
         tlay?.setOnLongClickListener(BtnLongLsn(position))
 
@@ -197,17 +179,16 @@ class MemMsgLsAdapter(private val context: Context, var list: ArrayList<MsgEnt>?
         val item = list?.get(pos)
         val itm = listVw.getChildAt(pos-fir)
         val vwhd = itm.tag as VwHolder
-        val tlay = vwhd.tlay
-        val hdlay = tlay?.findViewById(R.id.msg_send_lay_msgls_itm_attalay) as FrameLayout?
-        val prgrs = hdlay?.findViewById(R.id.msg_send_lay_msgls_itm_attaprgrs) as ProgressBar?
-        val atttxt = hdlay?.findViewById(R.id.msg_send_lay_msgls_itm_attatxt) as TextView?
-        prgrs?.max = 100
-        prgrs?.progress = percent.toInt()
-        atttxt?.text = String.format("%d%s",percent,"%")
+        val attalay = vwhd.attalay
+        val prgrs = vwhd.attaprgrs
+        val atttxt = vwhd.attatxt
+        attalay?.visibility = View.VISIBLE
         if(percent in 0 .. 99){
-            hdlay?.visibility = View.VISIBLE
             prgrs?.visibility = View.VISIBLE
             atttxt?.textColor = COLOR_ORANGE
+            prgrs?.max = 100
+            prgrs?.progress = percent.toInt()
+            atttxt?.text = String.format("%d%s",percent,"%")
         }else if(percent>=100L){
             prgrs?.visibility = View.INVISIBLE
             atttxt?.textColor = COLOR_LIGHTGREEN
@@ -228,194 +209,94 @@ class MemMsgLsAdapter(private val context: Context, var list: ArrayList<MsgEnt>?
     }
 
     internal inner class VwHolder {
+        var hd: LinearLayout? = null
         var tlay: LinearLayout? = null
         var tit: TextView? = null
-        var sub: TextView? = null
         var lbtn: ImageButton? = null
-        var rbtn: ImageButton? = null
         var licon: ImageView? = null
-        var ricon: ImageView? = null
+        var attalay: RelativeLayout? = null
+        var attaprgrs: ProgressBar? = null
+        var attatxt: TextView? = null
     }
 
-    fun createItmVw(ctx:Context): View {
+    private fun createItmVw(ctx:Context): View {
 
-        return ctx.relativeLayout {
+        return ctx.linearLayout {
+            id = R.id.msg_send_lay_msgls_itm_hd
             backgroundColor = COLOR_WHITE
             descendantFocusability = ViewGroup.FOCUS_BLOCK_DESCENDANTS
-            padding = dip(8)
+            setPadding(dip(2),dip(6),dip(2),dip(6))
 
             imageButton {
                 id = R.id.msg_send_lay_msgls_itm_liconbtn
-                backgroundColor = 0xffececec.toInt()
-
             }.lparams{
-                width=dip(40)
-                height=dip(40)
-                alignParentLeft()
-                alignParentStart()
+                width=dip(36)
+                height=dip(36)
             }
 
-            imageButton {
-                id = R.id.msg_send_lay_msgls_itm_riconbtn
-                backgroundColor = 0xffececec.toInt()
-
+            imageView {
+                id = R.id.msg_send_lay_msgls_itm_licon
             }.lparams{
-                width=dip(40)
-                height=dip(40)
-                alignParentRight()
-                alignParentEnd()
+                width= dip(2)
+                height= dip(4)
+                topMargin = dip(17)
             }
 
-            relativeLayout {
+            linearLayout {
+                id = R.id.msg_send_lay_msgls_itm_tlay
+                orientation = LinearLayout.HORIZONTAL
 
-                imageView {
-                    id = R.id.msg_send_lay_msgls_itm_licon
-                    backgroundColor = COLOR_LIGHTGREY1
-                    backgroundResource = R.drawable.chat_triangle_l
+                relativeLayout{
+                    id = R.id.msg_send_lay_msgls_itm_attalay
+                    visibility = View.GONE
+                    backgroundResource = R.drawable.file_prgrs_bkg
 
-                }.lparams{
-                    width= dip(5)
-                    height= dip(5)
-                    alignParentLeft()
-                    alignParentStart()
-                    topMargin = dip(17)
-                }
-
-                imageView {
-                    id = R.id.msg_send_lay_msgls_itm_ricon
-                    backgroundResource = R.drawable.chat_triangle_r
-
-                }.lparams{
-                    width=dip(5)
-                    height=dip(5)
-                    alignParentRight()
-                    alignParentEnd()
-                    topMargin = dip(17)
-                }
-
-                linearLayout {
-                    id = R.id.msg_send_lay_msgls_itm_tlay
-                    orientation = LinearLayout.VERTICAL
-                    backgroundResource = R.drawable.slkt_others
-
-                    textView{
-                        id=R.id.msg_send_lay_msgls_itm_stit
-                        gravity = Gravity.END or Gravity.CENTER_VERTICAL
-                        textColor = 0xffdddddd.toInt()
-                        textSize =  12f
-                        maxLines= 1
-                        visibility = View.GONE
+                    progressBar {
+                        id = R.id.msg_send_lay_msgls_itm_attaprgrs
+                        progressDrawable = getResDrawable(ctx,R.drawable.progressbar_style)
+                        padding = 0
 
                     }.lparams{
-                        width= matchParent
-                        height= wrapContent
-
+                        width=dip(36)
+                        height=dip(36)
+                        centerVertically()
                     }
 
-                    linearLayout {
-                        orientation = LinearLayout.HORIZONTAL
+                    textView{
+                        id=R.id.msg_send_lay_msgls_itm_attatxt
+                        gravity = Gravity.CENTER
+                        textColor = 0xff333333.toInt()
+                        textSize =  12f
 
 
-                        frameLayout {
-                            id = R.id.msg_send_lay_msgls_itm_attalay
-                            visibility = View.GONE
-                            backgroundResource = R.drawable.file_prgrs_bkg
-
-                            linearLayout{
-                                orientation = LinearLayout.HORIZONTAL
-                                progressBar {
-                                    id = R.id.msg_send_lay_msgls_itm_attaprgrs
-                                    progressDrawable = getResDrawable(ctx,R.drawable.progressbar_style)
-                                    padding = 0
-
-                                }.lparams{
-                                    width=dip(38)
-                                    height=dip(38)
-                                    gravity = Gravity.CENTER_VERTICAL
-                                }
-                            }.lparams {
-                                width = wrapContent
-                                height = matchParent
-                            }
-
-                            linearLayout{
-                                orientation = LinearLayout.HORIZONTAL
-                                textView{
-                                    id=R.id.msg_send_lay_msgls_itm_attatxt
-                                    gravity = Gravity.CENTER
-                                    textColor = 0xff333333.toInt()
-                                    textSize =  12f
-
-
-                                }.lparams{
-                                    width=dip(38)
-                                    height=dip(38)
-                                    gravity = Gravity.CENTER_VERTICAL
-                                }
-                            }.lparams {
-                                width = wrapContent
-                                height = matchParent
-                            }
-
-
-                        }.lparams {
-                            width = wrapContent
-                            height = matchParent
-                            gravity = Gravity.CENTER_VERTICAL
-                           //margin = dip(3)
-                        }
-
-                        textView{
-                            id=R.id.msg_send_lay_msgls_itm_mtit
-                            gravity = Gravity.LEFT or Gravity.CENTER_VERTICAL
-                            padding = dip(10)
-                            textColor = 0xff333333.toInt()
-                            textSize =  16f
-
-                        }.lparams{
-                            width= wrapContent
-                            height= wrapContent
-
-                        }
-
-//                        imageView{
-//                            id = R.id.msg_send_lay_msgls_itm_status
-//                            backgroundColor = 0xffececec.toInt()
-//                            visibility = View.GONE
-//
-//                        }.lparams{
-//                            width = dip(5)
-//                            height = dip(5)
-//                            gravity = Gravity.RIGHT
-//                            rightMargin = dip(3)
-//                            bottomMargin = dip(3)
-//
-//                        }
-
-
-                    }.lparams {
-                        width = wrapContent
-                        height = wrapContent
+                    }.lparams{
+                        width=dip(36)
+                        height=dip(36)
+                        centerVertically()
                     }
-
 
                 }.lparams {
                     width = wrapContent
-                    height = wrapContent
-                    rightOf(R.id.msg_send_lay_msgls_itm_liconbtn)
-                    leftOf(R.id.msg_send_lay_msgls_itm_riconbtn)
-                    leftMargin = dip(2)
-                    rightMargin = dip(2)
+                    height = matchParent
                 }
 
+                textView{
+                    id=R.id.msg_send_lay_msgls_itm_mtit
+                    gravity = Gravity.LEFT or Gravity.CENTER_VERTICAL
+                    padding = dip(10)
+                    textColor = 0xff333333.toInt()
+                    textSize =  16f
 
+                }.lparams{
+                    width= wrapContent
+                    height= wrapContent
 
-            }.lparams{
-                width= wrapContent
-                height= wrapContent
-                rightOf(R.id.msg_send_lay_msgls_itm_liconbtn)
-                leftOf(R.id.msg_send_lay_msgls_itm_riconbtn)
+                }
 
+            }.lparams {
+                width = wrapContent
+                height = wrapContent
+                marginEnd = dip(38)
             }
         }
 

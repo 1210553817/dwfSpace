@@ -1,5 +1,9 @@
 <resources>
-    <style name="DwfTheme" parent="@android:style/Theme.Holo.Light.NoActionBar">
-
+    <style name="DwfTheme">
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:scrollbarSize">2dip</item>
+        <item name="android:scrollbarThumbHorizontal">@drawable/scrl_bar</item>
+        <item name="android:scrollbarThumbVertical">@drawable/scrl_bar</item>
     </style>
 </resources>
