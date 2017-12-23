@@ -253,7 +253,6 @@ class MemMsgLsAdapter(private val context: Context, var list: ArrayList<MsgEnt>?
 
                     progressBar {
                         id = R.id.msg_send_lay_msgls_itm_attaprgrs
-                        progressDrawable = getResDrawable(ctx,R.drawable.progressbar_style)
                         padding = 0
 
                     }.lparams{
