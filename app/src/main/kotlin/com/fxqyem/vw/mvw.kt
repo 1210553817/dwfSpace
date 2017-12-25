@@ -92,6 +92,11 @@ fun utilRandInt(min: Int, max: Int): Int {
     val randomNum = rand.nextInt((max - min) + 1) + min
     return randomNum
 }
+fun utilRandLong(): Long {
+    val rand = Random()
+    val randomNum = rand.nextLong()
+    return randomNum
+}
 fun utilGetRandomColorArray(): FloatArray{
     val r = utilRandInt(0, 90).toFloat()/100
     val g = utilRandInt(0, 90).toFloat()/100

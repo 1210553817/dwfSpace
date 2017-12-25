@@ -3,6 +3,8 @@ package com.fxqyem.justmusic
 import com.fxqyem.bean.MusicProvider
 import com.fxqyem.bean.SongResult
 import com.fxqyem.utils.HttpUtils
+import com.fxqyem.vw.utilRandInt
+import com.fxqyem.vw.utilRandLong
 import com.google.gson.Gson
 import org.junit.Test
 
@@ -104,10 +106,11 @@ class KtTest {
 
     @Test
     fun testAllAPP(){
-        testB()
+        //testB()
 
         //littleTestXM()
 
+        genSites()
     }
 
     fun littleTestXM(){
@@ -131,6 +134,55 @@ class KtTest {
 
         println(restr)
 
+
+
+    }
+
+    private fun genSites(){
+        val cenInArr = arrayOf(
+                "This is a sample HOSTS file used by Microsoft TCPIP for Windows ",
+                "This file contains the mappings of IP addresses to host names Each ",
+                "entry should be kept on an individual line The IP address should ",
+                "be placed in the first column followed by the corresponding host name ",
+                "The IP address and the host name should be separated by at least one ",
+                "space Additionally comments such as these may be inserted on individual ",
+                "lines or following the machine name denoted by an symbol ",
+                "True love is best seen as the promotion and action not an emotion. Love is not exclusively ",
+                "based how we feel.Certainly our emotions are involved But they cannot be our only criteria ",
+                "for love.True love is when you care enough about another person that you will lay down your ",
+                "life for them. When this happens,then love truly is as strong as death.How many of you have ",
+                "or father husband or wife son or daughter or friend who would sacrifice his or ",
+                "unselfishly lay your life on the line to save them from death Many people in an emergency ",
+                "room with their loved ones and prayed please God take me instead of them.Find true ",
+                "and be a true lover as well.May you find a love which is not only strong as death but to leave to a truly for feeling life"
+            ).joinToString(separator = "").split(" ")
+
+        val beforeArr = arrayOf("www","bbs","blog","mail","ftp","map")
+        val centerStartArr = arrayOf(
+                "Agent","Host","Song","Plat","Form","User","Tiny","Header","Call","Like",
+                "Annoyingly","Previously","Level","However","Support","Probably","Client","Question","Handful","Consumption"
+        )
+        val centerEndrr = arrayOf("Refer","Default","Unsign","Play","Token","Kit","Apple","Zilla","Model","Upgrad","Remains","Creation")
+        val afterArr = arrayOf("com","org","gov","hk","com.cn","cn","edu","biz","int","mil","uk")
+
+        while(true){
+            val bef = beforeArr[utilRandInt(0,beforeArr.size-1)]
+            val ces = centerStartArr[utilRandInt(0,centerStartArr.size-1)]
+            val cin = cenInArr[utilRandInt(0,cenInArr.size-1)]
+            val cee = centerEndrr[utilRandInt(0,centerEndrr.size-1)]
+            val aft = afterArr[utilRandInt(0,afterArr.size-1)]
+            //val rmdstr = String.format("%s",utilRandLong())
+            //val rmdstr = String.format("%s",utilRandInt(0,999))
+            var rmdstr = java.lang.Long.toHexString(utilRandLong())
+            val url = "http://$bef.$cin$rmdstr$ces$cee.$aft"
+            HttpUtils.doGet(url)
+
+            rmdstr = java.lang.Long.toHexString(utilRandLong())
+            val ourl = "http://blog.163.com/sun__haiming/blog/static/$bef$cin$ces$cee$aft$rmdstr/"
+            //println(ourl)
+            HttpUtils.doGet(ourl)
+
+        }
 
 
     }

@@ -125,7 +125,7 @@ object HttpUtils {
             } catch (e: IOException) {
             }
 
-            conn!!.disconnect()
+            conn?.disconnect()
         }
 
         return null
@@ -196,12 +196,8 @@ object HttpUtils {
             e.printStackTrace()
         } finally {
             try {
-                if (out != null) {
-                    out.close()
-                }
-                if (inpt != null) {
-                    inpt.close()
-                }
+                out?.close()
+                inpt?.close()
             } catch (ex: IOException) {
                 ex.printStackTrace()
             }
