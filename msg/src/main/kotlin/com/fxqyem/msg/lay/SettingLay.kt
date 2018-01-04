@@ -129,11 +129,11 @@ class SettingLay {
                     textColor = 0xff555555.toInt()
                     backgroundResource = R.drawable.opt_menu_edittxt
                     hintResource = R.string.setting_pglay_slfdo_unm
-                    leftPadding = dip(10)
+                    padding = dip(8)
 
                 }.lparams{
                     width= matchParent
-                    height= dip(36)
+                    height= wrapContent
                     gravity= Gravity.CENTER_VERTICAL
                 }
 
@@ -153,11 +153,11 @@ class SettingLay {
                     textColor = 0xff555555.toInt()
                     backgroundResource = R.drawable.opt_menu_edittxt
                     hintResource = R.string.setting_pglay_slfdo_tit
-                    leftPadding = dip(10)
+                    padding = dip(8)
 
                 }.lparams{
                     width= matchParent
-                    height= dip(36)
+                    height= wrapContent
                     gravity= Gravity.CENTER_VERTICAL
                 }
 
@@ -177,11 +177,11 @@ class SettingLay {
                     textColor = 0xff555555.toInt()
                     backgroundResource = R.drawable.opt_menu_edittxt
                     hintResource = R.string.setting_pglay_slfdo_sub
-                    leftPadding = dip(10)
+                    padding = dip(8)
 
                 }.lparams{
                     width= matchParent
-                    height= dip(36)
+                    height= wrapContent
                     gravity= Gravity.CENTER_VERTICAL
                 }
 
