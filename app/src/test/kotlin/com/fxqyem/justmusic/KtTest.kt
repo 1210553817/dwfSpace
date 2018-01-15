@@ -140,7 +140,7 @@ class KtTest {
 
     private fun genSites(){
         val cenInArr = arrayOf(
-                "This is a sample HOSTS file used by Microsoft TCPIP for Windows ",
+                "a sample HOSTS file used by Microsoft TCPIP for Windows ",
                 "This file contains the mappings of IP addresses to host names Each ",
                 "entry should be kept on an individual line The IP address should ",
                 "be placed in the first column followed by the corresponding host name ",
@@ -154,16 +154,22 @@ class KtTest {
                 "or father husband or wife son or daughter or friend who would sacrifice his or ",
                 "unselfishly lay your life on the line to save them from death Many people in an emergency ",
                 "room with their loved ones and prayed please God take me instead of them.Find true ",
-                "and be a true lover as well.May you find a love which is not only strong as death but to leave to a truly for feeling life"
+                "and be a true lover as well.May you find a love which is not only strong as death but to leave to a truly for feeling life",
+                "The production and consumption of top-quality ham is the subject of the same awe and mystery as the making of fine wine. Cutting de-boned jamón de bellota on a ham-slicing machine is regarded as sacrilege. The leg must be bolted on to a frame called a jamonero and then cut by hand using a long narrow blade. Most towns in the ham-producing areas of Extremadura Castilla y León and Andalucía hold solemn ham-slicing competitions often attended by hundreds of spectators."
             ).joinToString(separator = "").split(" ")
 
-        val beforeArr = arrayOf("www","bbs","blog","mail","ftp","map")
+        val beforeArr = arrayOf("www","bbs","blog","mail","ftp","map","wap","m","news","chat","doc","api")
         val centerStartArr = arrayOf(
-                "Agent","Host","Song","Plat","Form","User","Tiny","Header","Call","Like",
-                "Annoyingly","Previously","Level","However","Support","Probably","Client","Question","Handful","Consumption"
+                "Since ","Agent","Host","Song","Plat","Form","User","Tiny","Header","Call","Like",
+                "Annoyingly","Previously","Level","However","Support","Probably","Client","Question","Handful","Consumption",
+                "Fake","Maybe","Unqualified","Examination","Identity","Force","Simulate","Intellectual","Perhaps",
+                "Cannes","Shaggy","Sacred","Toward","Domestic","Depends","Unmask"
         )
-        val centerEndrr = arrayOf("Refer","Default","Unsign","Play","Token","Kit","Apple","Zilla","Model","Upgrad","Remains","Creation")
-        val afterArr = arrayOf("com","org","gov","hk","com.cn","cn","edu","biz","int","mil","uk")
+        val centerEndrr = arrayOf("Refer","Default","Unsign","Play","Token","Kit","Apple","Zilla","Model",
+                "Upgrad","Remains","Creation","Inauthentic","Doubt","Pictures","Adaptation","Spawned","Acclaimed","Particular",
+                "Chalamet","Academic","Hammer","Sundance","Festival","January","Culture","Photography",
+                "Released","Classics","Universe","Holmes","Industry","Transformative","Pattinson")
+        val afterArr = arrayOf("com","org","gov","hk","com.cn","cn","edu","biz","int","mil","uk","cc","tw","net","tv","us","uk","fr")
 
         while(true){
             val bef = beforeArr[utilRandInt(0,beforeArr.size-1)]
@@ -174,13 +180,12 @@ class KtTest {
             //val rmdstr = String.format("%s",utilRandLong())
             //val rmdstr = String.format("%s",utilRandInt(0,999))
             var rmdstr = java.lang.Long.toHexString(utilRandLong())
-            val url = "http://$bef.$cin$rmdstr$ces$cee.$aft"
+            var suffix="s"
+            val url = "http://$bef.$cin$rmdstr$ces$cee$suffix.$aft"
             HttpUtils.doGet(url)
-
-            rmdstr = java.lang.Long.toHexString(utilRandLong())
-            val ourl = "http://blog.163.com/sun__haiming/blog/static/$bef$cin$ces$cee$aft$rmdstr/"
+            //val ourl = "http://blog.163.com/sun__haiming/blog/static/$bef$cin$ces$cee$aft$rmdstr/"
             //println(ourl)
-            HttpUtils.doGet(ourl)
+            //HttpUtils.doGet(url)
 
         }
 
