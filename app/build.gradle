@@ -45,13 +45,14 @@ dependencies {
     //    })
     compile 'com.android.support:support-v4:23.4.0'
     compile 'com.android.support:design:23.4.0'
-    compile 'org.jetbrains.kotlin:kotlin-stdlib:1.2.10'
+    compile 'org.jetbrains.kotlin:kotlin-stdlib:1.2.30'
     compile 'org.jetbrains.anko:anko-sdk25:0.10.0-beta-1'
     compile 'org.jetbrains.anko:anko-design:0.9-beta1'
     compile 'org.jetbrains.anko:anko-support-v4:0.9-beta1'
     //    compile 'org.jetbrains.anko:anko-appcompat-v7:0.10.0-beta-1'
     //    compile 'com.android.support:appcompat-v7:23.0.0'
     compile 'com.google.code.gson:gson:2.8.2'
+    compile 'commons-codec:commons-codec:1.11'
     compile files('libs/BASE64Encoder.jar')
 
     testCompile 'junit:junit:4.12'

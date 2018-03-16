@@ -184,8 +184,7 @@ object HttpUtils {
                 out.flush()
             }
             // 定义BufferedReader输入流来读取URL的响应
-            inpt = BufferedReader(
-                    InputStreamReader(conn.inputStream))
+            inpt = BufferedReader(InputStreamReader(conn.inputStream))
             var line: String?
             line = inpt.readLine()
             while (line != null) {

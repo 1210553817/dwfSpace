@@ -4,14 +4,99 @@ import com.fxqyem.bean.MusicProvider
 import com.fxqyem.bean.SongResult
 import com.fxqyem.utils.HttpUtils
 import com.fxqyem.vw.utilRandInt
-import com.fxqyem.vw.utilRandLong
 import com.google.gson.Gson
+import org.apache.commons.codec.binary.Base64
+import org.apache.commons.codec.binary.Hex
 import org.junit.Test
+import java.util.*
+import javax.crypto.Cipher
+import javax.crypto.spec.IvParameterSpec
+import javax.crypto.spec.SecretKeySpec
 
 /**
  * Created by Dwf on 2017/8/31.
  */
 class KtTest {
+
+    private fun testA(){
+        val songs: List<SongResult>? = MusicProvider.getWyLs("周杰伦",1,3)
+        songs?:return
+        for(song in songs){
+            println(Gson().toJson(song))
+            val surl = MusicProvider.getWyPlayUrl(song.songId,0)
+            println(surl)
+            val lurl = MusicProvider.getWyLrc(song.songId)
+            println(lurl)
+            println("----------------")
+
+        }
+
+    }
+
+    private fun wyMusicDetailTest(){
+        var sid = "418603077"
+        val heads = HashMap<String, String>()
+        heads.put("X-REAL-IP", generateChinaRandomIP())
+        heads.put("Referrer", "http://music.163.com/")
+
+        var params="{\"method\":\"post\",\"url\":\"http://music.163.com/api/song/enhance/player/url\","+
+                "\"params\":{\"ids\":[\"$sid\"],\"br\":128000}" +
+                "}"
+        var encrypted = encrypt(params)
+        var result = HttpUtils.doPost("http://music.163.com/api/linux/forward", "eparams=$encrypted", heads )
+        println(result)
+    }
+
+    fun encrypt(raw: String): String? {
+        var scrt = "7246674226682325323F5E6544673A51"
+        val encrypted: ByteArray?
+        try {
+            encrypted = encrypt(raw, Hex.decodeHex(scrt.toCharArray()))
+            return String(Hex.encodeHex(encrypted)).toUpperCase()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return null
+    }
+
+    @Throws(Exception::class)
+    fun encrypt(sSrc: String, sKey: ByteArray): ByteArray? {
+        return encrypt(sSrc.toByteArray(charset("utf-8")),sKey)
+    }
+    @Throws(Exception::class)
+    fun encrypt(sSrc: ByteArray, sKey: ByteArray): ByteArray? {
+        return encrypt(sSrc, sKey,null)
+    }
+    @Throws(Exception::class)
+    fun encrypt(sSrc: ByteArray, sKey: ByteArray?, iv: ByteArray?): ByteArray? {
+        if (sKey == null) {
+            print("Key为空null")
+            return null
+        }
+        // 判断Key是否为16位
+        if (sKey.size != 16) {
+            print("Key长度不是16位")
+            return null
+        }
+        val skeySpec = SecretKeySpec(sKey, "AES")
+        var ivspec: IvParameterSpec? = null
+        if (iv != null) {
+            ivspec = IvParameterSpec(iv)
+        }
+        val cipher: Cipher
+        if (ivspec == null) {
+            cipher = Cipher.getInstance("AES/ECB/PKCS5Padding")//"算法/模式/补码方式"
+            cipher.init(Cipher.ENCRYPT_MODE, skeySpec)
+        } else {
+            cipher = Cipher.getInstance("AES/CBC/PKCS5Padding")
+            cipher.init(Cipher.ENCRYPT_MODE, skeySpec, ivspec)
+        }
+        return cipher.doFinal(sSrc)
+    }
+    fun generateChinaRandomIP(): String {
+        val ip = "47.93.50." + (1 + Random().nextInt(255))
+        return ip
+    }
 
     fun testB(){
        val songs: List<SongResult>? = MusicProvider.getXmLs("周杰伦",1,10)
@@ -106,11 +191,12 @@ class KtTest {
 
     @Test
     fun testAllAPP(){
-        //testB()
+        //wyMusicDetailTest()
+        testA()
 
         //littleTestXM()
 
-        genSites()
+        //genSites()
     }
 
     fun littleTestXM(){
@@ -179,7 +265,8 @@ class KtTest {
             val aft = afterArr[utilRandInt(0,afterArr.size-1)]
             //val rmdstr = String.format("%s",utilRandLong())
             //val rmdstr = String.format("%s",utilRandInt(0,999))
-            var rmdstr = java.lang.Long.toHexString(utilRandLong())
+            //var rmdstr = java.lang.Long.toHexString(utilRandLong())
+            var rmdstr ="s"
             var suffix="s"
             val url = "http://$bef.$cin$rmdstr$ces$cee$suffix.$aft"
             HttpUtils.doGet(url)

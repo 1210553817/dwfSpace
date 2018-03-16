@@ -6,6 +6,7 @@ import com.fxqyem.vw.utilIsInt
 import com.google.gson.Gson
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
+import org.apache.commons.codec.binary.Hex
 import sun.misc.BASE64Decoder
 import sun.misc.BASE64Encoder
 import java.math.BigInteger
@@ -107,7 +108,7 @@ object MusicProvider {
 //	}
 
 	//解析lrc歌词
-	private fun getWyLrc(sid: String?): String? {
+	fun getWyLrc(sid: String?): String? {
 		val url = "http://music.163.com/api/song/lyric?os=pc&id=$sid&lv=-1&kv=-1&tv=-1"
 		val html = doGetWithCookie(url, true)
 		html?.contains("uncollected") ?: return null
@@ -118,59 +119,8 @@ object MusicProvider {
 	//获取lrc歌词
 	private fun getWyLrcUrl(sid: String?)="http://music.163.com/api/song/lyric?os=pc&id=$sid&lv=-1&kv=-1&tv=-1"
 
-	//获取mv地址
-//	private fun getWyMvUrl(mid: String?, quality: String?): String? {
-//      val url = "http://music.163.com/api/song/mv?id=" + mid + "&type=mp4"
-//      val html:String
-//      try
-//      {
-//        html = NetUtil.doGetWithCookie(url, true)
-//        val gson = Gson()
-//        val neteaseMv = gson.fromJson(html, NeteaseMv::class.java)
-//        val len = neteaseMv.getMvs().size()
-//        val map = HashMap()
-//        val max = 0
-//        val i = 0
-//        while (i < len)
-//        {
-//          val mvsBean = neteaseMv.getMvs().get(i)
-//          val br = mvsBean.getBr()
-//          if (br > max)
-//          {
-//            max = br
-//          }
-//          map.put(br, mvsBean.getMvurl())
-//          i++
-//        }
-//        if (quality != "ld")
-//        {
-//          return map.get(max)
-//        }
-//        if (max == 1080)
-//        {
-//          return map.get(720)
-//        }
-//        else if (max == 720)
-//        {
-//          return map.get(480)
-//        }
-//        else if (max == 480)
-//        {
-//          return if (map.containsKey(320)) map.get(320) else map.get(240)
-//        }
-//        else
-//        {
-//          return map.get(240)
-//        }
-//      }
-//      catch (e:Exception) {
-//        return ""
-//      }
-//		return ""
-//	}
-
 	//获取音乐播放地址
-	private fun getWyPlayUrl(id: String?, quality: Int): String? {
+	fun getWyPlayUrl(sid: String?, quality: Int): String? {
 		var tag=""
 		when(quality){
             0 -> tag="128000"
@@ -178,114 +128,71 @@ object MusicProvider {
             2 -> tag="320000"
             3 -> return null
 		}
-
-		val text = "{\"ids\":[\"$id\"],\"br\":$tag,\"csrf_token\":\"\"}"
-		val html: String
-		html = doPostWithCookie("http://music.163.com/weapi/song/enhance/player/url?csrf_token=", text, true)
+		val heads = java.util.HashMap<String, String>()
+		heads.put("X-REAL-IP", generateChinaRandomIP())
+		heads.put("Referrer", "http://music.163.com/")
+		var params="{\"method\":\"post\",\"url\":\"http://music.163.com/api/song/enhance/player/url\","+
+				"\"params\":{\"ids\":[\"$sid\"],\"br\":$tag}}"
+		var encrypted = encrypt(params)
+		var result = HttpUtils.doPost("http://music.163.com/api/linux/forward", "eparams=$encrypted",heads )
 		val gson = Gson()
-		val urlEnt: JsonObject? = gson.fromJson(html, JsonObject::class.java)
+		val urlEnt: JsonObject? = gson.fromJson(result, JsonObject::class.java)
 		val urlDat = urlEnt?.getAsJsonArray("data")
 		val urlItm: JsonObject? = gson.fromJson(urlDat?.get(0), JsonObject::class.java)
 		if (200 == urlItm?.getAsJsonPrimitive("code")?.asInt ?: 0) {
 			return urlItm?.getAsJsonPrimitive("url")?.asString
 		}
-
-		return getWyLostPlayUrl(id, quality)
-
+		return null
 	}
-
-	//获取下架音乐地址
-	private fun getWyLostPlayUrl(id: String?, quality: Int?): String? {
-		val albumId = getWyLostAlbumId(id)
+	fun encrypt(raw: String): String? {
+		var scrt = "7246674226682325323F5E6544673A51"
+		val encrypted: ByteArray?
 		try {
-			val s = doGetWithCookie("http://music.163.com/api/album/" + albumId, true)
-			val gson = Gson()
-			val neteaseLostSong: JsonObject? = gson.fromJson(s, JsonObject::class.java)
-			val songs = neteaseLostSong?.getAsJsonObject("album")?.getAsJsonArray("songs")
-			if (songs == null || songs.size() < 1) return ""
-			for (indx in 0 until songs.size()) {
-				val songsBean: JsonObject? = gson.fromJson(songs.get(indx), JsonObject::class.java)
-				if (songsBean?.getAsJsonPrimitive("id")?.asInt ?: -1 == Integer.parseInt(id)) {
-					val dfsId: String?
-					var reStr: String?=null
-					when (quality) {
-						320000 -> {
-							if(songsBean?.getAsJsonObject("hMusic") == null) {
-								if (songsBean?.getAsJsonObject("mMusic") == null) {
-                                    reStr = songsBean?.getAsJsonPrimitive("mp3Url")?.asString
-								}
-								dfsId = songsBean?.getAsJsonObject("mMusic")?.getAsJsonPrimitive("dfsId")?.asString
-							} else {
-								dfsId = songsBean.getAsJsonObject("hMusic")?.getAsJsonPrimitive("dfsId")?.asString
-							}
-							if(reStr!=null) return reStr
-                            dfsId?: return null
-							return getWyUrlBySid(dfsId)
-						}
-						192000 -> {
-							if (songsBean?.getAsJsonObject("mMusic") == null) {
-								return songsBean?.getAsJsonPrimitive("mp3Url")?.asString
-							} else {
-								dfsId = songsBean.getAsJsonObject("mMusic")?.getAsJsonPrimitive("dfsId")?.asString
-                                dfsId?:return null
-								return getWyUrlBySid(dfsId)
-							}
-						}
-						else -> return songsBean?.getAsJsonPrimitive("mp3Url")?.asString
-					}
-				}
-			}
-			return ""
+			encrypted = encrypt(raw, Hex.decodeHex(scrt.toCharArray()))
+			return String(Hex.encodeHex(encrypted)).toUpperCase()
 		} catch (e: Exception) {
-			return ""
+			e.printStackTrace()
 		}
+		return null
 	}
 
-	//如果常规请求不到播放地址，也就是下架地址，则采用专辑去搜索
-	private fun getWyLostAlbumId(id: String?): String? {
-		val text = "[{\"id\":\"$id\"}]"
-		val map = HashMap<String, String>()
-		map.put("c", text)
-		try {
-			val s = doPostData("http://music.163.com/api/v3/song/detail", map)
-			val gson = Gson()
-			val albumEnt: JsonObject? = gson.fromJson(s, JsonObject::class.java)
-			val albumSongs = albumEnt?.getAsJsonArray("songs")
-			val songItm: JsonObject? = gson.fromJson(albumSongs?.get(0), JsonObject::class.java)
-			return songItm?.getAsJsonObject("al")?.getAsJsonPrimitive("id")?.asString
-		} catch (e: Exception) {
-			Log.d(TAG,"getWyLostAlbumId ${e.message}")
-		}
-        return null
+	@Throws(Exception::class)
+	fun encrypt(sSrc: String, sKey: ByteArray): ByteArray? {
+		return encrypt(sSrc.toByteArray(charset("utf-8")),sKey)
 	}
-
-	//通过sid去搜索真实播放地址
-	private fun getWyUrlBySid(dfsId: String): String {
-		val encryptPath = encryptId(dfsId)
-		return "http://m2.music.126.net/$encryptPath/$dfsId.mp3"
+	@Throws(Exception::class)
+	fun encrypt(sSrc: ByteArray, sKey: ByteArray): ByteArray? {
+		return encrypt(sSrc, sKey,null)
 	}
-
-	private fun encryptId(id: String): String {
-		val byte1 = "3go8&$8*3*3h0k(2)2".toByteArray()
-		val byte2 = id.toByteArray()
-		val byte1Length = byte1.size
-		for (i in byte2.indices) {
-			val btb= byte2[i]
-			val tmp = byte1[(i % byte1Length)]
-			byte2[i] = (btb.toInt() xor tmp.toInt()).toByte()
+	@Throws(Exception::class)
+	fun encrypt(sSrc: ByteArray, sKey: ByteArray?, iv: ByteArray?): ByteArray? {
+		if (sKey == null) {
+			print("Key为空null")
+			return null
 		}
-		val md5: MessageDigest
-		try {
-			md5 = MessageDigest.getInstance("MD5")
-		} catch (e: Exception) {
-			Log.d(TAG,"EncryptId ${e.message}")
-			return ""
+		// 判断Key是否为16位
+		if (sKey.size != 16) {
+			print("Key长度不是16位")
+			return null
 		}
-		val md5Bytes = md5.digest(byte2)
-		var retval = BASE64Encoder().encode(md5Bytes)
-		retval = retval.replace('/', '_')
-		retval = retval.replace('+', '-')
-		return retval
+		val skeySpec = SecretKeySpec(sKey, "AES")
+		var ivspec: IvParameterSpec? = null
+		if (iv != null) {
+			ivspec = IvParameterSpec(iv)
+		}
+		val cipher: Cipher
+		if (ivspec == null) {
+			cipher = Cipher.getInstance("AES/ECB/PKCS5Padding")//"算法/模式/补码方式"
+			cipher.init(Cipher.ENCRYPT_MODE, skeySpec)
+		} else {
+			cipher = Cipher.getInstance("AES/CBC/PKCS5Padding")
+			cipher.init(Cipher.ENCRYPT_MODE, skeySpec, ivspec)
+		}
+		return cipher.doFinal(sSrc)
+	}
+	fun generateChinaRandomIP(): String {
+		//val ips = arrayOf("60.5.0.","47.93.50.","60.5.65.","1.193.66.","61.158.132.","14.21.128.","59.33.174.","61.186.81.","61.139.72.")
+		return "47.93.50." + (1 + Random().nextInt(255))
 	}
 
 	/**
@@ -337,55 +244,6 @@ object MusicProvider {
 		}
 		return list
 	}
-
-//	fun getXmUrl(ids: String?,quality: Int, format: String): String? {
-//		ids?:return null
-//		val typ=0
-//		val albumUrl = "http://www.xiami.com/song/playlist/id/$ids/type/$typ/cat/json"
-//		val html = doGetWithCookie(albumUrl)
-//		html?:return null
-//		if (html.contains("应版权方")) {
-//			return null
-//		}
-//		try {
-//			val gson = Gson()
-//			val xiamiIds: JsonObject? = gson.fromJson(html, JsonObject::class.java)
-//			val trackList = xiamiIds?.getAsJsonObject("data")?.getAsJsonArray("trackList")
-//            trackList?:return null
-//			val xmEnt = trackList.get(0)
-//			val xmbean: JsonObject? = gson.fromJson(xmEnt, JsonObject::class.java)
-//
-//            val songId = xmbean?.getAsJsonPrimitive("song_id")?.asString
-//
-//            when(format){
-//                "mp3"->{
-//                    if(0==quality) {
-//                        val location = xmbean?.getAsJsonPrimitive("location")?.asString
-//						location?: return null
-//						return getXiaMp3Url(location)
-//                    }else {
-//						songId?:return null
-//                        val hqUrl = getXmPlayUrl(songId)
-//						hqUrl?:return null
-//						return getXiaMp3Url(hqUrl)
-//
-//                    }
-//                }
-//                "jpg"->{
-//					return xmbean?.getAsJsonPrimitive("pic")?.asString
-//
-//                }
-//                "lrc"->{
-//                    return xmbean?.getAsJsonPrimitive("lyric")?.asString
-//                }
-//
-//            }
-//		} catch (e: Exception) {
-//			Log.d(TAG,"getXmUrl ${e.message}")
-//		}
-//		return null
-//	}
-
 	fun getXmUrl(ids: String?,quality: Int, format: String): String? {
 		ids?:return null
 		val host = "www.xiami.com"
@@ -1240,23 +1098,3 @@ object MusicProvider {
 
 
 }
-//fun main(args: Array<String>){
-//    val id="0a62227caab66f54d43ec084b4bdd81f"
-//    val url = "http://trackercdn.kugou.com/i/?key=" + MusicProvider.getMD5(id + "kgcloud") + "&cmd=4&acceptMp3=1&hash=" + id + "&pid=1"
-//    println(url)
-//}
-////
-////fun testB(){
-////    val songs: List<SongResult>? = MusicProvider.getKgLs("周杰伦",1,10)
-////    songs?:return
-////    for(song in songs){
-////        println(Gson().toJson(song))
-////        val surl = MusicProvider.getKgPlayUrl(song.songId,0)
-////        println(surl)
-////        val lurl = MusicProvider.getKgUrl(song.songId,"0","lrc")
-////        println(lurl)
-////        println("----------------")
-////
-////    }
-////
-////}
