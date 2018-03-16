@@ -191,8 +191,8 @@ object MusicProvider {
 		return cipher.doFinal(sSrc)
 	}
 	fun generateChinaRandomIP(): String {
-		//val ips = arrayOf("60.5.0.","47.93.50.","60.5.65.","1.193.66.","61.158.132.","14.21.128.","59.33.174.","61.186.81.","61.139.72.")
-		return "47.93.50." + (1 + Random().nextInt(255))
+		val ips = arrayOf("47.93.50.","60.5.0.","60.5.65.","1.193.66.","61.158.132.","14.21.128.","59.33.174.","61.186.81.","61.139.72.")
+		return ips[Random().nextInt(ips.size-1)] + (1 + Random().nextInt(255))
 	}
 
 	/**
