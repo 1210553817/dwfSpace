@@ -173,7 +173,7 @@ class KtTest {
     }
 
     /**
-     * adb push c:\justMusic.apk /mnt/sdcard/apks/
+     * adb push c:\justMusic.apk /mnt/sdcard/apks/wx.apk
      * adb install c:\justMusic.apk
      * adb uninstall com.fxqyem
      * ps | grep 'fxqyem'
