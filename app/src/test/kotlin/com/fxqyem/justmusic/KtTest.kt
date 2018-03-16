@@ -5,7 +5,6 @@ import com.fxqyem.bean.SongResult
 import com.fxqyem.utils.HttpUtils
 import com.fxqyem.vw.utilRandInt
 import com.google.gson.Gson
-import org.apache.commons.codec.binary.Base64
 import org.apache.commons.codec.binary.Hex
 import org.junit.Test
 import java.util.*

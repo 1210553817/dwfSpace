@@ -12,7 +12,6 @@ import sun.misc.BASE64Encoder
 import java.math.BigInteger
 import java.net.URLEncoder
 import java.net.URLDecoder
-import java.security.MessageDigest
 import javax.crypto.Cipher
 import javax.crypto.spec.IvParameterSpec
 import javax.crypto.spec.SecretKeySpec
