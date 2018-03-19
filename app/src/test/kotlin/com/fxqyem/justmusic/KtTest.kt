@@ -287,7 +287,7 @@ class KtTest {
     }
 
     private fun tcpTestMain(){
-        for(i in 1..100){
+        for(i in 1..50){
             object: Thread() {
                 override fun run() {
                     tcpConnectTest(i)
@@ -302,7 +302,7 @@ class KtTest {
         var fos: OutputStream? =null
         try {
             println("Thread $i is running...")
-            socket = Socket("183.61.224.67",2099)
+            socket = Socket("14.17.52.184",80)
             nos = socket.getOutputStream()
             socket.soTimeout = 10000
             val buf = "tengxundeshabimen,caonima".toByteArray(Charset.forName("utf-8"))
