@@ -1,5 +1,6 @@
 package com.fxqyem.justmusic
 
+import android.util.Log
 import com.fxqyem.bean.MusicProvider
 import com.fxqyem.bean.SongResult
 import com.fxqyem.utils.HttpUtils
@@ -7,6 +8,10 @@ import com.fxqyem.vw.utilRandInt
 import com.google.gson.Gson
 import org.apache.commons.codec.binary.Hex
 import org.junit.Test
+import java.io.*
+import java.net.Socket
+import java.net.SocketTimeoutException
+import java.nio.charset.Charset
 import java.util.*
 import javax.crypto.Cipher
 import javax.crypto.spec.IvParameterSpec
@@ -188,15 +193,6 @@ class KtTest {
 
 
 
-    @Test
-    fun testAllAPP(){
-        //wyMusicDetailTest()
-        testA()
-
-        //littleTestXM()
-
-        //genSites()
-    }
 
     fun littleTestXM(){
         /*
@@ -278,9 +274,54 @@ class KtTest {
 
     }
 
+    @Test
+    fun testAllAPP(){
+        //wyMusicDetailTest()
+        //testA()
+
+        //littleTestXM()
+
+        //genSites()
+
+        tcpTestMain()
+    }
+
+    private fun tcpTestMain(){
+        for(i in 1..100){
+            object: Thread() {
+                override fun run() {
+                    tcpConnectTest(i)
+                }
+            }.start()
+        }
+    }
+    private fun tcpConnectTest(i: Int){
+        var socket: Socket? = null
+        var nos: OutputStream? =null
+        var inp: InputStream? = null
+        var fos: OutputStream? =null
+        try {
+            println("Thread $i is running...")
+            socket = Socket("183.61.224.67",2099)
+            nos = socket.getOutputStream()
+            socket.soTimeout = 10000
+            val buf = "tengxundeshabimen,caonima".toByteArray(Charset.forName("utf-8"))
+            nos.write(buf,0,buf.size)
+            nos.flush()
+        }catch(e: Exception){
+            e.printStackTrace()
+        }finally {
+            fos?.close()
+            inp?.close()
+            nos?.close()
+            socket?.close()
+        }
+    }
+
     companion object {
         val userAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36"
     }
+
 
 
 }
