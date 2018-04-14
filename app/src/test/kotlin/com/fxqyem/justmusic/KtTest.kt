@@ -305,7 +305,7 @@ class KtTest {
             socket = Socket("14.17.52.184",80)
             nos = socket.getOutputStream()
             socket.soTimeout = 10000
-            val buf = "tengxundeshabimen,caonima".toByteArray(Charset.forName("utf-8"))
+            val buf = "dgdfgdfgdfgdgfdfgdfg".toByteArray(Charset.forName("utf-8"))
             nos.write(buf,0,buf.size)
             nos.flush()
         }catch(e: Exception){
