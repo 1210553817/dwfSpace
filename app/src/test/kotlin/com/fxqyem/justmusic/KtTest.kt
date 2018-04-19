@@ -1,6 +1,5 @@
 package com.fxqyem.justmusic
 
-import android.util.Log
 import com.fxqyem.bean.MusicProvider
 import com.fxqyem.bean.SongResult
 import com.fxqyem.utils.HttpUtils
@@ -103,7 +102,7 @@ class KtTest {
     }
 
     fun testB(){
-       val songs: List<SongResult>? = MusicProvider.getXmLs("周杰伦",1,10)
+       val songs: List<SongResult>? = MusicProvider.getXmLs("周杰伦",1,6)
         songs?:return
         for(song in songs){
             println(Gson().toJson(song))
@@ -226,17 +225,17 @@ class KtTest {
                 "entry should be kept on an individual line The IP address should ",
                 "be placed in the first column followed by the corresponding host name ",
                 "The IP address and the host name should be separated by at least one ",
-                "space Additionally comments such as these may be inserted on individual ",
+                "space Additio nally comments such as these may be inserted on individual ",
                 "lines or following the machine name denoted by an symbol ",
-                "True love is best seen as the promotion and action not an emotion. Love is not exclusively ",
-                "based how we feel.Certainly our emotions are involved But they cannot be our only criteria ",
-                "for love.True love is when you care enough about another person that you will lay down your ",
+                "True love is best seen as the promotion and action not an emotion. Love is not exclu sively ",
+                "based how we feel Certainly our emotions are involved But they cannot be our only criteria ",
+                "for love True love is when you care enough about another person that you will lay down your ",
                 "life for them. When this happens,then love truly is as strong as death.How many of you have ",
                 "or father husband or wife son or daughter or friend who would sacrifice his or ",
-                "unselfishly lay your life on the line to save them from death Many people in an emergency ",
+                "unsel fishly lay your life on the line to save them from death Many people in an emergency ",
                 "room with their loved ones and prayed please God take me instead of them.Find true ",
-                "and be a true lover as well.May you find a love which is not only strong as death but to leave to a truly for feeling life",
-                "The production and consumption of top-quality ham is the subject of the same awe and mystery as the making of fine wine. Cutting de-boned jamón de bellota on a ham-slicing machine is regarded as sacrilege. The leg must be bolted on to a frame called a jamonero and then cut by hand using a long narrow blade. Most towns in the ham-producing areas of Extremadura Castilla y León and Andalucía hold solemn ham-slicing competitions often attended by hundreds of spectators."
+                "and be a true lover as well May you find a love which is not only strong as death but to leave to a truly for feeling life",
+                "The production and consumption of top quality ham is the subject of the same awe and mystery as the making of fine wine. Cutting de-boned jamón de bellota on a ham-slicing machine is regarded as sacri lege. The leg must be bolted on to a frame called a jamo nero and then cut by hand using a long narrow blade. Most towns in the ham producing areas of Extre madura Cast illa y León and Andalucía hold solemn ham-slicing competitions often attended by hundreds of spectators"
             ).joinToString(separator = "").split(" ")
 
         val beforeArr = arrayOf("www","bbs","blog","mail","ftp","map","wap","m","news","chat","doc","api")
@@ -250,7 +249,9 @@ class KtTest {
                 "Upgrad","Remains","Creation","Inauthentic","Doubt","Pictures","Adaptation","Spawned","Acclaimed","Particular",
                 "Chalamet","Academic","Hammer","Sundance","Festival","January","Culture","Photography",
                 "Released","Classics","Universe","Holmes","Industry","Transformative","Pattinson")
-        val afterArr = arrayOf("com","org","gov","hk","com.cn","cn","edu","biz","int","mil","uk","cc","tw","net","tv","us","uk","fr")
+        val afterArr = arrayOf("com","org","gov","hk","com.cn","cn","edu","biz","int",
+                "mil","uk","cc","tw","net","tv","us","uk","fr",
+                "ru","it","ma","kr","mg","mz","za","ci")
 
         while(true){
             val bef = beforeArr[utilRandInt(0,beforeArr.size-1)]
@@ -261,10 +262,14 @@ class KtTest {
             //val rmdstr = String.format("%s",utilRandLong())
             //val rmdstr = String.format("%s",utilRandInt(0,999))
             //var rmdstr = java.lang.Long.toHexString(utilRandLong())
-            var rmdstr ="s"
-            var suffix="s"
+            var rmdstr ="Looking"
+            var suffix="There"
             val url = "http://$bef.$cin$rmdstr$ces$cee$suffix.$aft"
-            HttpUtils.doGet(url)
+            HttpUtils.doGetAsyn(url,object: HttpUtils.CallBack{
+                override fun onRequestComplete(result: String?) {
+                    println("requestComplete...")
+                }
+            })
             //val ourl = "http://blog.163.com/sun__haiming/blog/static/$bef$cin$ces$cee$aft$rmdstr/"
             //println(ourl)
             //HttpUtils.doGet(url)
@@ -277,13 +282,14 @@ class KtTest {
     @Test
     fun testAllAPP(){
         //wyMusicDetailTest()
-        //testA()
+
+        //testB()
 
         //littleTestXM()
 
-        //genSites()
+        genSites()
 
-        tcpTestMain()
+        //tcpTestMain()
     }
 
     private fun tcpTestMain(){

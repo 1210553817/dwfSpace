@@ -222,7 +222,7 @@ object MusicProvider {
 			val songsBean: JsonObject? = Gson().fromJson(songsItm, JsonObject::class.java)
 			val songId = songsBean?.getAsJsonPrimitive("song_id")?.asString
             val songName = songsBean?.getAsJsonPrimitive("song_name")?.asString
-            val songLink = "http://www.xiami.com/song/" + songId
+            val songLink = "http://www.xiami.com/song/$songId"
             val artistId = songsBean?.getAsJsonPrimitive("artist_id")?.asString
             val artistName = songsBean?.getAsJsonPrimitive("artist_name")?.asString
             val albumId = songsBean?.getAsJsonPrimitive("album_id")?.asString
@@ -244,6 +244,12 @@ object MusicProvider {
 		return list
 	}
 	fun getXmUrl(ids: String?,quality: Int, format: String): String? {
+		var res = getXmUrlA(ids,quality, format)
+		res?:return res
+		if(res.startsWith("//"))res = "http:$res"
+		return res
+	}
+	fun getXmUrlA(ids: String?,quality: Int, format: String): String? {
 		ids?:return null
 		val host = "www.xiami.com"
 		val referer = "http://www.xiami.com/play?ids=/song/playlist/id/$ids/object_name/default/object_id/0"
