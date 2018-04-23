@@ -858,7 +858,7 @@ object MusicProvider {
 	/**
 	 ***********Common start
 	 */
-	private val userAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36"
+	private val userAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36"
 	private val cookieStr = "__remember_me=true; MUSIC_U=5f9d910d66cb2440037d1c68e6972ebb9f15308b56bfeaa4545d34fbabf71e0f36b9357ab7f474595690d369e01fbb9741049cea1c6bb9b6; __csrf=8ea789fbbf78b50e6b64b5ebbb786176; os=uwp; osver=10.0.10586.318; appver=1.2.1; deviceId=0e4f13d2d2ccbbf31806327bd4724043"
 	private val modulus = "00e0b509f6259df8642dbc35662901477df22677ec152b5ff68ace615bb7" +
 			"b725152b3ab17a876aea8a5aa76d2e417629ec4ee341f56135fccf695280" +
