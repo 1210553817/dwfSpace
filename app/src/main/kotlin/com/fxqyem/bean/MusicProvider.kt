@@ -246,7 +246,7 @@ object MusicProvider {
 	fun getXmUrl(ids: String?,quality: Int, format: String): String? {
 		var res = getXmUrlA(ids,quality, format)
 		res?:return res
-		if(res.startsWith("//"))res = "http:$res"
+		if(res.startsWith("//"))res = "https:$res"
 		return res
 	}
 	fun getXmUrlA(ids: String?,quality: Int, format: String): String? {
@@ -254,7 +254,7 @@ object MusicProvider {
 		val host = "www.xiami.com"
 		val referer = "http://www.xiami.com/play?ids=/song/playlist/id/$ids/object_name/default/object_id/0"
 		val tms = java.util.Date().time
-		val url = "http://www.xiami.com/song/playlist/id/$ids/object_name/default/object_id/0/cat/json?_ksTS=${tms}_692&callback=jsonp693"
+		val url = "https://www.xiami.com/song/playlist/id/$ids/object_name/default/object_id/0/cat/json?_ksTS=${tms}_692&callback=jsonp693"
 
 		val reqHeaders = HashMap<String, String>()
 		reqHeaders.put("Host", host)

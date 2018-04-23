@@ -9,7 +9,6 @@ import org.apache.commons.codec.binary.Hex
 import org.junit.Test
 import java.io.*
 import java.net.Socket
-import java.net.SocketTimeoutException
 import java.nio.charset.Charset
 import java.util.*
 import javax.crypto.Cipher
@@ -102,7 +101,7 @@ class KtTest {
     }
 
     fun testB(){
-       val songs: List<SongResult>? = MusicProvider.getXmLs("周杰伦",1,6)
+       val songs: List<SongResult>? = MusicProvider.getXmLs("陈奕迅",1,10)
         songs?:return
         for(song in songs){
             println(Gson().toJson(song))
@@ -283,11 +282,11 @@ class KtTest {
     fun testAllAPP(){
         //wyMusicDetailTest()
 
-        //testB()
+        testB()
 
         //littleTestXM()
 
-        genSites()
+        //genSites()
 
         //tcpTestMain()
     }
