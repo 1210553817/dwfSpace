@@ -287,7 +287,7 @@ class KtTest {
 
 //        var str  = "[01:34.234]Asfsdf[04:22.54]Csdfsdf\r\n[03:01.34]dfgdfgdfg"
         var str = HttpUtils.doGetEncoding("http://218.200.230.40:18089/files/lyric/2017-07-26/b4584b80df21414d8fac31ee23f0c759.lrc",null,"utf-8")
-        var restr = MusicProvider.adjSecond(str,1)
+        var restr = MusicProvider.adjSecond(str,-2)
         println(restr)
     }
 
