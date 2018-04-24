@@ -62,6 +62,7 @@ object LrcParser {
                 bufferReader = BufferedReader(inputReader)
             }
             val p = Pattern.compile("(\\[[\\d:\\.\\[\\]]+\\])(.*)")
+            val p1 = Pattern.compile("\\[\\d{2,3}:\\d{2}\\.\\d{2,3}\\]")
             var lrcContent=""
             var addCount = 0
             var temp = bufferReader?.readLine()
@@ -72,8 +73,6 @@ object LrcParser {
                         mes.add(lrcContent!!.trim { it <= ' ' })
                     }
                     addCount = 0
-                    val p1 = Pattern
-                            .compile("\\[\\d{2}:\\d{2}\\.\\d{2,3}\\]")
                     val m1 = p1.matcher(m.group(1))
                     lrcContent = m.group(2)
                     while (m1.find()) {

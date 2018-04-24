@@ -494,6 +494,7 @@ class MainActivity : android.app.Activity(), OnBackListener {
                         songItem.name = if (utilNotNull(sitm.songName)) sitm.songName else "< unknown >"
                         songItem.artist = if (utilNotNull(sitm.artistName)) sitm.artistName else "< unknown >"
                         songItem.picUrl = sitm.picUrl
+                        songItem.lrcUrl = sitm.lrcUrl
 
                         songItem.songId = sitm.songId
                         songItem.qmid = sitm.qqmid
@@ -519,62 +520,65 @@ class MainActivity : android.app.Activity(), OnBackListener {
             }
         }
         netSelectorBtn?.onClick {
-            if(NetUtils.isConnected(this@MainActivity)) {
-                val cttVw = HomeLay().createNetSelectMenu(this@MainActivity)
-                netSelectSldMenu = SldMenu.create(this@MainActivity, cttVw, vwCtnFrmLy)
-                netSelectSldMenu?.setOnStateChangeListener(object : SldMenu.OnStateChangeListener {
-                    override fun onStateChange(state: Int) {
-                        if (state == SldMenu.MENU_STATE_GONE_START) {
-                            this@MainActivity?.popBackLsnStack(BK_KEY_netSelectSldMenu, this@MainActivity)
-                        } else if (state == SldMenu.MENU_STATE_SHOW) {
-                            this@MainActivity?.push2BackLsnStack(BackLsnHolder(BK_KEY_netSelectSldMenu, this@MainActivity))
-                        } else if (state == SldMenu.MENU_STATE_GONE) {
-                            netSelectSldMenu = null
-                        }
+            val cttVw = HomeLay().createNetSelectMenu(this@MainActivity)
+            netSelectSldMenu = SldMenu.create(this@MainActivity, cttVw, vwCtnFrmLy)
+            netSelectSldMenu?.setOnStateChangeListener(object : SldMenu.OnStateChangeListener {
+                override fun onStateChange(state: Int) {
+                    if (state == SldMenu.MENU_STATE_GONE_START) {
+                        this@MainActivity?.popBackLsnStack(BK_KEY_netSelectSldMenu, this@MainActivity)
+                    } else if (state == SldMenu.MENU_STATE_SHOW) {
+                        this@MainActivity?.push2BackLsnStack(BackLsnHolder(BK_KEY_netSelectSldMenu, this@MainActivity))
+                    } else if (state == SldMenu.MENU_STATE_GONE) {
+                        netSelectSldMenu = null
                     }
-                })
-                netSelectSldMenu?.show(1)
-                val tophd = cttVw.findViewById(R.id.main_net_ser_selector_tophd) as LinearLayout
-                AndUtil.initStatus(this@MainActivity, tophd)
-                val wyBtn = cttVw.findViewById(R.id.main_net_ser_selector_wy) as LinearLayout
-                val xmBtn = cttVw.findViewById(R.id.main_net_ser_selector_xm) as LinearLayout
-                val kgBtn = cttVw.findViewById(R.id.main_net_ser_selector_kg) as LinearLayout
-                val qqBtn = cttVw.findViewById(R.id.main_net_ser_selector_qq) as LinearLayout
-                val bdBtn = cttVw.findViewById(R.id.main_net_ser_selector_bd) as LinearLayout
-                val wsBtn = cttVw.findViewById(R.id.main_net_ser_selector_ws) as LinearLayout
-                wyBtn.onClick {
-                    netSelectorBtn?.tag = "wy"
-                    netSelectorBtn?.backgroundResource = R.mipmap.icon_wy
-                    netSelectSldMenu?.cancle()
                 }
-                xmBtn.onClick {
-                    netSelectorBtn?.tag = "xm"
-                    netSelectorBtn?.backgroundResource = R.mipmap.icon_xm
-                    netSelectSldMenu?.cancle()
-                }
-                kgBtn.onClick {
-                    netSelectorBtn?.tag = "kg"
-                    netSelectorBtn?.backgroundResource = R.mipmap.icon_kg
-                    netSelectSldMenu?.cancle()
-                }
-                qqBtn.onClick {
-                    netSelectorBtn?.tag = "qq"
-                    netSelectorBtn?.backgroundResource = R.mipmap.icon_qq
-                    netSelectSldMenu?.cancle()
-                }
-                bdBtn.onClick {
-                    netSelectorBtn?.tag = "bd"
-                    netSelectorBtn?.backgroundResource = R.mipmap.icon_bd
-                    netSelectSldMenu?.cancle()
-                }
-                wsBtn.onClick {
-                    netSelectorBtn?.tag = "ws"
-                    netSelectorBtn?.backgroundResource = R.mipmap.icon_ws
-                    netSelectSldMenu?.cancle()
-                }
-            }else{
-                Toast.makeText(this@MainActivity,"没有网络连接哦！",Toast.LENGTH_SHORT).show()
+            })
+            netSelectSldMenu?.show(1)
+            val tophd = cttVw.findViewById(R.id.main_net_ser_selector_tophd) as LinearLayout
+            AndUtil.initStatus(this@MainActivity, tophd)
+            val wyBtn = cttVw.findViewById(R.id.main_net_ser_selector_wy) as LinearLayout
+            val xmBtn = cttVw.findViewById(R.id.main_net_ser_selector_xm) as LinearLayout
+            val kgBtn = cttVw.findViewById(R.id.main_net_ser_selector_kg) as LinearLayout
+            val qqBtn = cttVw.findViewById(R.id.main_net_ser_selector_qq) as LinearLayout
+            val bdBtn = cttVw.findViewById(R.id.main_net_ser_selector_bd) as LinearLayout
+            val mgBtn = cttVw.findViewById(R.id.main_net_ser_selector_mg) as LinearLayout
+            val wsBtn = cttVw.findViewById(R.id.main_net_ser_selector_ws) as LinearLayout
+            wyBtn.onClick {
+                netSelectorBtn?.tag = "wy"
+                netSelectorBtn?.backgroundResource = R.mipmap.icon_wy
+                netSelectSldMenu?.cancle()
             }
+            xmBtn.onClick {
+                netSelectorBtn?.tag = "xm"
+                netSelectorBtn?.backgroundResource = R.mipmap.icon_xm
+                netSelectSldMenu?.cancle()
+            }
+            kgBtn.onClick {
+                netSelectorBtn?.tag = "kg"
+                netSelectorBtn?.backgroundResource = R.mipmap.icon_kg
+                netSelectSldMenu?.cancle()
+            }
+            qqBtn.onClick {
+                netSelectorBtn?.tag = "qq"
+                netSelectorBtn?.backgroundResource = R.mipmap.icon_qq
+                netSelectSldMenu?.cancle()
+            }
+            bdBtn.onClick {
+                netSelectorBtn?.tag = "bd"
+                netSelectorBtn?.backgroundResource = R.mipmap.icon_bd
+                netSelectSldMenu?.cancle()
+            }
+            mgBtn.onClick {
+                netSelectorBtn?.tag = "mg"
+                netSelectorBtn?.backgroundResource = R.mipmap.icon_mg
+                netSelectSldMenu?.cancle()
+            }
+            wsBtn.onClick {
+                netSelectorBtn?.tag = "ws"
+                netSelectorBtn?.backgroundResource = R.mipmap.icon_ws
+                netSelectSldMenu?.cancle()
+            }
+
 
 
         }
@@ -587,12 +591,13 @@ class MainActivity : android.app.Activity(), OnBackListener {
                     val keywd = netKeywordEdit?.text?.toString() ?: ""
                     doAsync {
                         when (qtp) {
-                            "wy" -> netSelectLs = MusicProvider.getWyLs(keywd, 1, 20)
-                            "xm" -> netSelectLs = MusicProvider.getXmLs(keywd, 1, 20)
-                            "kg" -> netSelectLs = MusicProvider.getKgLs(keywd, 1, 20)
-                            "qq" -> netSelectLs = MusicProvider.getQqLs(keywd, 1, 20)
-                            "bd" -> netSelectLs = MusicProvider.getBdLs(keywd, 1, 20)
-                            "ws" -> netSelectLs = MusicProvider.getWsLs(keywd, 1, 20)
+                            "wy" -> netSelectLs = MusicProvider.getWyLs(keywd, 1, 30)
+                            "xm" -> netSelectLs = MusicProvider.getXmLs(keywd, 1, 30)
+                            "kg" -> netSelectLs = MusicProvider.getKgLs(keywd, 1, 30)
+                            "qq" -> netSelectLs = MusicProvider.getQqLs(keywd, 1, 30)
+                            "bd" -> netSelectLs = MusicProvider.getBdLs(keywd, 1, 30)
+                            "mg" -> netSelectLs = MusicProvider.getMgLs(keywd, 1, 30)
+                            "ws" -> netSelectLs = MusicProvider.getWsLs(keywd, 1, 30)
                         }
                         uiThread {
                             netLsAdapter?.setList(netSelectLs ?: ArrayList<SongResult>())

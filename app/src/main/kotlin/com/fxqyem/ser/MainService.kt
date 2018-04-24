@@ -454,6 +454,7 @@ class MainService : Service(), MediaPlayer.OnPreparedListener {
                     sitm.type = songInfo.type
                     sitm.songId = songInfo.songId
                     sitm.qqmid = songInfo.qmid
+                    sitm.lrcUrl = songInfo.lrcUrl
                     val lrcText = MusicProvider.getLrcText(sitm)
                     if(lrcText!=null) {
                         val ifo = LrcParser.parseLrcA(lrcText.toByteArray(),mPlayer?.duration?:0)

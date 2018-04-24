@@ -136,6 +136,7 @@
     <item name="main_net_ser_selector_kg" type="id"/>
     <item name="main_net_ser_selector_qq" type="id"/>
     <item name="main_net_ser_selector_bd" type="id"/>
+    <item name="main_net_ser_selector_mg" type="id"/>
     <item name="main_net_ser_selector_ws" type="id"/>
     <!-- frgm_hm_loc_optmn_selector-->
     <item name="frgm_hm_loc_optmn_selector_tophd" type="id"/>

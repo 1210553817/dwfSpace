@@ -20,8 +20,8 @@ import javax.crypto.spec.SecretKeySpec
  */
 class KtTest {
 
-    private fun testA(){
-        val songs: List<SongResult>? = MusicProvider.getWyLs("周杰伦",1,3)
+    private fun testWY(){
+        val songs: List<SongResult>? = MusicProvider.getWyLs("陈奕迅",1,3)
         songs?:return
         for(song in songs){
             println(Gson().toJson(song))
@@ -100,7 +100,7 @@ class KtTest {
         return ips[Random().nextInt(ips.size-1)] + (1 + Random().nextInt(255))
     }
 
-    fun testB(){
+    fun testXM(){
        val songs: List<SongResult>? = MusicProvider.getXmLs("陈奕迅",1,10)
         songs?:return
         for(song in songs){
@@ -115,7 +115,7 @@ class KtTest {
 
     }
 
-    fun testC(){
+    fun testKG(){
        val songs: List<SongResult>? = MusicProvider.getKgLs("周杰伦",1,10)
         songs?:return
         for(song in songs){
@@ -130,7 +130,7 @@ class KtTest {
 
     }
 
-    fun testD(){
+    fun testBD(){
         val songs: List<SongResult>? = MusicProvider.getBdLs("周杰伦",1,10)
         songs?:return
         for(song in songs){
@@ -145,17 +145,12 @@ class KtTest {
 
     }
 
-
-
-    fun testE(){
-        val songs: List<SongResult>? = MusicProvider.getWyLs("周杰伦",1,10)
+    fun testMG(){
+        val songs: List<SongResult>? = MusicProvider.getMgLs("陈奕迅",1,10)
         songs?:return
         for(song in songs){
             println(Gson().toJson(song))
-            val surl = MusicProvider.getBdUrl(song.songId,0,"mp3")
-            println(surl)
-            val lurl = MusicProvider.getBdUrl(song.songId,0,"lrc")
-            println(lurl)
+            println(song.lrcUrl)
             println("----------------")
 
         }
@@ -282,13 +277,18 @@ class KtTest {
     fun testAllAPP(){
         //wyMusicDetailTest()
 
-        testB()
+        //testMG()
 
         //littleTestXM()
 
         //genSites()
 
         //tcpTestMain()
+
+//        var str  = "[01:34.234]Asfsdf[04:22.54]Csdfsdf\r\n[03:01.34]dfgdfgdfg"
+        var str = HttpUtils.doGetEncoding("http://218.200.230.40:18089/files/lyric/2017-07-26/b4584b80df21414d8fac31ee23f0c759.lrc",null,"utf-8")
+        var restr = MusicProvider.adjSecond(str,1)
+        println(restr)
     }
 
     private fun tcpTestMain(){
