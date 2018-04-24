@@ -3,7 +3,7 @@ apply plugin: "kotlin-android"
 
 android {
     compileSdkVersion 23
-    buildToolsVersion '26.0.2'
+    buildToolsVersion '27.0.3'
     defaultConfig {
         applicationId "com.fxqyem"
         minSdkVersion 19
@@ -39,21 +39,21 @@ android {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
+    api fileTree(include: ['*.jar'], dir: 'libs')
     //    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
     //        exclude group: 'com.android.support', module: 'support-annotations'
     //    })
-    compile 'com.android.support:support-v4:23.4.0'
-    compile 'com.android.support:design:23.4.0'
-    compile 'org.jetbrains.kotlin:kotlin-stdlib:1.2.30'
-    compile 'org.jetbrains.anko:anko-sdk25:0.10.0-beta-1'
-    compile 'org.jetbrains.anko:anko-design:0.9-beta1'
-    compile 'org.jetbrains.anko:anko-support-v4:0.9-beta1'
-    //    compile 'org.jetbrains.anko:anko-appcompat-v7:0.10.0-beta-1'
-    //    compile 'com.android.support:appcompat-v7:23.0.0'
-    compile 'com.google.code.gson:gson:2.8.2'
-    compile 'commons-codec:commons-codec:1.11'
-    compile files('libs/BASE64Encoder.jar')
+    api 'com.android.support:support-v4:23.4.0'
+    api 'com.android.support:design:23.4.0'
+    api 'org.jetbrains.kotlin:kotlin-stdlib:1.2.40'
+    api 'org.jetbrains.anko:anko-sdk25:0.10.0-beta-1'
+    api 'org.jetbrains.anko:anko-design:0.9-beta1'
+    api 'org.jetbrains.anko:anko-support-v4:0.9-beta1'
+    //    api 'org.jetbrains.anko:anko-appcompat-v7:0.10.0-beta-1'
+    //    api 'com.android.support:appcompat-v7:23.0.0'
+    api 'com.google.code.gson:gson:2.8.2'
+    api 'commons-codec:commons-codec:1.11'
+    api files('libs/BASE64Encoder.jar')
 
-    testCompile 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.12'
 }
