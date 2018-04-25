@@ -1123,31 +1123,36 @@ object MusicProvider {
         when (tp) {
             "wy" ->{
                 sid?:return null
-                return getWyLrc(sid)
+				val l =  getWyLrc(sid)
+				return  addMs(l,-100)
             }
             "xm" ->{
                 sid?:return null
 				val llrc = getXmUrl(sid,0,"lrc")
 				llrc?:return null
-				return  HttpUtils.doGetEncoding(llrc,null,"utf-8")
+				val l = HttpUtils.doGetEncoding(llrc,null,"utf-8")
+				return  addMs(l,-100)
             }
             "kg" -> {
                 sid?:return null
-                return getKgLrc(sid)
+				val l = getKgLrc(sid)
+				return  addMs(l,-100)
             }
             "qq" ->{
 				val qmid = rst.qqmid
                 qmid?:return null
-                return getQqLrcA(qmid)
+				val l = getQqLrcA(qmid)
+                return addMs(l,-100)
             }
             "bd" ->{
                 sid?:return null
-                return  getBdLrc(sid)
+				val l = getBdLrc(sid)
+                return  addMs(l,-100)
             }
 			"mg" ->{
 				val ul = rst.lrcUrl?:return null
-				var lrct = HttpUtils.doGetEncoding(ul,null,"utf-8")
-				return adjSecond(lrct,-1)
+				val l = HttpUtils.doGetEncoding(ul,null,"utf-8")
+				return addMs(l,-400)
 			}
 
         }
@@ -1155,27 +1160,24 @@ object MusicProvider {
         return null
     }
 
-	fun adjSecond(str: String?,num: Int): String?{
+	fun addMs(str: String?,n: Int): String?{
 		str?:return null
-		var restr = str.replace("\\[(\\d{2,3}):(\\d{2})\\.(\\d{2,3})\\]".toRegex(),{
-			var m = it.groupValues[1].toInt()
-			var s = it.groupValues[2].toInt()
-			val vri = s+num
-			if(vri>=60) {
-				s =s+num-60
-				m++
-			}else if(vri<0){
-				s =60+vri
-				m--
-			}else{
-				s=vri
-			}
-			val ms = if(m<10)"0$m" else "$m"
-			val ss = if(s<10)"0$s" else "$s"
-			"[$ms:$ss.${it.groupValues[3]}]"
+		return str.replace("\\[(\\d{2,3}):(\\d{2})\\.(\\d{2,3})\\]".toRegex(),{
+			val m = it.groupValues[1].toInt()*60000
+			val s = it.groupValues[2].toInt()*1000
+			val l = it.groupValues[3].toInt()
+			var t = m+s+l+n
+			if(t<0)t = 0
+            val mi=t/60000
+            val si=t%60000/1000
+            val li=t%60000%1000
+
+			val ms = if(mi<10)"0$mi" else "$mi"
+			val ss = if(si<10)"0$si" else "$si"
+			val ll = if(li<10)"0$li" else "$li"
+			"[$ms:$ss.$ll]"
 
 		})
-		return restr
 	}
 
 
