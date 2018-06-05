@@ -1056,30 +1056,30 @@ object MusicProvider {
             "wy" ->{
                 sid?:return null
 				val l =  getWyLrc(sid)
-				return  addMs(l,-100)
+				return  addMs(l,-50)
             }
             "xm" ->{
                 sid?:return null
 				val llrc = getXmUrl(sid,0,"lrc")
 				llrc?:return null
 				val l = HttpUtils.doGetEncoding(llrc,null,"utf-8")
-				return  addMs(l,-100)
+				return  addMs(l,-50)
             }
             "kg" -> {
                 sid?:return null
 				val l = getKgLrc(sid)
-				return  addMs(l,-100)
+				return  addMs(l,-50)
             }
             "qq" ->{
 				val qmid = rst.qqmid
                 qmid?:return null
 				val l = getQqLrcA(qmid)
-                return addMs(l,-100)
+                return addMs(l,-50)
             }
             "bd" ->{
                 sid?:return null
 				val l = getBdLrc(sid)
-                return  addMs(l,-100)
+                return  addMs(l,-60)
             }
 			"mg" ->{
 				val ul = rst.lrcUrl?:return null
