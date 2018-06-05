@@ -4,6 +4,7 @@ import com.fxqyem.bean.MusicProvider
 import com.fxqyem.bean.SongResult
 import com.fxqyem.utils.HttpUtils
 import com.fxqyem.vw.utilRandInt
+import com.fxqyem.vw.utilRandLong
 import com.google.gson.Gson
 import org.apache.commons.codec.binary.Hex
 import org.junit.Test
@@ -270,9 +271,9 @@ class KtTest {
             val aft = afterArr[utilRandInt(0,afterArr.size-1)]
             //val rmdstr = String.format("%s",utilRandLong())
             //val rmdstr = String.format("%s",utilRandInt(0,999))
-            //var rmdstr = java.lang.Long.toHexString(utilRandLong())
-            var rmdstr ="Looking"
-            var suffix="There"
+            var rmdstr = java.lang.Long.toHexString(utilRandLong())
+            //var rmdstr ="Yoo"
+            var suffix="Nice"
             val url = "http://$bef.$cin$rmdstr$ces$cee$suffix.$aft"
             HttpUtils.doGetAsyn(url,object: HttpUtils.CallBack{
                 override fun onRequestComplete(result: String?) {
