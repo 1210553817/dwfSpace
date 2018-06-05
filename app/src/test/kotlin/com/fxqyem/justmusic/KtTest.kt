@@ -130,6 +130,21 @@ class KtTest {
 
     }
 
+    fun testQQ(){
+        val songs: List<SongResult>? = MusicProvider.getQqLs("李玉刚",1,10)
+        songs?:return
+        for(song in songs){
+            println(Gson().toJson(song))
+            val surl = MusicProvider.getQqPlayUrl(song.qqmid,0)
+            println(surl)
+            val lurl = MusicProvider.getQqLrcA(song.songId?:"")
+            println(lurl)
+            println("----------------")
+
+        }
+
+    }
+
     fun testBD(){
         val songs: List<SongResult>? = MusicProvider.getBdLs("周杰伦",1,10)
         songs?:return
@@ -275,6 +290,9 @@ class KtTest {
 
     @Test
     fun testAllAPP(){
+
+        testQQ()
+
         //wyMusicDetailTest()
 
         //testMG()
@@ -285,9 +303,9 @@ class KtTest {
 
         //tcpTestMain()
 
-        var str = HttpUtils.doGetEncoding("http://218.200.230.40:18089/files/lyric/2017-07-26/b4584b80df21414d8fac31ee23f0c759.lrc",null,"utf-8")
-        var restr = MusicProvider.addMs(str,-600)
-        println(restr)
+//        var str = HttpUtils.doGetEncoding("http://218.200.230.40:18089/files/lyric/2017-07-26/b4584b80df21414d8fac31ee23f0c759.lrc",null,"utf-8")
+//        var restr = MusicProvider.addMs(str,-600)
+//        println(restr)
 
         //println(MusicProvider.addMs("[03:01.500]",6600))
     }

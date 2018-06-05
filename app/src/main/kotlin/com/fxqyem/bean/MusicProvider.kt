@@ -507,8 +507,8 @@ object MusicProvider {
 		var html = doGetWithCookie(url)
 		html?:return null
 		html = html.substring(0, html.length - 1).replace("callback(", "")
-		val tencentDatas: JsonObject? = Gson().fromJson(html, JsonObject::class.java)
-		val songs = tencentDatas?.getAsJsonObject("data")?.getAsJsonObject("song")
+		val rls: JsonObject? = Gson().fromJson(html, JsonObject::class.java)
+		val songs = rls?.getAsJsonObject("data")?.getAsJsonObject("song")
 		val sls = songs?.getAsJsonArray("list")
 		if (sls == null || sls.size() < 1) return null
 		return getQqLsByJson(sls)
@@ -542,25 +542,19 @@ object MusicProvider {
 
 			val mid = songsBean?.getAsJsonPrimitive("mediaMid")?.asString ?: (songsBean?.getAsJsonPrimitive("media_mid")?.asString)
 			songResult.qqmid = mid
-			// if (songsBean.getSizeflac() != 0) {
-			// songResult.setBitRate("无损");
-			// songResult.setFlacUrl("http://dl.stream.qqmusic.qq.com/F000" + mid + ".flac?vkey=F7B5C260CB57AE3339B157A9443C33A01043A9AB6A8CFC7600535EEC4FDA13A31B1C94259C6A655FAB2A255A4C107F6D3A2FB1F2308ABE60&guid=YYFM&uin=123456&fromtag=53");
-			// songResult.setFlacUrl("http://dl.stream.qqmusic.qq.com/F000" + mid + ".flac?vkey=F7B5C260CB57AE3339B157A9443C33A01043A9AB6A8CFC7600535EEC4FDA13A31B1C94259C6A655FAB2A255A4C107F6D3A2FB1F2308ABE60&guid=YYFM&uin=123456&fromtag=53");
-			// }
-			//ape为A000
+
 			val albumMid = songsBean?.getAsJsonPrimitive("albummid")?.asString
 			if (albumMid != null && albumMid.length > 2) {
 				songResult.picUrl = "http://i.gtimg.cn/music/photo/mid_album_500/" + albumMid.substring(albumMid.length - 2, albumMid.length - 1) + "/" + albumMid.substring(albumMid.length - 1) + "/" + albumMid + ".jpg"
 			}
 			songResult.length = secTotime(songsBean?.getAsJsonPrimitive("interval")?.asInt ?: 0)
 			songResult.type = "qq"
-			// songResult.setLrcUrl(GetLrcUrl(SongId, SongName, artistName)); //暂不去??歌词，直接解析浪费性能
 			list.add(songResult)
 		}
 		return list
 	}
 
-	private fun getQqPlayUrl(mid: String?, quality: Int): String? {
+	fun getQqPlayUrl(mid: String?, quality: Int): String? {
 		var prefix=""
 		var tag=""
 		when(quality) {
@@ -582,85 +576,23 @@ object MusicProvider {
         }
 		
 		val vtm = Random(System.currentTimeMillis()).nextLong()
-		val key = getQqKey((vtm).toString())
+		val key = getQqKey(vtm.toString())
 		key?:return null
 		return "http://ws.stream.qqmusic.qq.com/$prefix$mid.mp3?vkey=$key&guid=$vtm&fromtag=$tag"
 	}
 
-	//  private fun getQqMvUrl(id:String, quality:String):String {
-//    try
-//    {
-//      val html = NetUtil.doGetWithCookie("http://vv.video.qq.com/getinfo?vid=" + id + "&platform=11&charge=1&otype=json")
-//      html = html.substring(0, html.length - 1).replace("QZOutputJson=", "")
-//      val gson = Gson()
-//      val tencentMvData = gson.fromJson(html, TencentMvData::class.java)
-//      if (tencentMvData.getFl() == null)
-//      {
-//        return ""
-//      }
-//      val fi = tencentMvData.getFl().getFi()
-//      val dic = HashMap()
-//      val count = fi.size()
-//      for (fiBean in fi)
-//      {
-//        dic.put(fiBean.getName(), fiBean.getId())
-//      }
-//      val mvID:Int
-//      if (quality == "hd")
-//      when (count) {
-//        4 -> mvID = dic.get("fhd")
-//        3 -> mvID = dic.get("shd")
-//        2 -> mvID = dic.get("hd")
-//        else -> mvID = dic.get("sd")
-//      }
-//      else
-//      {
-//        when (count) {
-//          4 -> mvID = dic.get("shd")
-//          3 -> mvID = dic.get("hd")
-//          else -> mvID = dic.get("sd")
-//        }
-//      }
-//      val vkey = GetVkey(mvID, id)
-//      val fn = id + ".p" + (mvID - 10000) + ".1.mp4"
-//      return tencentMvData.getVl().getVi().get(0).getUl().getUi().get(0).getUrl() + fn + "?vkey=" + vkey
-//    }
-//    catch (e:Exception) {
-//      return ""
-//    }
-//  }
-//  private fun getQqVkey(id:Int, videoId:String):String {
-//    try
-//    {
-//      val fn = videoId + ".p" + (id - 10000) + ".1.mp4"
-//      val url = "http://vv.video.qq.com/getkey?format=" + id + "&otype=json&vid=" + videoId +
-//      "&platform=11&charge=1&filename=" + fn
-//      val html = NetUtil.doGetWithCookie(url)
-//      if (html.isEmpty())
-//      {
-//        return ""
-//      }
-//      html = html.substring(0, html.length - 1).replace("QZOutputJson=", "")
-//      val gson = Gson()
-//      val tencentMvKey = gson.fromJson(html, TencentMvKey::class.java)
-//      return tencentMvKey.getKey()
-//    }
-//    catch (e:Exception) {
-//      return ""
-//    }
-//  }
-	private fun getQqKey(time: String): String? {
-		try {
-			var html = doGetWithCookie("http://base.music.qq.com/fcgi-bin/fcg_musicexpress.fcg?json=3&guid=" + time)
-			html = html?.replace("jsonCallback(", "")?.replace(");", "")
-			val gson = Gson()
-			val tencentGetKey: JsonObject? = gson.fromJson(html, JsonObject::class.java)
-			return tencentGetKey?.getAsJsonPrimitive("key")?.asString
-		} catch (e: Exception) {
-			Log.e(TAG,e.message)
-		}
+    private fun getQqKey(time: String): String? {
+        try {
+            var html = doGetWithCookie("http://base.music.qq.com/fcgi-bin/fcg_musicexpress.fcg?json=3&guid=" + time)
+            html = html?.replace("jsonCallback(", "")?.replace(");", "")
+            val gson = Gson()
+            val tencentGetKey: JsonObject? = gson.fromJson(html, JsonObject::class.java)
+            return tencentGetKey?.getAsJsonPrimitive("key")?.asString
+        } catch (e: Exception) {
+            Log.e(TAG,e.message)
+        }
         return null
-	}
+    }
 
 //	fun getQqLrc(sid: String):String?{
 //		var restr: String?=null
@@ -687,7 +619,7 @@ object MusicProvider {
 //	}
 
     //https://github.com/xiangwenhu/vbox/blob/master/
-    private fun getQqLrcA(qsongMid: String):String?{
+	fun getQqLrcA(qsongMid: String):String?{
         val cyqqBaseUrl = "https://c.y.qq.com"
         val commonParams = "g_tk=5381&loginUin=0&hostUin=0&inCharset=utf8&outCharset=utf-8&notice=0&platform=yqq&needNewCode=0"
         val urlSuffix = "$cyqqBaseUrl/lyric/fcgi-bin/fcg_query_lyric_new.fcg?$commonParams&format=json"
