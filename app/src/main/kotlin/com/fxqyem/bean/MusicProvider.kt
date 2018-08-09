@@ -560,7 +560,7 @@ object MusicProvider {
 		when(quality) {
             0 -> {
                 prefix = "M500"
-                tag = "0"
+                tag = "30"
             }
 			1 ->{
                 prefix = "O600"
@@ -578,7 +578,8 @@ object MusicProvider {
 		val vtm = Random(System.currentTimeMillis()).nextLong()
 		val key = getQqKey(vtm.toString())
 		key?:return null
-		return "http://ws.stream.qqmusic.qq.com/$prefix$mid.mp3?vkey=$key&guid=$vtm&fromtag=$tag"
+		//return "http://ws.stream.qqmusic.qq.com/$prefix$mid.mp3?vkey=$key&guid=$vtm&fromtag=$tag"
+		return "http://dl.stream.qqmusic.qq.com/$prefix$mid.mp3?vkey=$key&guid=85880580&fromtag=$tag"
 	}
 
     private fun getQqKey(time: String): String? {
@@ -586,8 +587,8 @@ object MusicProvider {
             var html = doGetWithCookie("http://base.music.qq.com/fcgi-bin/fcg_musicexpress.fcg?json=3&guid=" + time)
             html = html?.replace("jsonCallback(", "")?.replace(");", "")
             val gson = Gson()
-            val tencentGetKey: JsonObject? = gson.fromJson(html, JsonObject::class.java)
-            return tencentGetKey?.getAsJsonPrimitive("key")?.asString
+            val tkey: JsonObject? = gson.fromJson(html, JsonObject::class.java)
+            return tkey?.getAsJsonPrimitive("key")?.asString
         } catch (e: Exception) {
             Log.e(TAG,e.message)
         }
