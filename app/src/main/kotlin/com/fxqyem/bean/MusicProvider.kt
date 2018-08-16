@@ -578,8 +578,8 @@ object MusicProvider {
 		val vtm = Random(System.currentTimeMillis()).nextLong()
 		val key = getQqKey(vtm.toString())
 		key?:return null
-		//return "http://ws.stream.qqmusic.qq.com/$prefix$mid.mp3?vkey=$key&guid=$vtm&fromtag=$tag"
-		return "http://dl.stream.qqmusic.qq.com/$prefix$mid.mp3?vkey=$key&guid=85880580&fromtag=$tag"
+		return "http://ws.stream.qqmusic.qq.com/$prefix$mid.mp3?vkey=$key&guid=$vtm&fromtag=$tag"
+		//return "http://dl.stream.qqmusic.qq.com/$prefix$mid.m4a?vkey=$key&guid=$vtm&fromtag=$tag"
 	}
 
     private fun getQqKey(time: String): String? {

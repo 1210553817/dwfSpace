@@ -132,7 +132,7 @@ class KtTest {
     }
 
     fun testQQ(){
-        val songs: List<SongResult>? = MusicProvider.getQqLs("李玉刚",1,10)
+        val songs: List<SongResult>? = MusicProvider.getQqLs("周杰伦",1,10)
         songs?:return
         for(song in songs){
             println(Gson().toJson(song))
@@ -230,7 +230,7 @@ class KtTest {
 
     private fun genSites(){
         val cenInArr = arrayOf(
-                "a sample HOSTS file used by Microsoft TCPIP for Windows ",
+                "a sample hold file used by soft which for shadow ",
                 "This file contains the mappings of IP addresses to host names Each ",
                 "entry should be kept on an individual line The IP address should ",
                 "be placed in the first column followed by the corresponding host name ",
@@ -240,12 +240,12 @@ class KtTest {
                 "True love is best seen as the promotion and action not an emotion. Love is not exclu sively ",
                 "based how we feel Certainly our emotions are involved But they cannot be our only criteria ",
                 "for love True love is when you care enough about another person that you will lay down your ",
-                "life for them. When this happens,then love truly is as strong as death.How many of you have ",
+                "life for them When this happens,then love truly is as strong as death.How many of you have ",
                 "or father husband or wife son or daughter or friend who would sacrifice his or ",
                 "unsel fishly lay your life on the line to save them from death Many people in an emergency ",
                 "room with their loved ones and prayed please God take me instead of them.Find true ",
                 "and be a true lover as well May you find a love which is not only strong as death but to leave to a truly for feeling life",
-                "The production and consumption of top quality ham is the subject of the same awe and mystery as the making of fine wine. Cutting de-boned jamón de bellota on a ham-slicing machine is regarded as sacri lege. The leg must be bolted on to a frame called a jamo nero and then cut by hand using a long narrow blade. Most towns in the ham producing areas of Extre madura Cast illa y León and Andalucía hold solemn ham-slicing competitions often attended by hundreds of spectators"
+                "The production and cons umption of top quality ham is the subject of the same awe and mystery as the making of fine wine Cutting de-boned jamón de bellota on a ham-slicing machine is regarded as sacri lege The leg must be bolted on to a frame called a jamo nero and then cut by hand using a long narrow blade Most towns in the ham producing areas of Extre madura Cast illa y León and Anda lucía hold solemn ham slicing compet itions often attended by hundreds of spectators"
             ).joinToString(separator = "").split(" ")
 
         val beforeArr = arrayOf("www","bbs","blog","mail","ftp","map","wap","m","news","chat","doc","api")
@@ -271,9 +271,9 @@ class KtTest {
             val aft = afterArr[utilRandInt(0,afterArr.size-1)]
             //val rmdstr = String.format("%s",utilRandLong())
             //val rmdstr = String.format("%s",utilRandInt(0,999))
-            var rmdstr = java.lang.Long.toHexString(utilRandLong())
-            //var rmdstr ="Yoo"
-            var suffix="Nice"
+            //var rmdstr = java.lang.Long.toHexString(utilRandLong())
+            var rmdstr ="er"
+            var suffix="ed"
             val url = "http://$bef.$cin$rmdstr$ces$cee$suffix.$aft"
             HttpUtils.doGetAsyn(url,object: HttpUtils.CallBack{
                 override fun onRequestComplete(result: String?) {
