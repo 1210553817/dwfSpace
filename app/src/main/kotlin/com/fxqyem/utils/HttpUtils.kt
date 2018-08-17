@@ -265,6 +265,7 @@ object HttpUtils {
         }
 
     }
+
     fun doGetEncoding(urlStr: String,headParams: Map<String,String>?,encode: String?): String? {
         var url: URL?
         var conn: HttpURLConnection? = null
@@ -305,6 +306,62 @@ object HttpUtils {
         }
 
         return null
+
+    }
+
+
+    fun doDownloadWith(urlStr: String,filePath: String,fileName: String,stateCall: StateCall,headParams: Map<String,String>?){
+        var url: URL?
+        var conn: HttpURLConnection? = null
+        var inpt: InputStream? = null
+        var baos: FileOutputStream? = null
+        try {
+            url = URL(urlStr)
+            conn = url.openConnection() as HttpURLConnection
+            conn.requestMethod = "GET"
+            conn.setRequestProperty("accept", "*/*")
+            conn.setRequestProperty("connection", "Keep-Alive")
+            if(headParams!=null){
+                for(ent in headParams.entries){
+                    conn.setRequestProperty(ent.key,ent.value)
+                }
+            }
+            if (conn.responseCode == 200) {
+                stateCall.onStateChange(0,0,fileName)
+                val contentLength = conn.contentLength
+                val perclen = contentLength/100
+                inpt = conn.inputStream
+                val output = File(filePath,fileName)
+                baos = FileOutputStream(output)
+                val buf = ByteArray(4096)
+                var part=0
+                var len = inpt.read(buf)
+                var dnsz=len
+                while (len!= -1) {
+                    baos.write(buf, 0, len)
+                    len = inpt.read(buf)
+                    dnsz+=len;
+                    val pct = dnsz/perclen
+                    if(pct!=part){
+                        stateCall.onStateChange(1,part,fileName)
+                        part=pct;
+                    }
+                }
+                baos.flush()
+                stateCall.onStateChange(2,100,fileName)
+            } else {
+                throw RuntimeException(" responseCode is not 200 ... ")
+            }
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+            try {
+                baos?.close()
+                inpt?.close()
+            } catch (e: IOException) {
+            }
+            conn?.disconnect()
+        }
 
     }
 }

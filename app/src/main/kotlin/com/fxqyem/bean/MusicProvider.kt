@@ -576,72 +576,77 @@ object MusicProvider {
         }
 		
 		val vtm = Random(System.currentTimeMillis()).nextLong()
-		val key = getQqKey(vtm.toString())
+		val key = getQqKey(vtm.toString(),mid)
 		key?:return null
-		return "http://ws.stream.qqmusic.qq.com/$prefix$mid.mp3?vkey=$key&guid=$vtm&fromtag=$tag"
-		//return "http://dl.stream.qqmusic.qq.com/$prefix$mid.m4a?vkey=$key&guid=$vtm&fromtag=$tag"
+		//return "http://ws.stream.qqmusic.qq.com/$prefix$mid.mp3?vkey=$key&guid=$vtm&fromtag=$tag"
+		return "http://dl.stream.qqmusic.qq.com/C400$mid.m4a?vkey=$key&guid=$vtm&uin=0&fromtag=66"
 	}
 
-    private fun getQqKey(time: String): String? {
+    private fun getQqKey(time: String,mid: String?): String? {
         try {
-            var html = doGetWithCookie("http://base.music.qq.com/fcgi-bin/fcg_musicexpress.fcg?json=3&guid=" + time)
-            html = html?.replace("jsonCallback(", "")?.replace(");", "")
+            //var html = doGetWithCookie("http://base.music.qq.com/fcgi-bin/fcg_musicexpress.fcg?json=3&guid=" + time)
+            var html = doGetWithCookie("https://c.y.qq.com/base/fcgi-bin/fcg_music_express_mobile3.fcg?format=json&cid=205361747&platform=yqq&hostUin=0&needNewCode=0&uin=0&songmid=$mid&filename=C400$mid.m4a&guid=" + time)
+            //html = html?.replace("jsonCallback(", "")?.replace(");", "")
             val gson = Gson()
-            val tkey: JsonObject? = gson.fromJson(html, JsonObject::class.java)
-            return tkey?.getAsJsonPrimitive("key")?.asString
+            val ren: JsonObject? = gson.fromJson(html, JsonObject::class.java)
+			val code = ren?.getAsJsonPrimitive("code")?.asString
+			if(code!="0")return null
+			val arr = ren?.getAsJsonObject("data")?.getAsJsonArray("items")?.get(0)
+			arr?:return null
+			val itm = arr.asJsonObject
+            return itm?.getAsJsonPrimitive("vkey")?.asString
         } catch (e: Exception) {
+			e.printStackTrace()
             Log.e(TAG,e.message)
         }
         return null
     }
 
-//	fun getQqLrc(sid: String):String?{
-//		var restr: String?=null
-//		if(!isNumber(sid)) return null
-//
-//		try{
-//			val id=Integer.parseInt(sid)
-//			val midn=id%100
-//            val prUrl="http://music.qq.com/miniportal/static/lyric/$midn/$id.xml"
-//			restr= HttpUtils.doGetEncoding(prUrl,null,"GBK")
-//			if(restr==null) return restr
-//			val regexa = Regex(""".+<!\[CDATA\[([\s\S]*)\]\]>.*""")
-//		    val result = regexa.find(restr)
-//		    if (result != null) {
-//				val ctt = result.groupValues[1]
-//				return ctt.replace("&apos;", "'")
-//		    }else{
-//				return null
-//			}
-//		}catch(e: Exception){
-//			return null
-//		}
-//
-//	}
+	fun getQqLrcA(sid: String):String?{
+		var restr: String?=null
+		try{
+			val id=Integer.parseInt(sid)
+			val midn=id%100
+            val prUrl="http://music.qq.com/miniportal/static/lyric/$midn/$id.xml"
+			restr= HttpUtils.doGetEncoding(prUrl,null,"GBK")
+			if(restr==null) return restr
+			val regexa = Regex(""".+<!\[CDATA\[([\s\S]*)\]\]>.*""")
+		    val result = regexa.find(restr)
+		    if (result != null) {
+				val ctt = result.groupValues[1]
+				return ctt.replace("&apos;", "'")
+		    }else{
+				return null
+			}
+		}catch(e: Exception){
+			return null
+		}
+
+	}
 
     //https://github.com/xiangwenhu/vbox/blob/master/
-	fun getQqLrcA(qsongMid: String):String?{
-        val cyqqBaseUrl = "https://c.y.qq.com"
-        val commonParams = "g_tk=5381&loginUin=0&hostUin=0&inCharset=utf8&outCharset=utf-8&notice=0&platform=yqq&needNewCode=0"
-        val urlSuffix = "$cyqqBaseUrl/lyric/fcgi-bin/fcg_query_lyric_new.fcg?$commonParams&format=json"
-        val realUrl ="$urlSuffix&songmid=$qsongMid&pcachetime=${java.util.Date().time}"
-        try{
-            val hdMap = HashMap<String,String>()
-            hdMap.put("Accept","application/json")
-            hdMap.put("Content-Type","application/json")
-            hdMap.put("referer","https://y.qq.com/portal/player.html")
-            val qlre = HttpUtils.doGetEncoding(realUrl,hdMap,"utf-8")
-            val qlrcn =qlre?.replace("(MusicJsonCallback\\()|(\\}\\))".toRegex(),"")
-            val plreo: JsonObject? = Gson().fromJson(qlrcn+"}",JsonObject::class.java)
-            val lyricStr = plreo?.getAsJsonPrimitive("lyric")?.asString
-            if(lyricStr==null||lyricStr.length<10) return null
-            val destr: ByteArray = BASE64Decoder().decodeBuffer(lyricStr)
-            return String(destr)
-        }catch(e: Exception){
-            return null
-        }
-
-    }
+//	fun getQqLrcA(qsongMid: String):String?{
+//        val cyqqBaseUrl = "https://c.y.qq.com"
+//        val commonParams = "g_tk=5381&loginUin=0&hostUin=0&inCharset=utf8&outCharset=utf-8&notice=0&platform=yqq&needNewCode=0"
+//        val urlSuffix = "$cyqqBaseUrl/lyric/fcgi-bin/fcg_query_lyric_new.fcg?$commonParams&format=json"
+//        val realUrl ="$urlSuffix&songmid=$qsongMid&pcachetime=${java.util.Date().time}"
+//        try{
+//            val hdMap = HashMap<String,String>()
+//            hdMap.put("Accept","application/json")
+//            hdMap.put("Content-Type","application/json")
+//            hdMap.put("referer","https://y.qq.com/portal/player.html")
+//            val qlre = HttpUtils.doGetEncoding(realUrl,hdMap,"utf-8")
+//            val qlrcn =qlre?.replace("(MusicJsonCallback\\()|(\\}\\))".toRegex(),"")
+//            val plreo: JsonObject? = Gson().fromJson(qlrcn+"}",JsonObject::class.java)
+//            val lyricStr = plreo?.getAsJsonPrimitive("lyric")?.asString
+//            if(lyricStr==null||lyricStr.length<10) return null
+//            val destr: ByteArray = BASE64Decoder().decodeBuffer(lyricStr)
+//            return String(destr)
+//        }catch(e: Exception){
+//            return null
+//        }
+//
+//    }
     /**
 	 * ********baidu start**********
      */
@@ -1075,7 +1080,7 @@ object MusicProvider {
 				val qmid = rst.qqmid
                 qmid?:return null
 				val l = getQqLrcA(qmid)
-                return addMs(l,-50)
+                return l
             }
             "bd" ->{
                 sid?:return null

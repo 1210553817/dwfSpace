@@ -136,7 +136,7 @@ class KtTest {
         songs?:return
         for(song in songs){
             println(Gson().toJson(song))
-            val surl = MusicProvider.getQqPlayUrl(song.songId,0)
+            val surl = MusicProvider.getQqPlayUrl(song.qqmid,0)
             println(surl)
             val lurl = MusicProvider.getQqLrcA(song.songId?:"")
             println(lurl)
@@ -293,9 +293,12 @@ class KtTest {
     fun testAllAPP(){
 
         testQQ()
+        //testDown()
 
         //wyMusicDetailTest()
 
+
+        //testWY()
         //testMG()
 
         //littleTestXM()
@@ -309,6 +312,19 @@ class KtTest {
 //        println(restr)
 
         //println(MusicProvider.addMs("[03:01.500]",6600))
+    }
+
+    private fun testDown(){
+        //val hdp = mapOf("Cookie" to "pgv_pvid=-1678923377287220041; ")
+        val hdp = mapOf("fff" to "pgv_pvid=-1678923377287220041; ")
+        HttpUtils.doDownloadWith("https://dl.stream.qqmusic.qq.com/C400000amRvH3wxv56.m4a?vkey=24852D50B191617665C41A4598910141E5A17CC329FF39697BFFD9C581908D9CECF588DD81097509C033BFD514DE467195CEDE381E6901CF&guid=-1678923377287220041&uin=0&fromtag=66",
+            "C:\\Users\\Dong\\Desktop","testDown.mp3", object: HttpUtils.StateCall{
+            override fun onStateChange(state: Int,value: Int,result: String?){
+                println("###########")
+                println("${result} downloading... ${value}%")
+            }
+        },hdp
+        )
     }
 
     private fun tcpTestMain(){
