@@ -136,7 +136,7 @@ class KtTest {
         songs?:return
         for(song in songs){
             println(Gson().toJson(song))
-            val surl = MusicProvider.getQqPlayUrl(song.qqmid,0)
+            val surl = MusicProvider.getQqPlayUrl(song.qqmid)
             println(surl)
             val lurl = MusicProvider.getQqLrcA(song.songId?:"")
             println(lurl)

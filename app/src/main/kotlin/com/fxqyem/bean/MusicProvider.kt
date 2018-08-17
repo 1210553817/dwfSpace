@@ -36,8 +36,6 @@ object MusicProvider {
 		}
         return null
 	}
-
-	//解析搜索时获取到的json，然后拼接成固定格式
 	//具体每个返回标签的规范参考https://github.com/metowolf/NeteaseCloudMusicApi/wiki/%E7%BD%91%E6%98%93%E4%BA%91%E9%9F%B3%E4%B9%90API%E5%88%86%E6%9E%90---weapi
 	@Throws(Exception::class)
 	private fun getWyLsByJson(songs: JsonArray): List<SongResult>? {
@@ -435,61 +433,6 @@ object MusicProvider {
 				val kugouMp3Url: JsonObject? = gson.fromJson(html, JsonObject::class.java)
 				return kugouMp3Url?.getAsJsonPrimitive("url")?.asString
 			}
-			if (format == "mp4") {
-				/**
-				val key = getMD5(id + "kugoumvcloud")
-				html = doGetWithCookie("http://trackermv.kugou.com/interface/index?cmd=100&pid=6&ext=mp4&hash=" + id +
-				"&quality=-1&key=" + key + "&backupdomain=1")
-				// /interface/index?cmd=100&pid=6&ext=mp4&hash=1f1668e15ee298b4d3ee630cef0c6a90&quality=-1&key=0cda6579ff6a8822d5d5a9e504bbcc57&backupdomain=1
-				if (html?.contains("Bad key")?:true)
-				{
-				return ""
-				}
-				val kugouMv: JsonObject = gson.fromJson(html, JsonObject::class.java)
-				val mvdata = kugouMv?.getAsJsonObject("mvdata")
-				if (quality == "hd")
-				{
-				val rq = mvdata?.getAsJsonObject("rq")?.getAsJsonPrimitive("downurl")?.asString
-				if (rq != null && !rq.isEmpty())
-				{
-				return rq
-				}
-				val sq = mvdata?.getAsJsonObject("sq")?.getAsJsonPrimitive("downurl")?.asString
-				if (sq != null && !sq.isEmpty())
-				{
-				return sq
-				}
-				val hd = mvdata?.getAsJsonObject("hd")?.getAsJsonPrimitive("downurl")?.asString
-				if (hd != null && !hd.isEmpty())
-				{
-				return hd
-				}
-				val sd = mvdata?.getAsJsonObject("sd")?.getAsJsonPrimitive("downurl")?.asString
-				if (sd != null && !sd.isEmpty())
-				{
-				return sd
-				}
-				}
-				else
-				{
-				val sq = mvdata?.getAsJsonObject("sq")?.getAsJsonPrimitive("downurl")?.asString
-				if (sq != null && !sq.isEmpty())
-				{
-				return sq
-				}
-				val hd = mvdata?.getAsJsonObject("hd")?.getAsJsonPrimitive("downurl")?.asString
-				if (hd != null && !hd.isEmpty())
-				{
-				return hd
-				}
-				val sd = mvdata?.getAsJsonObject("sd")?.getAsJsonPrimitive("downurl")?.asString
-				if (sd != null && !sd.isEmpty())
-				{
-				return sd
-				}
-				}
-				 */
-			}
 		} catch (ignored: Exception) {
 		}
 		return null
@@ -500,7 +443,6 @@ object MusicProvider {
 	/**
 	 ***********qq start
 	 */
-	//腾讯支持无损和mv解析
 	@Throws(Exception::class)
 	fun getQqLs(key: String, page: Int, size: Int): List<SongResult>? {
 		val url = "http://soso.music.qq.com/fcgi-bin/search_cp?aggr=0&catZhida=0&lossless=1&sem=1&w=" + urlEncode(key) + "&n=" + size + "&t=0&p=" + page + "&remoteplace=sizer.yqqlist.song&g_tk=5381&loginUin=0&hostUin=0&format=jsonp&inCharset=GB2312&outCharset=utf-8&notice=0&platform=yqq&needNewCode=0"
@@ -513,8 +455,6 @@ object MusicProvider {
 		if (sls == null || sls.size() < 1) return null
 		return getQqLsByJson(sls)
 	}
-
-	//解析搜索时获取到的json，然后拼接成固定格式
 	@Throws(Exception::class)
 	private fun getQqLsByJson(songs: JsonArray): List<SongResult> {
 		val list = ArrayList<SongResult>()
@@ -554,27 +494,7 @@ object MusicProvider {
 		return list
 	}
 
-	fun getQqPlayUrl(mid: String?, quality: Int): String? {
-		var prefix=""
-		var tag=""
-		when(quality) {
-            0 -> {
-                prefix = "M500"
-                tag = "30"
-            }
-			1 ->{
-                prefix = "O600"
-                tag = "50"
-            }
-			2 -> {
-                prefix = "M800"
-                tag = "50"
-            }
-			3 ->{
-                return null
-            }
-        }
-		
+	fun getQqPlayUrl(mid: String?): String? {
 		val vtm = Random(System.currentTimeMillis()).nextLong()
 		val key = getQqKey(vtm.toString(),mid)
 		key?:return null
@@ -1038,7 +958,7 @@ object MusicProvider {
             "kg" -> return getKgPlayUrl(sid,0)
             "qq" ->{
                 val qqmid = rst.qqmid
-                return getQqPlayUrl(qqmid,0)
+                return getQqPlayUrl(qqmid)
             }
             "bd" ->{
                 return getBdUrl(sid,0,"mp3")
@@ -1046,7 +966,7 @@ object MusicProvider {
 			"mg" ->{
                 return rst.songLink
             }
-            "ws" ->{
+				"ws" ->{
                 return getWsPlayUrl(sid)
             }
         }
