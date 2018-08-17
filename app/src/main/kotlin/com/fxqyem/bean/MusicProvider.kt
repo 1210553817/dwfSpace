@@ -997,10 +997,9 @@ object MusicProvider {
 				return  addMs(l,-50)
             }
             "qq" ->{
-				val qmid = rst.qqmid
-                qmid?:return null
-				val l = getQqLrcA(qmid)
-                return l
+				sid?:return null
+				val l = getQqLrcA(sid)
+                return addMs(l,-40)
             }
             "bd" ->{
                 sid?:return null
