@@ -32,7 +32,7 @@ dependencies {
 
     //api 'com.android.support:design:23.0.0'
     api 'com.android.support:support-v4:23.0.0'
-    api 'org.jetbrains.kotlin:kotlin-stdlib:1.2.40'
+    api 'org.jetbrains.kotlin:kotlin-stdlib:1.2.61'
     api 'org.jetbrains.anko:anko-sdk25:0.10.0-beta-1'
     //compile 'org.jetbrains.anko:anko-design:0.9-beta1'
     api 'org.jetbrains.anko:anko-support-v4:0.9-beta1'
