@@ -2,13 +2,10 @@ package com.fxqyem.lay
 
 import android.view.Gravity
 import android.view.View
-import android.widget.ImageView
 import android.widget.LinearLayout
-import android.widget.TextView
 import com.fxqyem.R
-import com.fxqyem.act.MainActivity
 import com.fxqyem.act.SubActivity
-import com.fxqyem.vw.*
+import com.fxqyem.vw.COLOR_WHITE
 import org.jetbrains.anko.*
 
 /**

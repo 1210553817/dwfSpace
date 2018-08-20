@@ -20,11 +20,7 @@ import android.support.v4.content.LocalBroadcastManager
 import android.support.v4.view.PagerAdapter
 import android.support.v4.view.ViewPager
 import android.util.Log
-import android.view.KeyEvent
-import android.view.MotionEvent
-import android.view.View
-import android.view.ViewGroup
-import android.view.WindowManager
+import android.view.*
 import android.view.animation.DecelerateInterpolator
 import android.widget.*
 import com.fxqyem.R
@@ -32,16 +28,14 @@ import com.fxqyem.adp.HomeExpdLsAdapter
 import com.fxqyem.adp.NetLsAdapter
 import com.fxqyem.adp.TmpLsAdapter
 import com.fxqyem.bean.*
+import com.fxqyem.lay.HomeLay
 import com.fxqyem.lay.MainLay
+import com.fxqyem.lay.TmplsLay
 import com.fxqyem.ser.MainService
 import com.fxqyem.utils.*
-import com.fxqyem.lay.HomeLay
-import com.fxqyem.lay.TmplsLay
 import com.fxqyem.vw.*
 import org.jetbrains.anko.*
-
-import java.util.ArrayList
-import java.util.Stack
+import java.util.*
 
 class MainActivity : android.app.Activity(), OnBackListener {
     //Views

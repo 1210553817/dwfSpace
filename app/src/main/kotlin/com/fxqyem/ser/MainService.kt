@@ -1,31 +1,19 @@
 package com.fxqyem.ser
 
 import android.app.Service
-import android.content.BroadcastReceiver
-import android.content.ComponentName
-import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
+import android.content.*
 import android.content.res.Configuration
 import android.media.AudioManager
 import android.media.MediaPlayer
-import android.os.Bundle
-import android.os.CountDownTimer
-import android.os.Handler
-import android.os.IBinder
-import android.os.Message
+import android.os.*
 import android.support.v4.content.LocalBroadcastManager
 import android.util.Log
 import android.view.KeyEvent
 import com.fxqyem.bean.*
-
-import com.fxqyem.utils.*
+import com.fxqyem.utils.LrcParser
 import com.fxqyem.vw.utilRandInt
 import org.jetbrains.anko.doAsync
-
-import java.util.ArrayList
-import java.util.Timer
-import java.util.TimerTask
+import java.util.*
 
 
 class MainService : Service(), MediaPlayer.OnPreparedListener {

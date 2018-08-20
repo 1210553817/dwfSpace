@@ -5,29 +5,26 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.content.LocalBroadcastManager
-import android.util.Log
 import android.view.KeyEvent
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
-
 import com.fxqyem.R
-import com.fxqyem.act.MainActivity
 import com.fxqyem.act.HmFrgm
+import com.fxqyem.act.MainActivity
 import com.fxqyem.bean.*
-import com.fxqyem.utils.*
-import com.fxqyem.vw.SldMenu
 import com.fxqyem.lay.FrgmHmLay
 import com.fxqyem.lay.FrgmMenuLay
 import com.fxqyem.lay.HomeLay
+import com.fxqyem.utils.AndUtil
+import com.fxqyem.utils.DbUtil
+import com.fxqyem.utils.PrefUtil
+import com.fxqyem.utils.SDCardUtils
+import com.fxqyem.vw.SldMenu
 import com.fxqyem.vw.utilSqlNull
-import org.jetbrains.anko.onClick
 import org.jetbrains.anko.textResource
-
-import java.util.ArrayList
-import java.util.HashMap
+import java.util.*
 
 class SongLsAdapter(frgmt: Fragment, var list: List<SongInfo>?, private val dataTp: Int, private val stbnm: String?) : BaseAdapter(), OnBackListener {
     private var viewHd: ThisViewHd? = null

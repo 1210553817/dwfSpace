@@ -6,16 +6,8 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.app.Fragment
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.IntentFilter
-import android.database.DataSetObserver
-import android.net.Uri
-import android.os.Environment
 import android.support.v4.content.LocalBroadcastManager
-import android.util.Log
 import android.widget.*
-
 import com.fxqyem.R
 import com.fxqyem.adp.SongLsAdapter
 import com.fxqyem.bean.*
@@ -23,12 +15,8 @@ import com.fxqyem.lay.FrgmHmLay
 import com.fxqyem.utils.*
 import com.fxqyem.vw.SldMenu
 import org.jetbrains.anko.onClick
-import android.media.MediaScannerConnection
 import android.os.CountDownTimer
 import android.view.*
-import org.jetbrains.anko.runOnUiThread
-import java.io.File
-import java.util.HashMap
 import kotlin.collections.ArrayList
 
 

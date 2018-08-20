@@ -7,15 +7,23 @@ import com.google.gson.Gson
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import org.apache.commons.codec.binary.Hex
-import sun.misc.BASE64Decoder
 import sun.misc.BASE64Encoder
 import java.math.BigInteger
-import java.net.URLEncoder
 import java.net.URLDecoder
+import java.net.URLEncoder
+import java.util.Random
 import javax.crypto.Cipher
 import javax.crypto.spec.IvParameterSpec
 import javax.crypto.spec.SecretKeySpec
-import java.util.Random
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
+import kotlin.collections.List
+import kotlin.collections.component1
+import kotlin.collections.component2
+import kotlin.collections.dropLastWhile
+import kotlin.collections.iterator
+import kotlin.collections.mapOf
+import kotlin.collections.toTypedArray
 
 object MusicProvider {
 	val TAG = "MusicProvider"

@@ -8,9 +8,11 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import com.fxqyem.R
-import com.fxqyem.act.MainActivity
 import com.fxqyem.utils.BitMapUtil
-import com.fxqyem.vw.*
+import com.fxqyem.vw.COLOR_TRANS
+import com.fxqyem.vw.appColorArray
+import com.fxqyem.vw.getResColor
+import com.fxqyem.vw.getResDrawable
 import org.jetbrains.anko.*
 
 /**

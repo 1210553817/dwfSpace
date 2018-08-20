@@ -1,27 +1,17 @@
 package com.fxqyem.vw
 
 import android.content.Context
-import android.graphics.*
+import android.graphics.Matrix
 import android.os.CountDownTimer
 import android.util.AttributeSet
-import android.util.Log
-import android.util.TypedValue
-import android.view.Gravity
 import android.view.MotionEvent
 import android.view.View
-import android.view.ViewGroup
-import android.view.ViewTreeObserver
-import android.widget.FrameLayout
 import android.widget.ListView
-import android.widget.TextView
-
-import com.fxqyem.act.MainActivity
-import com.fxqyem.utils.AndUtil
-import android.widget.SimpleAdapter
 import com.fxqyem.R
+import com.fxqyem.act.MainActivity
 import com.fxqyem.adp.LrcLsAdapter
+import com.fxqyem.utils.AndUtil
 import org.jetbrains.anko.dip
-import org.jetbrains.anko.onScrollListener
 
 
 class LrcMovView : ListView {

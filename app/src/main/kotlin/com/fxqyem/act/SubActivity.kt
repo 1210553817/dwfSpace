@@ -3,10 +3,9 @@ package com.fxqyem.act
 import android.app.Activity
 import android.os.Bundle
 import android.widget.TextView
+import com.fxqyem.R
 import com.fxqyem.lay.SubLay
 import org.jetbrains.anko.setContentView
-import com.fxqyem.R
-import org.jetbrains.anko.textResource
 
 /**
  * Created by Dwf on 2017/9/13.

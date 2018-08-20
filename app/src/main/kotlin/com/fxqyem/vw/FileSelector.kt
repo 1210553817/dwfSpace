@@ -1,11 +1,13 @@
 package com.fxqyem.vw
 
+
 import android.content.Context
 import android.graphics.Bitmap
-import android.util.Log
-import android.view.*
+import android.view.Gravity
+import android.view.KeyEvent
+import android.view.View
+import android.view.ViewGroup
 import android.widget.*
-
 import com.fxqyem.R
 import com.fxqyem.act.MainActivity
 import com.fxqyem.bean.AppConstants
@@ -15,8 +17,6 @@ import com.fxqyem.utils.AndUtil
 import com.fxqyem.utils.BitMapUtil
 import com.fxqyem.utils.SDCardUtils
 import org.jetbrains.anko.*
-
-
 import java.io.File
 import java.util.*
 

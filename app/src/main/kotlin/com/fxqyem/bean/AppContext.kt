@@ -7,9 +7,7 @@ import com.fxqyem.utils.PrefUtil
 import com.fxqyem.utils.SDCardUtils
 import com.fxqyem.vw.utilSqlNull
 import org.jetbrains.anko.doAsync
-
-import java.util.ArrayList
-import java.util.HashMap
+import java.util.*
 
 
 class AppContext : Application() {

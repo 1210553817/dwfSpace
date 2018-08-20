@@ -1,11 +1,7 @@
 package com.fxqyem.adp
 
 import android.content.Context
-import android.content.Intent
 import android.media.MediaScannerConnection
-import android.os.Bundle
-import android.support.v4.content.LocalBroadcastManager
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
@@ -13,9 +9,9 @@ import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import com.fxqyem.R
-import com.fxqyem.bean.*
+import com.fxqyem.bean.MusicProvider
+import com.fxqyem.bean.SongResult
 import com.fxqyem.lay.HomeLay
-import com.fxqyem.utils.AndUtil
 import com.fxqyem.utils.HttpUtils
 import com.fxqyem.utils.SDCardUtils
 import com.fxqyem.vw.utilNotNull
@@ -24,7 +20,7 @@ import org.jetbrains.anko.uiThread
 import java.io.File
 import java.io.FileOutputStream
 import java.io.PrintWriter
-import java.util.ArrayList
+import java.util.*
 
 class NetLsAdapter(private val context: Context, var list: ArrayList<SongResult>?) : BaseAdapter() {
     private var viewHd: ThisViewHd? = null

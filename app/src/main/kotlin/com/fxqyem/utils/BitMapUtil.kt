@@ -6,27 +6,19 @@ import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.graphics.*
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.provider.MediaStore
+import android.renderscript.Allocation
+import android.renderscript.Element
+import android.renderscript.RenderScript
+import android.renderscript.ScriptIntrinsicBlur
 import android.util.Log
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.lang.ref.WeakReference
-import android.graphics.BitmapFactory
-import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.Drawable
-import android.renderscript.Allocation
-import android.renderscript.Element
-import android.renderscript.ScriptIntrinsicBlur
-import android.renderscript.RenderScript
-import android.R.attr.scaleHeight
-import android.R.attr.scaleWidth
-
-
-
-
 
 
 object BitMapUtil {

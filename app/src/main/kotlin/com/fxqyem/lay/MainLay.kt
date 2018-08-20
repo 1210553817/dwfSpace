@@ -2,6 +2,7 @@ package com.fxqyem.lay
 
 import android.app.Service
 import android.content.Context
+import android.media.AudioManager
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -10,15 +11,12 @@ import android.widget.LinearLayout.VERTICAL
 import android.widget.SeekBar
 import com.fxqyem.R
 import com.fxqyem.act.MainActivity
+import com.fxqyem.bean.AppContext
+import com.fxqyem.utils.BitMapUtil
 import com.fxqyem.vw.*
 import org.jetbrains.anko.*
 import org.jetbrains.anko.design.tabLayout
 import org.jetbrains.anko.support.v4.viewPager
-import android.content.Context.AUDIO_SERVICE
-import android.media.AudioManager
-import android.widget.Toast
-import com.fxqyem.bean.AppContext
-import com.fxqyem.utils.BitMapUtil
 
 
 /**
