@@ -4,7 +4,6 @@ import com.fxqyem.bean.MusicProvider
 import com.fxqyem.bean.SongResult
 import com.fxqyem.utils.HttpUtils
 import com.fxqyem.vw.utilRandInt
-import com.fxqyem.vw.utilRandLong
 import com.google.gson.Gson
 import org.apache.commons.codec.binary.Hex
 import org.junit.Test
