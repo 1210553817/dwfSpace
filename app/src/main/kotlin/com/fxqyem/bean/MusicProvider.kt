@@ -510,9 +510,6 @@ object MusicProvider {
 		return "http://dl.stream.qqmusic.qq.com/C400$mid.m4a?vkey=$key&guid=$vtm&uin=0&fromtag=66"
 	}
 
-	/**
-	 * 2018-8-17 15:36:34 fixed qq music
-	 */
     private fun getQqKey(time: String,mid: String?): String? {
         try {
             //var html = doGetWithCookie("http://base.music.qq.com/fcgi-bin/fcg_musicexpress.fcg?json=3&guid=" + time)
