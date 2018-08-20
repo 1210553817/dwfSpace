@@ -516,7 +516,7 @@ object MusicProvider {
     private fun getQqKey(time: String,mid: String?): String? {
         try {
             //var html = doGetWithCookie("http://base.music.qq.com/fcgi-bin/fcg_musicexpress.fcg?json=3&guid=" + time)
-            var html = doGetWithCookie("https://c.y.qq.com/base/fcgi-bin/fcg_music_express_mobile3.fcg?format=json&cid=205361747&platform=yqq&hostUin=0&needNewCode=0&uin=0&songmid=$mid&filename=C400$mid.m4a&guid=" + time)
+            var html = doGetWithCookie("https://c.y.qq.com/base/fcgi-bin/fcg_music_express_mobile3.fcg?format=json&cid=205361747&platform=yqq&hostUin=0&needNewCode=0&uin=0&songmid=$mid&filename=C400$mid.m4a&guid=$time")
             //html = html?.replace("jsonCallback(", "")?.replace(");", "")
             val gson = Gson()
             val ren: JsonObject? = gson.fromJson(html, JsonObject::class.java)
