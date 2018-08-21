@@ -291,7 +291,7 @@ class KtTest {
     @Test
     fun testAllAPP(){
 
-        //testQQ()
+        testQQ()
         //testDown()
 
         //wyMusicDetailTest()
@@ -302,7 +302,7 @@ class KtTest {
 
         //littleTestXM()
 
-        genSites()
+        //genSites()
 
         //tcpTestMain()
 

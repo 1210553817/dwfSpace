@@ -656,52 +656,6 @@ object MusicProvider {
 
 		return lyro?.getAsJsonPrimitive("lrcContent")?.asString
 	}
-	/**
-	 * ********migu start**********
-	 */
-	fun getMgLs(key: String, page: Int, size: Int): List<SongResult>? {
-		val enck = urlEncode(key)
-		val url = "http://m.10086.cn/migu/remoting/scr_search_tag?pgc=$page&rows=$size&type=2&keyword=$enck"
-		val html = HttpUtils.doGetEncoding(url, mapOf("Referer" to "http://m.10086.cn"),"utf-8")
-		html?:return null
-		val mgDatas: JsonObject? = Gson().fromJson(html, JsonObject::class.java)
-		val songs = mgDatas?.getAsJsonArray("musics")
-		if (songs == null || songs.size() < 1) return null
-		return getMgLsByJson(songs)
-	}
-
-	private fun getMgLsByJson(songs: JsonArray): List<SongResult>?{
-		val list = ArrayList<SongResult>()
-		for (indx in 0 until songs.size()) {
-			val song = songs.get(indx)
-			val songResult = SongResult()
-			val songsBean: JsonObject? = Gson().fromJson(song, JsonObject::class.java)
-			val songId = songsBean?.getAsJsonPrimitive("id")?.asString
-			val songName = songsBean?.getAsJsonPrimitive("songName")?.asString
-			val lkb = songsBean?.get("mp3")?.isJsonPrimitive?:false
-			val songLink = if(lkb)songsBean?.getAsJsonPrimitive("mp3")?.asString else null
-			val lrb = songsBean?.get("lyrics")?.isJsonPrimitive?:false
-			val lrcLink = if(lrb)songsBean?.getAsJsonPrimitive("lyrics")?.asString else null
-			val artistId = songsBean?.getAsJsonPrimitive("singerId")?.asString
-			val artistName = songsBean?.getAsJsonPrimitive("singerName")?.asString
-			val albumId = songsBean?.getAsJsonPrimitive("albumId")?.asString
-			val albumName = songsBean?.getAsJsonPrimitive("albumName")?.asString
-			val picUrl = songsBean?.getAsJsonPrimitive("cover")?.asString
-			songResult.songId = songId
-			songResult.songName = songName
-			songResult.songLink = songLink
-			songResult.lrcUrl = lrcLink
-			songResult.artistName = artistName
-			songResult.artistId = artistId
-			songResult.albumId = albumId
-			songResult.albumName = albumName
-			songResult.picUrl = picUrl
-			songResult.type = "mg"
-			list.add(songResult)
-		}
-		return list
-
-	}
 
     /**
      * ********5sing ws start**********
@@ -962,10 +916,7 @@ object MusicProvider {
             "bd" ->{
                 return getBdUrl(sid,0,"mp3")
             }
-			"mg" ->{
-                return rst.songLink
-            }
-				"ws" ->{
+			"ws" ->{
                 return getWsPlayUrl(sid)
             }
         }
@@ -1005,11 +956,6 @@ object MusicProvider {
 				val l = getBdLrc(sid)
                 return  addMs(l,-60)
             }
-			"mg" ->{
-				val ul = rst.lrcUrl?:return null
-				val l = HttpUtils.doGetEncoding(ul,null,"utf-8")
-				return addMs(l,-400)
-			}
 
         }
 

@@ -535,7 +535,6 @@ class MainActivity : android.app.Activity(), OnBackListener {
             val kgBtn = cttVw.findViewById(R.id.main_net_ser_selector_kg) as LinearLayout
             val qqBtn = cttVw.findViewById(R.id.main_net_ser_selector_qq) as LinearLayout
             val bdBtn = cttVw.findViewById(R.id.main_net_ser_selector_bd) as LinearLayout
-            val mgBtn = cttVw.findViewById(R.id.main_net_ser_selector_mg) as LinearLayout
             val wsBtn = cttVw.findViewById(R.id.main_net_ser_selector_ws) as LinearLayout
             wyBtn.onClick {
                 netSelectorBtn?.tag = "wy"
@@ -562,11 +561,6 @@ class MainActivity : android.app.Activity(), OnBackListener {
                 netSelectorBtn?.backgroundResource = R.mipmap.icon_bd
                 netSelectSldMenu?.cancle()
             }
-            mgBtn.onClick {
-                netSelectorBtn?.tag = "mg"
-                netSelectorBtn?.backgroundResource = R.mipmap.icon_mg
-                netSelectSldMenu?.cancle()
-            }
             wsBtn.onClick {
                 netSelectorBtn?.tag = "ws"
                 netSelectorBtn?.backgroundResource = R.mipmap.icon_ws
@@ -590,7 +584,6 @@ class MainActivity : android.app.Activity(), OnBackListener {
                             "kg" -> netSelectLs = MusicProvider.getKgLs(keywd, 1, 30)
                             "qq" -> netSelectLs = MusicProvider.getQqLs(keywd, 1, 30)
                             "bd" -> netSelectLs = MusicProvider.getBdLs(keywd, 1, 30)
-                            "mg" -> netSelectLs = MusicProvider.getMgLs(keywd, 1, 30)
                             "ws" -> netSelectLs = MusicProvider.getWsLs(keywd, 1, 30)
                         }
                         uiThread {
@@ -609,7 +602,6 @@ class MainActivity : android.app.Activity(), OnBackListener {
 
 
     }
-
 
 
     private inner class SldLyTouchListener : View.OnTouchListener {

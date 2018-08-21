@@ -794,7 +794,6 @@ class HomeLay {
                     }.lparams{
                         width= matchParent
                         height= dip(45)
-
                     }
 
                     linearLayout {
@@ -827,8 +826,8 @@ class HomeLay {
                     }.lparams{
                         width= matchParent
                         height= dip(45)
-
                     }
+
                     linearLayout {
                         id=R.id.main_net_ser_selector_kg
                         backgroundResource=R.drawable.hm_song_opt_menu_mem
@@ -859,8 +858,8 @@ class HomeLay {
                     }.lparams{
                         width= matchParent
                         height= dip(45)
-
                     }
+
                     linearLayout {
                         id=R.id.main_net_ser_selector_qq
                         backgroundResource=R.drawable.hm_song_opt_menu_mem
@@ -891,8 +890,8 @@ class HomeLay {
                     }.lparams{
                         width= matchParent
                         height= dip(45)
-
                     }
+
                     linearLayout {
                         id=R.id.main_net_ser_selector_bd
                         backgroundResource=R.drawable.hm_song_opt_menu_mem
@@ -923,40 +922,8 @@ class HomeLay {
                     }.lparams{
                         width= matchParent
                         height= dip(45)
-
                     }
-                    linearLayout {
-                        id=R.id.main_net_ser_selector_mg
-                        backgroundResource=R.drawable.hm_song_opt_menu_mem
-                        orientation = LinearLayout.HORIZONTAL
-                        verticalGravity=Gravity.CENTER_VERTICAL
 
-                        imageView {
-                            backgroundColor= COLOR_TRANS
-                            backgroundResource = R.mipmap.icon_mg
-
-                        }.lparams{
-                            width= dip(30)
-                            height= dip(30)
-                        }
-
-                        textView{
-                            text="咪咕音乐"
-                            gravity = Gravity.START or Gravity.CENTER_VERTICAL
-                            textColor = 0xff888888.toInt()
-                            textSize = 16f
-
-                        }.lparams{
-                            width= matchParent
-                            height= matchParent
-                            leftMargin=dip(10)
-                        }
-
-                    }.lparams{
-                        width= matchParent
-                        height= dip(45)
-
-                    }
                     linearLayout {
                         id=R.id.main_net_ser_selector_ws
                         backgroundResource=R.drawable.hm_song_opt_menu_mem
