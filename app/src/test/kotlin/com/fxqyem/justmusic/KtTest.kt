@@ -160,18 +160,6 @@ class KtTest {
 
     }
 
-    fun testMG(){
-        val songs: List<SongResult>? = MusicProvider.getMgLs("陈奕迅",1,10)
-        songs?:return
-        for(song in songs){
-            println(Gson().toJson(song))
-            println(song.lrcUrl)
-            println("----------------")
-
-        }
-
-    }
-
     fun testF(){
         val songs: List<SongResult>? = MusicProvider.getWsLs("周杰伦",1,10)
         songs?:return
