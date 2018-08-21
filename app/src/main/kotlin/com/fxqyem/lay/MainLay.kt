@@ -437,7 +437,7 @@ class MainLay : AnkoComponent<MainActivity> {
                     id=R.id.main_covLy
                     orientation = VERTICAL
                     visibility = View.GONE
-                    backgroundColor = 0x15000000.toInt()
+                    backgroundColor = 0x15000000
 
                 }.lparams {
                     width = matchParent
@@ -451,7 +451,7 @@ class MainLay : AnkoComponent<MainActivity> {
                     id=R.id.main_sldLy
                     visibility = View.GONE
 
-                    var sldShpBlkDivGrv = textView{
+                    val sldShpBlkDivGrv = textView{
                         id=R.id.main_sldLy_gra
                         backgroundResource = R.drawable.shp_blk_div_gra
 

@@ -17,7 +17,7 @@ import org.jetbrains.anko.*
 class FrgmHmLay {
     fun createView(ctx: Context): View {
 
-        val coreVw = ctx.linearLayout {
+        return ctx.linearLayout {
             orientation = LinearLayout.VERTICAL
 
             relativeLayout {
@@ -88,11 +88,10 @@ class FrgmHmLay {
             }
         }
 
-        return coreVw
     }
 
     fun createItmView(ctx: Context): View {
-        val itmVw = ctx.relativeLayout{
+        return ctx.relativeLayout{
             descendantFocusability = ViewGroup.FOCUS_BLOCK_DESCENDANTS
 
             imageButton{
@@ -155,12 +154,12 @@ class FrgmHmLay {
                 rightOf(R.id.frgm_hm_lsitm_ckBtn)
             }
         }
-        return itmVw
+
     }
 
     fun createLocOptSelectMenu(ctx: Context): View {
 
-        val menuVw = ctx.linearLayout{
+        return ctx.linearLayout{
             id=R.id.frgm_hm_loc_optmn_selector_tophd
             orientation = LinearLayout.VERTICAL
             //backgroundResource = R.drawable.hm_song_opt_menu_ctn
@@ -359,6 +358,5 @@ class FrgmHmLay {
 
         }
 
-        return menuVw
     }
 }

@@ -40,7 +40,7 @@ inline fun Context.verticalHolderView(
         init: VerticalHolderView.() -> Unit)=ankoView(::VerticalHolderView,theme,init)
 
 /**
- * others
+ * Res
  */
 fun getResString(ctx: Context, rid: Int): String{
     return ctx.resources.getString(rid)

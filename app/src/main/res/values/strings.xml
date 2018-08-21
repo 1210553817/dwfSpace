@@ -3,7 +3,7 @@
     <string name="app_name">音乐</string>
     <!--main-->
     <string name="sld_settings">关于</string>
-    <string name="version_info">唯乐JustMusic_v1.3171127</string>
+    <string name="version_info">唯乐JustMusic_v1.3180821</string>
     <string name="sld_quit">退出</string>
     <string name="sld_ls_lsbkgSetting">列表背景设置</string>
     <string name="sld_ls_ctrlbkgSetting">播放背景设置</string>

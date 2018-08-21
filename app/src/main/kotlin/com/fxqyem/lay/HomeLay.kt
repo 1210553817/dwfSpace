@@ -136,13 +136,13 @@ class HomeLay {
 
             expandableListView {
                 id=R.id.home_ex_expdls
-                backgroundColor = 0x00000000.toInt()
+                backgroundColor = 0x00000000
                 dividerHeight = dip(1)
                 divider= getResDrawable(ctx,R.drawable.home_ex_expdls_divi_bkg)
                 setChildDivider(getResDrawable(ctx,R.drawable.home_ex_expdls_divi_bkg))
                 isFocusable = false
                 isFocusableInTouchMode = false
-                cacheColorHint = 0x00000000.toInt()
+                cacheColorHint = 0x00000000
                 selector = getResDrawable(ctx,R.drawable.hm_song_ls_itm_bkg)
 
             }.lparams{
@@ -155,7 +155,7 @@ class HomeLay {
     }
 
     fun createGrpView(ctx: Context): View {
-        val grpVw = ctx.relativeLayout{
+        return ctx.relativeLayout{
             descendantFocusability = ViewGroup.FOCUS_BLOCK_DESCENDANTS
 
             imageButton{
@@ -195,11 +195,11 @@ class HomeLay {
             }
 
         }
-        return grpVw
+
     }
 
     fun createChdView(ctx: Context): View {
-        val chdVw = ctx.relativeLayout{
+        return ctx.relativeLayout{
             descendantFocusability = ViewGroup.FOCUS_BLOCK_DESCENDANTS
 
             imageButton{
@@ -248,12 +248,12 @@ class HomeLay {
                 leftOf(R.id.home_ex_chd_moreBtn)
             }
         }
-        return chdVw
+
     }
 
     fun createFavOptMenu(ctx: Context): View {
 
-        val menuVw = ctx.linearLayout{
+        return ctx.linearLayout{
             orientation = LinearLayout.VERTICAL
             backgroundResource = R.drawable.hm_song_opt_menu_ctn
 
@@ -372,7 +372,6 @@ class HomeLay {
 
         }
 
-        return menuVw
     }
 
     fun createFavOptEdit(ctx: Context): View {
@@ -610,7 +609,7 @@ class HomeLay {
      * net start
      */
     fun createNetView(ctx: Context): View {
-        val netVw = ctx.linearLayout{
+        return ctx.linearLayout{
             orientation = LinearLayout.VERTICAL
             backgroundColor = COLOR_TRANS
 
@@ -647,10 +646,10 @@ class HomeLay {
 
                 editText {
                     id=R.id.main_net_ser_keyword
-                    gravity =Gravity.LEFT
+                    gravity =Gravity.START
                     maxLines=1
                     textColor = 0xffeeeeee.toInt()
-                    backgroundColor = 0x22ffffff.toInt()
+                    backgroundColor = 0x22ffffff
 
                 }.lparams{
                     width= matchParent
@@ -687,12 +686,11 @@ class HomeLay {
 
         }
 
-        return netVw
     }
 
     fun createNetItemView(ctx:Context): View {
 
-        val itmVw = ctx.relativeLayout {
+        return ctx.relativeLayout {
             backgroundColor = getResColor(ctx,R.color.mainTitle)
             descendantFocusability = ViewGroup.FOCUS_BLOCK_DESCENDANTS
             setPadding(dip(2),dip(2),dip(2),dip(2))
@@ -730,7 +728,7 @@ class HomeLay {
                 textView{
                     id=R.id.main_net_ser_rstls_sart
                     gravity = Gravity.CENTER_VERTICAL
-                    textColor = 0x66eeeeee.toInt()
+                    textColor = 0x66eeeeee
                     textSize =  14f
                     maxLines= 1
 
@@ -748,12 +746,11 @@ class HomeLay {
             }
         }
 
-        return itmVw
     }
 
     fun createNetSelectMenu(ctx: Context): View {
 
-        val menuVw = ctx.linearLayout{
+        return ctx.linearLayout{
             id=R.id.main_net_ser_selector_tophd
             orientation = LinearLayout.VERTICAL
            //backgroundResource = R.drawable.hm_song_opt_menu_ctn
@@ -1008,6 +1005,5 @@ class HomeLay {
 
         }
 
-        return menuVw
     }
 }

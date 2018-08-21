@@ -271,8 +271,8 @@ class KtTest {
             //val rmdstr = String.format("%s",utilRandLong())
             //val rmdstr = String.format("%s",utilRandInt(0,999))
             //var rmdstr = java.lang.Long.toHexString(utilRandLong())
-            var rmdstr ="er"
-            var suffix="ed"
+            var rmdstr ="ang"
+            var suffix="ong"
             val url = "http://$bef.$cin$rmdstr$ces$cee$suffix.$aft"
             HttpUtils.doGetAsyn(url,object: HttpUtils.CallBack{
                 override fun onRequestComplete(result: String?) {
@@ -291,7 +291,7 @@ class KtTest {
     @Test
     fun testAllAPP(){
 
-        testQQ()
+        //testQQ()
         //testDown()
 
         //wyMusicDetailTest()
@@ -302,7 +302,7 @@ class KtTest {
 
         //littleTestXM()
 
-        //genSites()
+        genSites()
 
         //tcpTestMain()
 
@@ -359,7 +359,7 @@ class KtTest {
     }
 
     companion object {
-        val userAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36"
+        const val userAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36"
     }
 
 

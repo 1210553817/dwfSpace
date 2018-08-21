@@ -18,7 +18,7 @@ class FrgmMenuLay {
 
     fun createMenu(ctx: Context): View {
 
-        val menuVw = ctx.linearLayout{
+        return ctx.linearLayout{
             orientation = LinearLayout.VERTICAL
             backgroundResource = R.drawable.hm_song_opt_menu_ctn
 
@@ -204,12 +204,11 @@ class FrgmMenuLay {
 
         }
 
-        return menuVw
     }
 
     fun chsFav(ctx: Context): View {
 
-        val reVw = ctx.linearLayout{
+        return ctx.linearLayout{
             orientation = LinearLayout.VERTICAL
             backgroundResource = R.drawable.hm_song_opt_menu_ctn
 
@@ -263,12 +262,11 @@ class FrgmMenuLay {
 
         }
 
-        return reVw
     }
 
     fun chsFavItm(ctx: Context): View {
 
-        val reVw = ctx.linearLayout{
+        return ctx.linearLayout{
             orientation = LinearLayout.VERTICAL
             backgroundResource = R.drawable.hm_song_opt_menu_ctn
             setPadding(dip(5),0,0,0)
@@ -298,7 +296,6 @@ class FrgmMenuLay {
 
         }
 
-        return reVw
     }
 
     fun createFrgmInfo(ctx: Context): View {

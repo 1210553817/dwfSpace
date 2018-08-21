@@ -133,13 +133,11 @@ object MusicProvider {
             2 -> tag="320000"
             3 -> return null
 		}
-		val heads = java.util.HashMap<String, String>()
-		heads.put("X-REAL-IP", generateChinaRandomIP())
-		heads.put("Referrer", "http://music.163.com/")
-		var params="{\"method\":\"post\",\"url\":\"http://music.163.com/api/song/enhance/player/url\","+
+		val heads = mapOf("X-REAL-IP" to generateChinaRandomIP(),"Referrer" to "http://music.163.com/")
+		val params="{\"method\":\"post\",\"url\":\"http://music.163.com/api/song/enhance/player/url\","+
 				"\"params\":{\"ids\":[\"$sid\"],\"br\":$tag}}"
-		var encrypted = encrypt(params)
-		var result = HttpUtils.doPost("http://music.163.com/api/linux/forward", "eparams=$encrypted",heads )
+		val encrypted = encrypt(params)
+		val result = HttpUtils.doPost("http://music.163.com/api/linux/forward", "eparams=$encrypted",heads )
 		val gson = Gson()
 		val urlEnt: JsonObject? = gson.fromJson(result, JsonObject::class.java)
 		val urlDat = urlEnt?.getAsJsonArray("data")
@@ -149,8 +147,8 @@ object MusicProvider {
 		}
 		return null
 	}
-	fun encrypt(raw: String): String? {
-		var scrt = "7246674226682325323F5E6544673A51"
+	private fun encrypt(raw: String): String? {
+		val scrt = "7246674226682325323F5E6544673A51"
 		val encrypted: ByteArray?
 		try {
 			encrypted = encrypt(raw, Hex.decodeHex(scrt.toCharArray()))
@@ -195,7 +193,7 @@ object MusicProvider {
 		}
 		return cipher.doFinal(sSrc)
 	}
-	fun generateChinaRandomIP(): String {
+	private  fun generateChinaRandomIP(): String {
 		val ips = arrayOf("47.93.50.","60.5.0.","60.5.65.","1.193.66.","61.158.132.","14.21.128.","59.33.174.","61.186.81.","61.139.72.")
 		return ips[Random().nextInt(ips.size-1)] + (1 + Random().nextInt(255))
 	}
@@ -513,13 +511,13 @@ object MusicProvider {
     private fun getQqKey(time: String,mid: String?): String? {
         try {
             //var html = doGetWithCookie("http://base.music.qq.com/fcgi-bin/fcg_musicexpress.fcg?json=3&guid=" + time)
-            var html = doGetWithCookie("https://c.y.qq.com/base/fcgi-bin/fcg_music_express_mobile3.fcg?format=json&cid=205361747&platform=yqq&hostUin=0&needNewCode=0&uin=0&songmid=$mid&filename=C400$mid.m4a&guid=$time")
+            val html = doGetWithCookie("https://c.y.qq.com/base/fcgi-bin/fcg_music_express_mobile3.fcg?format=json&cid=205361747&platform=yqq&hostUin=0&needNewCode=0&uin=0&songmid=$mid&filename=C400$mid.m4a&guid=$time")
             //html = html?.replace("jsonCallback(", "")?.replace(");", "")
             val gson = Gson()
             val ren: JsonObject? = gson.fromJson(html, JsonObject::class.java)
 			val code = ren?.getAsJsonPrimitive("code")?.asString
 			if(code!="0")return null
-			val arr = ren?.getAsJsonObject("data")?.getAsJsonArray("items")?.get(0)
+			val arr = ren.getAsJsonObject("data")?.getAsJsonArray("items")?.get(0)
 			arr?:return null
 			val itm = arr.asJsonObject
             return itm?.getAsJsonPrimitive("vkey")?.asString
@@ -531,21 +529,17 @@ object MusicProvider {
     }
 
 	fun getQqLrcA(sid: String):String?{
-		var restr: String?=null
 		try{
 			val id=Integer.parseInt(sid)
 			val midn=id%100
             val prUrl="http://music.qq.com/miniportal/static/lyric/$midn/$id.xml"
-			restr= HttpUtils.doGetEncoding(prUrl,null,"GBK")
+			val restr= HttpUtils.doGetEncoding(prUrl,null,"GBK")
 			if(restr==null) return restr
 			val regexa = Regex(""".+<!\[CDATA\[([\s\S]*)\]\]>.*""")
 		    val result = regexa.find(restr)
-		    if (result != null) {
-				val ctt = result.groupValues[1]
-				return ctt.replace("&apos;", "'")
-		    }else{
-				return null
-			}
+			result?:return null
+			val ctt = result.groupValues[1]
+			return ctt.replace("&apos;", "'")
 		}catch(e: Exception){
 			return null
 		}
@@ -800,15 +794,12 @@ object MusicProvider {
 	}
 
 	private fun doPostWithRefer(url: String, refer: String): String {
-		val reqHeaders = HashMap<String, String>()
-		reqHeaders.put("User-agent", userAgent)
-		reqHeaders.put("Referer", refer)
+		val reqHeaders = mapOf("User-agent" to userAgent,"Referer" to refer)
 		return HttpUtils.doPost(url, "", reqHeaders)
 	}
 
 	private fun doPostData(url: String, params: HashMap<String, String>): String {
-		val reqHeaders = HashMap<String, String>()
-		reqHeaders.put("User-agent", userAgent)
+		val reqHeaders = mapOf("User-agent" to userAgent)
 		val sbd = StringBuilder()
 		var k = 0
 		for ((key, value) in params) {
@@ -1027,22 +1018,22 @@ object MusicProvider {
 
 	fun addMs(str: String?,n: Int): String?{
 		str?:return null
-		return str.replace("\\[(\\d{2,3}):(\\d{2})\\.(\\d{2,3})\\]".toRegex(),{
+		return str.replace("\\[(\\d{2,3}):(\\d{2})\\.(\\d{2,3})\\]".toRegex()){
 			val m = it.groupValues[1].toInt()*60000
 			val s = it.groupValues[2].toInt()*1000
 			val l = it.groupValues[3].toInt()
 			var t = m+s+l+n
 			if(t<0)t = 0
-            val mi=t/60000
-            val si=t%60000/1000
-            val li=t%60000%1000
+			val mi=t/60000
+			val si=t%60000/1000
+			val li=t%60000%1000
 
 			val ms = if(mi<10)"0$mi" else "$mi"
 			val ss = if(si<10)"0$si" else "$si"
 			val ll = if(li<10)"0$li" else "$li"
 			"[$ms:$ss.$ll]"
 
-		})
+		}
 	}
 
 
