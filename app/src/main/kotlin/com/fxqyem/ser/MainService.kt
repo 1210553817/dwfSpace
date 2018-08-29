@@ -75,7 +75,7 @@ class MainService : Service(), MediaPlayer.OnPreparedListener {
     }
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
-        curSongLs = AppContext.instance?.tmpLs
+        //curSongLs = AppContext.instance?.tmpLs
         curSongIndx = AppContext.instance?.curIndex?:0
         sendPlayBroadCast(false, false)
         isPlaying = true
@@ -83,13 +83,11 @@ class MainService : Service(), MediaPlayer.OnPreparedListener {
     }
 
     override fun onDestroy() {
-        if (mPlayer != null)
-            mPlayer!!.release()
+        mPlayer?.release()
         mPlayer = null
         mLocalBroadcastManager!!.unregisterReceiver(mReceiver)
         (getSystemService(Context.AUDIO_SERVICE) as AudioManager).unregisterMediaButtonEventReceiver(ComponentName(this, MediaButtonBroadcastReceiver::class.java))
-        if (timer != null)
-            timer!!.cancel()
+        timer?.cancel()
         timer = null
 
 
@@ -184,6 +182,7 @@ class MainService : Service(), MediaPlayer.OnPreparedListener {
     }
 
     private fun sendPlayBroadCast(isp: Boolean, isnew: Boolean) {
+        curSongLs = AppContext.instance?.tmpLs
         curSongLs?:return
         val itt = Intent(AppConstants.PLAYER_REVW_ACTION_PLAY)
         itt.putExtra("INDX", curSongIndx)

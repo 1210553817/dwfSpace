@@ -967,7 +967,8 @@ object MusicProvider {
 		return str.replace("\\[(\\d{2,3}):(\\d{2})\\.(\\d{2,3})\\]".toRegex()){
 			val m = it.groupValues[1].toInt()*60000
 			val s = it.groupValues[2].toInt()*1000
-			val l = it.groupValues[3].toInt()
+			var l = it.groupValues[3].toInt()
+			if(it.groupValues[3].length<3)l*=10
 			var t = m+s+l+n
 			if(t<0)t = 0
 			val mi=t/60000
