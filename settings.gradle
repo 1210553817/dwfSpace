@@ -1,1 +1,1 @@
-include ':app', ':msg'
+include ':app', ':msg', ':brw'
