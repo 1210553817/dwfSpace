@@ -17,7 +17,7 @@ object BrwLay {
 
            textView{
                text = "好啊！测试一下"
-               setTextColor(0xff333333.toInt())
+               setTextColor(Color.BLUE)
                backgroundColor = Color.GRAY
            }.lparams{
                 width = matchParent
