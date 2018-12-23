@@ -2,14 +2,6 @@ apply plugin: 'com.android.application'
 apply plugin: "kotlin-android"
 
 android {
-    signingConfigs {
-        app {
-            keyAlias 'dwf'
-            keyPassword 'abc22205'
-            storeFile file('D:/Dev/android/Keys/fxqyAppKey.jks')
-            storePassword 'abc22205'
-        }
-    }
     compileSdkVersion 26
     buildToolsVersion '28.0.3'
     defaultConfig {
