@@ -14,7 +14,7 @@ import org.jetbrains.anko.*
 /**
  * Created by Dwf on 2017/6/16.
  */
-class FrgmHmLay {
+object FrgmHmLay {
     fun createView(ctx: Context): View {
 
         return ctx.linearLayout {

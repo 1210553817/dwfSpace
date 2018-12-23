@@ -8,7 +8,7 @@ import com.fxqyem.msg.R
 import com.fxqyem.msg.vw.*
 import org.jetbrains.anko.*
 
-class MsgSendLay{
+object MsgSendLay{
 
     fun createView(ctx:Context): View {
 

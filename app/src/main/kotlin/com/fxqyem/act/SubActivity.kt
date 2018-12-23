@@ -15,7 +15,7 @@ class SubActivity: Activity(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        SubLay().setContentView(this)
+        this.setContentView(SubLay.createView(this))
         textVw = findViewById(R.id.subact_main_test_textvw) as TextView
 
         //textVw?.text = stringFromJNI()

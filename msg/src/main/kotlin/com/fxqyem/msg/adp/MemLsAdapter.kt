@@ -26,7 +26,7 @@ class MemLsAdapter(private val context: Context, var list: ArrayList<MsgEnt>?) :
         //val btn: ImageView?
         val btna: Button?
         if (convertView == null) {
-            convertView = MsgPagerLay().createMemItmVw(context)
+            convertView = MsgPagerLay.createMemItmVw(context)
             tit = convertView.findViewById(R.id.msg_lay_cen_mempg_itm_mtit) as TextView?
             sub = convertView.findViewById(R.id.msg_lay_cen_mempg_itm_stit) as TextView?
             //btn = convertView.findViewById(R.id.msg_lay_cen_mempg_itm_hiconbtn) as ImageView?

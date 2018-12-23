@@ -9,8 +9,8 @@ import com.fxqyem.msg.vw.COLOR_WHITE
 import org.jetbrains.anko.*
 
 
-class AboutLay : AnkoComponent<AboutActivity> {
-    override fun createView(ui: AnkoContext<AboutActivity>): View {
+object AboutLay {
+    fun createView(ui: AboutActivity): View {
 
         return ui.linearLayout{
             backgroundColor = COLOR_WHITE

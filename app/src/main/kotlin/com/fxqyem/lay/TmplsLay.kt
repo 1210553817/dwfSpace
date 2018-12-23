@@ -15,7 +15,7 @@ import org.jetbrains.anko.*
 /**
  * Created by Dwf on 2017/6/15.
  */
-class TmplsLay(){
+object TmplsLay{
 
     fun createView(ctx:Context): View {
 

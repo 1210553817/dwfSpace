@@ -44,7 +44,7 @@ class NetLsAdapter(private val context: Context, var list: ArrayList<SongResult>
         val mBtn: ImageButton?
         val nBtn: ImageButton?
         if (convertView == null) {
-            convertView = HomeLay().createNetItemView(context)
+            convertView = HomeLay.createNetItemView(context)
             mTextTitle = convertView?.findViewById(R.id.main_net_ser_rstls_stit) as TextView?
             mTextArtist = convertView?.findViewById(R.id.main_net_ser_rstls_sart) as TextView?
             mBtn = convertView?.findViewById(R.id.main_net_ser_rstls_dld) as ImageButton?

@@ -16,10 +16,8 @@ import com.fxqyem.msg.ent.MsgEnt
 import com.fxqyem.msg.lay.MsgSendLay
 import com.fxqyem.msg.utl.DbUtil
 import com.fxqyem.msg.vw.utilNotNull
-import org.jetbrains.anko.onClick
 import android.widget.AbsListView
 import com.fxqyem.msg.vw.FileSelector
-import org.jetbrains.anko.onItemLongClick
 import java.io.File
 
 
@@ -45,7 +43,7 @@ class MsgSendFrgm : Fragment() , BackKeyLsn {
        // Log.d(TAG,"MsgSendFrgm initViews..........")
         citem = arguments.getSerializable("ITEM") as MsgEnt
         AppContext.instance?.clearChat(citem?.ip)
-        val hdvw = MsgSendLay().createView(activity)
+        val hdvw = MsgSendLay.createView(activity)
         val tit = hdvw.findViewById(R.id.msg_send_lay_tit) as TextView
         memMsgLsView = hdvw.findViewById(R.id.msg_send_lay_msgls) as ListView
         val backBtn = hdvw.findViewById(R.id.msg_send_lay_backBtn) as ImageButton
@@ -54,10 +52,10 @@ class MsgSendFrgm : Fragment() , BackKeyLsn {
         val attaBtn = hdvw.findViewById(R.id.msg_send_lay_attaBtn) as Button
         val msgTxt = hdvw.findViewById(R.id.msg_send_lay_editTxt) as EditText
         tit.text = citem?.add
-        backBtn.onClick {
+        backBtn.setOnClickListener {
             this@MsgSendFrgm.fragmentManager.popBackStack()
         }
-        sendBtn.onClick {
+        sendBtn.setOnClickListener {
             val msgtxt = msgTxt.text.toString()
             if(utilNotNull(msgtxt)) {
                 val itt = Intent(AppConstants.ACTION_SER_SEND_MSG)
@@ -67,7 +65,7 @@ class MsgSendFrgm : Fragment() , BackKeyLsn {
                 msgTxt.setText("".toCharArray(),0,0)
             }
         }
-        attaBtn.onClick {
+        attaBtn.setOnClickListener {
             openFileSelector()
         }
 

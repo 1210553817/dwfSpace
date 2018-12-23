@@ -14,7 +14,6 @@ import com.fxqyem.bean.*
 import com.fxqyem.lay.FrgmHmLay
 import com.fxqyem.utils.*
 import com.fxqyem.vw.SldMenu
-import org.jetbrains.anko.onClick
 import android.os.CountDownTimer
 import android.view.*
 import kotlin.collections.ArrayList
@@ -53,7 +52,7 @@ class HmFrgm : Fragment() , OnBackListener {
     }
 
     private fun initViews(): View {
-        val hdvw = FrgmHmLay().createView(activity)
+        val hdvw = FrgmHmLay.createView(activity)
         lshdTitly = hdvw.findViewById(R.id.frgm_hm_lshd_titly) as RelativeLayout
         coreLsView = hdvw.findViewById(R.id.frgm_hm_lshd_lsvw) as ListView
         lshdBackBtn = hdvw.findViewById(R.id.frgm_hm_lshd_backBtn) as ImageButton
@@ -263,7 +262,7 @@ class HmFrgm : Fragment() , OnBackListener {
     }
     private fun createLocOptMenu(){
         val act= activity as MainActivity
-        val cttVw = FrgmHmLay().createLocOptSelectMenu(activity)
+        val cttVw = FrgmHmLay.createLocOptSelectMenu(activity)
         val parentView = act?.findViewById(R.id.main_vwctn_frmly) as ViewGroup
         locOptSelectSldMenu = SldMenu.create(act, cttVw, parentView)
         locOptSelectSldMenu?.setOnStateChangeListener(object:SldMenu.OnStateChangeListener{
@@ -347,24 +346,24 @@ class HmFrgm : Fragment() , OnBackListener {
                 }
             }
         }
-        allBtn.onClick {
+        allBtn.setOnClickListener {
             locLsLoadTp = 1
             locOptSelectSldMenu?.cancle()
             PrefUtil.put(act, AppConstants.PREF_KEY_FRGMHM_LOCOPT, locLsLoadTp, AppConstants.PREF_NAME_DATAS)
             initDatas()
 
         }
-        folderBtn.onClick {
+        folderBtn.setOnClickListener {
             locLsLoadTp = 2
             locOptSelectSldMenu?.cancle()
             PrefUtil.put(act, AppConstants.PREF_KEY_FRGMHM_LOCOPT, locLsLoadTp, AppConstants.PREF_NAME_DATAS)
             initDatas()
 
         }
-        mulckBtn.onClick {
+        mulckBtn.setOnClickListener {
             doLsMode(1)
         }
-        delBtn.onClick {
+        delBtn.setOnClickListener {
             val csls = getCkdSongLs(0)
             if(csls!=null&&csls.size>0) {
                 val ids = ArrayList<Int>()
@@ -381,7 +380,7 @@ class HmFrgm : Fragment() , OnBackListener {
             }
 
         }
-        add2fBtn.onClick {
+        add2fBtn.setOnClickListener {
             val csls = getCkdSongLs(0)
             if(csls!=null&&csls.size>0) {
                 songLsAdapter?.initChsFavMenu(csls)
@@ -390,7 +389,7 @@ class HmFrgm : Fragment() , OnBackListener {
                 Toast.makeText(activity,"没有要添加的数据！",Toast.LENGTH_SHORT).show()
             }
         }
-        add2pBtn.onClick {
+        add2pBtn.setOnClickListener {
             val csls = getCkdSongLs(0)
             val tmpLs = AppContext.instance?.tmpLs
             if(csls!=null&&csls.size>0) {
@@ -404,7 +403,7 @@ class HmFrgm : Fragment() , OnBackListener {
 
 
         }
-        sortsvBtn.onClick {
+        sortsvBtn.setOnClickListener {
             val csls = getCkdSongLs(1)
             if(csls!=null&&csls.size>0) {
                 songLsAdapter?.truncatFavLsTable(stbnm)

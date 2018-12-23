@@ -10,7 +10,7 @@ import com.fxqyem.msg.utl.BitMapUtil
 import com.fxqyem.msg.vw.*
 import org.jetbrains.anko.*
 
-class MsgPagerLay {
+object MsgPagerLay {
 
     fun createMemVw(ctx: Context): View {
         return ctx.linearLayout{

@@ -42,7 +42,7 @@ class TmpLsAdapter(private val context: Context, var list: ArrayList<SongInfo>?)
         val mTextArtist: TextView?
         val mBtn: ImageButton?
         if (convertView == null) {
-            convertView = TmplsLay().createItmView(context)
+            convertView = TmplsLay.createItmView(context)
             mTextTitle = convertView?.findViewById(R.id.tmp_ls_item_stit) as TextView?
             mTextArtist = convertView?.findViewById(R.id.tmp_ls_item_sart) as TextView?
             mBtn = convertView?.findViewById(R.id.tmp_ls_item_rmBtn) as ImageButton?

@@ -69,7 +69,7 @@ class MsgActivity : MsgBaseActivity() , BackKeyLsn {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        MsgLay().setContentView(this)
+        this.setContentView(MsgLay.createView(this))
         //req permissions
         requestPermissions()
         //views
@@ -122,11 +122,11 @@ class MsgActivity : MsgBaseActivity() , BackKeyLsn {
         //btm
         val btmMemBtnPly =  btmMemImg?.parent as LinearLayout
         val btmSetBtnPly =  btmSetImg?.parent as LinearLayout
-        btmMemBtnPly.onClick {
+        btmMemBtnPly.setOnClickListener {
             chooseBtmItem(0)
             cenViewPager?.currentItem=0
         }
-        btmSetBtnPly.onClick {
+        btmSetBtnPly.setOnClickListener {
             chooseBtmItem(1)
             cenViewPager?.currentItem=1
         }
@@ -152,9 +152,8 @@ class MsgActivity : MsgBaseActivity() , BackKeyLsn {
     }
 
     private fun initMsgPager(){
-        val msgPagerLay = MsgPagerLay()
-        val memVw = msgPagerLay.createMemVw(this)
-        val setVw = SettingLay().createSetVw(this)
+        val memVw = MsgPagerLay.createMemVw(this)
+        val setVw = SettingLay.createSetVw(this)
 
         this.memVw= memVw
         this.setVw= setVw
@@ -202,7 +201,7 @@ class MsgActivity : MsgBaseActivity() , BackKeyLsn {
             transaction.addToBackStack(null)
             transaction.commit()
         }
-        refreshBtn.onClick {
+        refreshBtn.setOnClickListener {
             reloadMemList()
         }
 
@@ -243,7 +242,7 @@ class MsgActivity : MsgBaseActivity() , BackKeyLsn {
                     })
                 }
                 R.mipmap.cus -> {
-                    val hdvw = SettingLay().createSelfVw(this@MsgActivity)
+                    val hdvw = SettingLay.createSelfVw(this@MsgActivity)
                     val unm = hdvw.find<EditText>(R.id.setting_pglay_slfdo_unm)
                     val tit = hdvw.find<EditText>(R.id.setting_pglay_slfdo_tit)
                     val sub = hdvw.find<EditText>(R.id.setting_pglay_slfdo_sub)
@@ -252,10 +251,10 @@ class MsgActivity : MsgBaseActivity() , BackKeyLsn {
                     unm.setText(AppContext.instance?.uname,TextView.BufferType.NORMAL)
                     tit.setText(AppContext.instance?.utit,TextView.BufferType.NORMAL)
                     sub.setText(AppContext.instance?.usub,TextView.BufferType.NORMAL)
-                    cbtn.onClick {
+                    cbtn.setOnClickListener {
                         selfSldMn?.cancle()
                     }
-                    obtn.onClick {
+                    obtn.setOnClickListener {
                         AppContext.instance?.setSelfInfo(unm.text.toString(),tit.text.toString(),sub.text.toString())
                         selfSldMn?.cancle()
                     }
@@ -290,7 +289,7 @@ class MsgActivity : MsgBaseActivity() , BackKeyLsn {
 
 
         }
-        hiconBtn.onClick {
+        hiconBtn.setOnClickListener {
 
         }
 

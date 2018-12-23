@@ -12,7 +12,7 @@ class AboutActivity : Activity(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        AboutLay().setContentView(this)
+        this.setContentView(AboutLay.createView(this))
     }
 
 

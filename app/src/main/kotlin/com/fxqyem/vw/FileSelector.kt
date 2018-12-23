@@ -220,7 +220,7 @@ class FileSelector(private val context: Context) : OnBackListener {
                         setTitPath(curPath)
                         setTitName(getResString(context,R.string.file_slector_holder_chsFile))
                         curFile = null
-                        hdView?.onLayoutChange { v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom ->
+                        hdView?.addOnLayoutChangeListener { v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom ->
                             v?.scrollTo(0,0)
                         }
                     } else {
@@ -241,7 +241,7 @@ class FileSelector(private val context: Context) : OnBackListener {
                     setTitName(getResString(context,R.string.file_slector_holder_chsFile))
                     curFile = null
                     val scry=if(scrollStack.size>0)scrollStack.pop()else 0
-                    hdView?.onLayoutChange { v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom ->
+                    hdView?.addOnLayoutChangeListener { v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom ->
                         v?.scrollTo(0,scry)
                     }
                 }
@@ -271,152 +271,141 @@ class FileSelector(private val context: Context) : OnBackListener {
     }
 
     private fun genFileSelectorLay(): View{
-        val ankoCtx = context.UI{
+        return context.linearLayout {
+            orientation = LinearLayout.VERTICAL
+            setBackgroundResource(R.drawable.hm_song_opt_menu_ctn)
+
+            textView {
+                id=R.id.file_slector_holder_tit
+                backgroundResource = R.drawable.hm_song_opt_menu_tit
+                maxLines = 1
+                textColor = 0xff049ff1.toInt()
+                textSize = 16f
+                text = getResString(context,R.string.file_slector_holder_chsFile)
+                gravity = Gravity.CENTER
+
+            }.lparams {
+                width= matchParent
+                height=dip(40)
+
+            }
 
             linearLayout {
-                orientation = LinearLayout.VERTICAL
-                setBackgroundResource(R.drawable.hm_song_opt_menu_ctn)
+                orientation = LinearLayout.HORIZONTAL
+                padding = dip(7)
 
                 textView {
-                    id=R.id.file_slector_holder_tit
-                    backgroundResource = R.drawable.hm_song_opt_menu_tit
                     maxLines = 1
-                    textColor = 0xff049ff1.toInt()
-                    textSize = 16f
-                    text = getResString(context,R.string.file_slector_holder_chsFile)
-                    gravity = Gravity.CENTER
-
-                }.lparams {
-                    width= matchParent
-                    height=dip(40)
-
-                }
-
-                linearLayout {
-                    orientation = LinearLayout.HORIZONTAL
-                    padding = dip(7)
-
-                    textView {
-                        maxLines = 1
-                        textColor = 0xff888888.toInt()
-                        textSize = 14f
-                        text = getResString(context,R.string.file_slector_holder_curPath)
-
-                    }.lparams{
-                        width= wrapContent
-                        height= wrapContent
-                        setHorizontalGravity(Gravity.CENTER_HORIZONTAL)
-                        setVerticalGravity(Gravity.CENTER_VERTICAL)
-                    }
-
-                    textView {
-                        id=R.id.file_slector_holder_path
-                        maxLines = 2
-                        textColor = 0xff666666.toInt()
-                        textSize = 12f
-
-                    }.lparams{
-                        width= wrapContent
-                        height= wrapContent
-                        setHorizontalGravity(Gravity.LEFT)
-                        setVerticalGravity(Gravity.CENTER_VERTICAL)
-                    }
+                    textColor = 0xff888888.toInt()
+                    textSize = 14f
+                    text = getResString(context,R.string.file_slector_holder_curPath)
 
                 }.lparams{
-                    width= matchParent
+                    width= wrapContent
+                    height= wrapContent
+                    setHorizontalGravity(Gravity.CENTER_HORIZONTAL)
+                    setVerticalGravity(Gravity.CENTER_VERTICAL)
+                }
+
+                textView {
+                    id=R.id.file_slector_holder_path
+                    maxLines = 2
+                    textColor = 0xff666666.toInt()
+                    textSize = 12f
+
+                }.lparams{
+                    width= wrapContent
+                    height= wrapContent
+                    setHorizontalGravity(Gravity.LEFT)
+                    setVerticalGravity(Gravity.CENTER_VERTICAL)
+                }
+
+            }.lparams{
+                width= matchParent
+                height=dip(30)
+
+
+            }
+
+            scrollView {
+                id=R.id.file_slector_holder_scrVw
+
+
+            }.lparams{
+                width= wrapContent
+                height=dip(220)
+            }
+
+            linearLayout {
+                orientation = LinearLayout.HORIZONTAL
+                setGravity(Gravity.CENTER)
+                padding=dip(7)
+
+                button{
+                    id=R.id.file_slector_holder_uplvBtn
+                    backgroundResource = R.drawable.hm_song_opt_menu_mem_btn
+                    textAlignment = TextView.TEXT_ALIGNMENT_CENTER
+                    textColor = 0xaa049ff1.toInt()
+                    textSize = 16f
+                    text = getResString(context,R.string.file_slector_holder_uplevel)
+                    padding = 0
+
+                }.lparams{
+                    width = dip(120)
                     height=dip(30)
 
 
                 }
 
-                scrollView {
-                    id=R.id.file_slector_holder_scrVw
-
-
-                }.lparams{
-                    width= wrapContent
-                    height=dip(220)
-                }
-
-                linearLayout {
-                    orientation = LinearLayout.HORIZONTAL
-                    setGravity(Gravity.CENTER)
-                    padding=dip(7)
-
-                    button{
-                        id=R.id.file_slector_holder_uplvBtn
-                        backgroundResource = R.drawable.hm_song_opt_menu_mem_btn
-                        textAlignment = TextView.TEXT_ALIGNMENT_CENTER
-                        textColor = 0xaa049ff1.toInt()
-                        textSize = 16f
-                        text = getResString(context,R.string.file_slector_holder_uplevel)
-                        padding = 0
-
-                    }.lparams{
-                        width = dip(120)
-                        height=dip(30)
-
-
-                    }
-
-                    button{
-                        id=R.id.file_slector_holder_okBtn
-                        backgroundResource = R.drawable.hm_song_opt_menu_mem_btn
-                        textColor = 0xaa049ff1.toInt()
-                        textSize = 16f
-                        text = getResString(context,R.string.file_slector_holder_confirm)
-                        padding = 0
-
-                    }.lparams{
-                        width = dip(120)
-                        height=dip(30)
-                        leftMargin=dip(10)
-
-
-                    }
+                button{
+                    id=R.id.file_slector_holder_okBtn
+                    backgroundResource = R.drawable.hm_song_opt_menu_mem_btn
+                    textColor = 0xaa049ff1.toInt()
+                    textSize = 16f
+                    text = getResString(context,R.string.file_slector_holder_confirm)
+                    padding = 0
 
                 }.lparams{
-                    width= matchParent
-                    height= wrapContent
+                    width = dip(120)
+                    height=dip(30)
+                    leftMargin=dip(10)
+
 
                 }
 
+            }.lparams{
+                width= matchParent
+                height= wrapContent
             }
         }
-        val reVw = ankoCtx.view
-        return reVw
     }
     private fun genFileSelectorItemLay(): View{
-        val ankoCtx = context.UI{
-            linearLayout {
-                orientation = LinearLayout.VERTICAL
-                padding = dip(5)
+        return context.linearLayout {
+            orientation = LinearLayout.VERTICAL
+            padding = dip(5)
 
-                imageView {
-                    id=R.id.file_slector_item_ico
-                    backgroundColor = 0xffffffff.toInt()
+            imageView {
+                id=R.id.file_slector_item_ico
+                backgroundColor = 0xffffffff.toInt()
 
-                }.lparams{
-                    width = dip(40)
-                    height = dip(30)
-
-                }
-
-                textView{
-                    id=R.id.file_slector_item_fname
-                    maxLines = 2
-                    textColor = 0xff444444.toInt()
-                    textSize = 12f
-                    gravity = Gravity.CENTER
-
-                }.lparams{
-                    width = dip(40)
-                    height = wrapContent
-                }
+            }.lparams{
+                width = dip(40)
+                height = dip(30)
 
             }
+
+            textView{
+                id=R.id.file_slector_item_fname
+                maxLines = 2
+                textColor = 0xff444444.toInt()
+                textSize = 12f
+                gravity = Gravity.CENTER
+
+            }.lparams{
+                width = dip(40)
+                height = wrapContent
+            }
+
         }
-        val reVw = ankoCtx.view
-        return reVw
     }
 }

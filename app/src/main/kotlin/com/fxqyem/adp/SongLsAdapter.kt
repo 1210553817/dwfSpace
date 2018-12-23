@@ -73,7 +73,7 @@ class SongLsAdapter(frgmt: Fragment, var list: List<SongInfo>?, private val data
         val mBtn: ImageButton?
         val ckBtn: Button?
         if (convertView == null) {
-            convertView = FrgmHmLay().createItmView(context)
+            convertView = FrgmHmLay.createItmView(context)
             mTextTitle = convertView?.findViewById(R.id.frgm_hm_lsitm_titTxt) as TextView?
             mTextArtist = convertView.findViewById(R.id.frgm_hm_lsitm_subtitTxt) as TextView?
             mBtn = convertView.findViewById(R.id.frgm_hm_lsitm_moreBtn) as ImageButton?
@@ -139,7 +139,7 @@ class SongLsAdapter(frgmt: Fragment, var list: List<SongInfo>?, private val data
             when (vid) {
                 R.id.frgm_hm_lsitm_moreBtn -> {
                     morBtnPosition = pos
-                    cttVw = FrgmMenuLay().createMenu(context)
+                    cttVw = FrgmMenuLay.createMenu(context)
                     parentView = mAct?.findViewById(R.id.main_vwctn_frmly) as ViewGroup?
                     sldMenua = SldMenu.create(mAct, cttVw, parentView)
                     sldMenua?.setOnStateChangeListener (object:SldMenu.OnStateChangeListener{
@@ -177,7 +177,7 @@ class SongLsAdapter(frgmt: Fragment, var list: List<SongInfo>?, private val data
                     initChsFavMenu(sls)
                 }
                 R.id.frgm_hm_mn_chsfav_new -> {
-                    cttVw = HomeLay().createFavOptEdit(context)
+                    cttVw = HomeLay.createFavOptEdit(context)
                     parentView = mAct?.findViewById(R.id.main_vwctn_frmly) as ViewGroup
                     sldMenuc = SldMenu.create(mAct, cttVw, parentView)
                     sldMenuc?.setOnStateChangeListener(object: SldMenu.OnStateChangeListener{
@@ -238,7 +238,7 @@ class SongLsAdapter(frgmt: Fragment, var list: List<SongInfo>?, private val data
                     sldMenua?.cancle()
                 }
                 R.id.frgm_hm_mn_info -> {
-                    cttVw = FrgmMenuLay().createFrgmInfo(context)
+                    cttVw = FrgmMenuLay.createFrgmInfo(context)
                     parentView = mAct!!.findViewById(R.id.main_vwctn_frmly) as ViewGroup
                     sldMenub = SldMenu.create(mAct, cttVw, parentView)
                     sldMenub!!.setOnStateChangeListener(object: SldMenu.OnStateChangeListener{
@@ -317,7 +317,7 @@ class SongLsAdapter(frgmt: Fragment, var list: List<SongInfo>?, private val data
      */
     fun initChsFavMenu(sls: ArrayList<SongInfo>?){
         val mAct = context as MainActivity
-        val cttVw = FrgmMenuLay().chsFav(context)
+        val cttVw = FrgmMenuLay.chsFav(context)
         val parentView = mAct?.findViewById(R.id.main_vwctn_frmly) as ViewGroup
         sldMenub = SldMenu.create(mAct, cttVw, parentView)
         sldMenub?.setOnStateChangeListener(object:SldMenu.OnStateChangeListener{

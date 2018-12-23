@@ -11,8 +11,8 @@ import org.jetbrains.anko.*
 /**
  * Created by Dwf on 2017/6/7.
  */
-class SubLay : AnkoComponent<SubActivity> {
-    override fun createView(ui: AnkoContext<SubActivity>): View {
+object SubLay{
+    fun createView(ui: SubActivity): View {
 
         return ui.linearLayout{
             backgroundColor = COLOR_WHITE

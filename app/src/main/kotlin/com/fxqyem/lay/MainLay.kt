@@ -16,15 +16,16 @@ import com.fxqyem.utils.BitMapUtil
 import com.fxqyem.vw.*
 import org.jetbrains.anko.*
 import org.jetbrains.anko.design.tabLayout
+import org.jetbrains.anko.design.themedTabLayout
 import org.jetbrains.anko.support.v4.viewPager
 
 
 /**
  * Created by Dwf on 2017/6/7.
  */
-class MainLay : AnkoComponent<MainActivity> {
-    override fun createView(ui: AnkoContext<MainActivity>): View {
-        var act = ui.owner
+object MainLay {
+    fun createView(ui: MainActivity): View {
+        val act = ui;
 
         val coreVw = ui.relativeLayout {
                 id = R.id.main_hd_ly
@@ -158,7 +159,7 @@ class MainLay : AnkoComponent<MainActivity> {
                     act.cenOriLy = relativeLayout {
                         id=R.id.main_cen_ori_ly
                         backgroundColor = COLOR_TRANS
-                       act.mTabLayout = tabLayout(theme=R.style.AppTheme){
+                       act.mTabLayout = themedTabLayout(theme=R.style.AppTheme){
                            id=R.id.main_tabs
                             backgroundColor=getResColor(act,R.color.mainTitle)
                            setSelectedTabIndicatorColor(getResColor(act,R.color.mainTxt))
@@ -695,7 +696,7 @@ class MainLay : AnkoComponent<MainActivity> {
                     }
                 }
             })
-            muteBtn.onClick {
+            muteBtn.setOnClickListener {
                 if(muteBtn.tag==0){
                     audio.setStreamVolume(AudioManager.STREAM_MUSIC, AppContext?.instance?.appVolume?:1, 0)
                     muteBtn.backgroundDrawable = BitMapUtil.getMatrixDrawableByRid(ctx, R.mipmap.red_thm_69, appColorArrayA)

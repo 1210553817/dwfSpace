@@ -25,7 +25,7 @@ class SetLsAdapter(private val context: Context, var list: ArrayList<MsgEnt>?) :
         val tit: TextView?
         val img: ImageView?
         if (convertView == null) {
-            convertView = SettingLay().createSetItmVw(context)
+            convertView = SettingLay.createSetItmVw(context)
             tit = convertView.findViewById(R.id.setting_pglay_item_mtit) as TextView?
             img = convertView.findViewById(R.id.setting_pglay_item_himg) as ImageView?
             vwHolder = VwHolder()

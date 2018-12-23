@@ -98,7 +98,7 @@ class HomeExpdLsAdapter(private val hdAct: Activity) : BaseExpandableListAdapter
         val grpVwhd: GrpViewHd
         val mTextTitle: TextView
         val mBtn: ImageButton
-        gView = HomeLay().createGrpView(hdAct)
+        gView = HomeLay.createGrpView(hdAct)
         mTextTitle = gView.findViewById(R.id.home_ex_grp_titTxt) as TextView
         mBtn = gView.findViewById(R.id.home_ex_grp_moreBtn) as ImageButton
         grpVwhd = GrpViewHd()
@@ -134,7 +134,7 @@ class HomeExpdLsAdapter(private val hdAct: Activity) : BaseExpandableListAdapter
         val mTextTitle: TextView
         val mTextArtist: TextView
         val mBtn: ImageButton
-        cView = HomeLay().createChdView(hdAct)
+        cView = HomeLay.createChdView(hdAct)
         mTextTitle = cView.findViewById(R.id.home_ex_chd_titTxt) as TextView
         mTextArtist = cView.findViewById(R.id.home_ex_chd_subtitTxt) as TextView
         mBtn = cView.findViewById(R.id.home_ex_chd_moreBtn) as ImageButton
@@ -165,7 +165,7 @@ class HomeExpdLsAdapter(private val hdAct: Activity) : BaseExpandableListAdapter
             val parentView: ViewGroup
             when (vid) {
                 R.id.home_ex_chd_moreBtn -> {
-                    cttVw = HomeLay().createFavOptMenu(hdAct)
+                    cttVw = HomeLay.createFavOptMenu(hdAct)
                     parentView = hdAct.findViewById(R.id.main_vwctn_frmly) as ViewGroup
                     sldMenua = SldMenu.create(hdAct, cttVw, parentView)
                     sldMenua?.setOnStateChangeListener(object: SldMenu.OnStateChangeListener{
@@ -189,7 +189,7 @@ class HomeExpdLsAdapter(private val hdAct: Activity) : BaseExpandableListAdapter
                     infoBtn.setOnClickListener(BtnOnClickLsn(gpos, cpos))
                 }
                 R.id.hm_fav_opt_menu_edtBtn -> {
-                    cttVw = HomeLay().createFavOptEdit(hdAct)
+                    cttVw = HomeLay.createFavOptEdit(hdAct)
                     parentView = hdAct.findViewById(R.id.main_vwctn_frmly) as ViewGroup
                     sldMenub = SldMenu.create(hdAct, cttVw, parentView)
                     sldMenub?.setOnStateChangeListener(object: SldMenu.OnStateChangeListener{
@@ -249,7 +249,7 @@ class HomeExpdLsAdapter(private val hdAct: Activity) : BaseExpandableListAdapter
                     Toast.makeText(hdAct, "移除成功！", Toast.LENGTH_SHORT).show()
                 }
                 R.id.hm_fav_opt_menu_infoBtn -> {
-                    cttVw = HomeLay().createFavOptInfo(hdAct)
+                    cttVw = HomeLay.createFavOptInfo(hdAct)
                     parentView = hdAct.findViewById(R.id.main_vwctn_frmly) as ViewGroup
                     sldMenub = SldMenu.create(hdAct, cttVw, parentView)
                     sldMenub?.setOnStateChangeListener(object: SldMenu.OnStateChangeListener{
@@ -274,7 +274,7 @@ class HomeExpdLsAdapter(private val hdAct: Activity) : BaseExpandableListAdapter
                 }
                 R.id.home_ex_grp_moreBtn -> {
                     val mAct = hdAct as MainActivity
-                    cttVw = HomeLay().createFavOptEdit(hdAct)
+                    cttVw = HomeLay.createFavOptEdit(hdAct)
                     parentView = hdAct?.findViewById(R.id.main_vwctn_frmly) as ViewGroup
                     sldMenuc = SldMenu.create(mAct, cttVw, parentView)
                     sldMenuc?.setOnStateChangeListener(object: SldMenu.OnStateChangeListener{

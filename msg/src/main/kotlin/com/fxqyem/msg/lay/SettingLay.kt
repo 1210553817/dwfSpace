@@ -10,7 +10,7 @@ import com.fxqyem.msg.R
 import com.fxqyem.msg.vw.*
 import org.jetbrains.anko.*
 
-class SettingLay {
+object SettingLay {
 
     fun createSetVw(ctx: Context): View {
         return ctx.linearLayout{

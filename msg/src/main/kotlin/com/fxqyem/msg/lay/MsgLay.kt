@@ -11,11 +11,10 @@ import com.fxqyem.msg.vw.*
 import org.jetbrains.anko.*
 import org.jetbrains.anko.support.v4.viewPager
 
-class MsgLay : AnkoComponent<MsgActivity> {
+object MsgLay {
 
-    override fun createView(ui: AnkoContext<MsgActivity>): View {
-        val act = ui.owner
-
+    fun createView(act: MsgActivity): View {
+        val ui = act;
         val coreVw = ui.relativeLayout {
             id = R.id.msg_lay_core_mainhd_ly
             backgroundColor = COLOR_LIGHTGREY0

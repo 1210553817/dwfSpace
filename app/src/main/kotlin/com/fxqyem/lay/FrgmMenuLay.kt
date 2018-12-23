@@ -14,7 +14,7 @@ import org.jetbrains.anko.*
 /**
  * Created by Dwf on 2017/6/29.
  */
-class FrgmMenuLay {
+object FrgmMenuLay {
 
     fun createMenu(ctx: Context): View {
 

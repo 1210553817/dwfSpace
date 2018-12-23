@@ -2,24 +2,27 @@
 
 buildscript {
     repositories {
-        jcenter()
+        mavenCentral()
+        //jcenter()
         google()
         maven { url "https://dl.bintray.com/kotlin/kotlin-dev/" }
+        maven { url "http://repo.spring.io/plugins-release/" }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.1.4'
-
+        classpath 'com.android.tools.build:gradle:3.2.1'
         //kotlin plugin
-        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.2.61'
-        classpath "org.jetbrains.kotlin:kotlin-android-extensions:1.2.61"
+        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.11'
+        classpath "org.jetbrains.kotlin:kotlin-android-extensions:1.3.11"
     }
 }
 
 allprojects {
     repositories {
-        jcenter()
+        mavenCentral()
+        //jcenter()
         google()
         maven { url "https://dl.bintray.com/kotlin/kotlin-dev/" }
+        maven { url "http://repo.spring.io/plugins-release/" }
     }
 }
 

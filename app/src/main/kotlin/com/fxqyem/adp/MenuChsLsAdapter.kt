@@ -29,7 +29,7 @@ class MenuChsLsAdapter(private val context: Context, var list: List<SongGrpInfo>
         val mTextTitle: TextView?
         val mTextArtist: TextView?
         if (convertView == null) {
-            convertView = FrgmMenuLay().chsFavItm(context)
+            convertView = FrgmMenuLay.chsFavItm(context)
             mTextTitle = convertView!!.findViewById(R.id.frgm_hm_mn_chsfav_item_tit) as TextView
             mTextArtist = convertView.findViewById(R.id.frgm_hm_mn_chsfav_item_sub) as TextView
             viewHd = ThisViewHd()

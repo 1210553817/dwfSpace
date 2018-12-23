@@ -132,7 +132,7 @@ class MainActivity : android.app.Activity(), OnBackListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        MainLay().setContentView(this)
+        this.setContentView(MainLay.createView(this))
         mHandler = MyHandler()
         initParams()
         initViews()
@@ -210,7 +210,7 @@ class MainActivity : android.app.Activity(), OnBackListener {
         bkgSettingBtnB?.setOnClickListener(BtnOnClickLsn())
         bkgBlurBtn?.setOnClickListener(BtnOnClickLsn())
         sldPlayModeBtn?.setOnClickListener(BtnOnClickLsn())
-        appSettingBtn?.onClick {
+        appSettingBtn?.setOnClickListener {
             val intent = Intent()
             intent.setClass(this,SubActivity::class.java)
             startActivity(intent)
@@ -266,8 +266,8 @@ class MainActivity : android.app.Activity(), OnBackListener {
 
     private fun initMainPagerViews() {
         //ViewPager
-        view1 = HomeLay().createView(this)
-        view2 = HomeLay().createNetView(this)
+        view1 = HomeLay.createView(this)
+        view2 = HomeLay.createNetView(this)
         //添加页卡视图
         mViewList.add(view1)
         mViewList.add(view2)
@@ -513,8 +513,8 @@ class MainActivity : android.app.Activity(), OnBackListener {
                 Toast.makeText(this@MainActivity,"没有网络连接哦！",Toast.LENGTH_SHORT).show()
             }
         }
-        netSelectorBtn?.onClick {
-            val cttVw = HomeLay().createNetSelectMenu(this@MainActivity)
+        netSelectorBtn?.setOnClickListener {
+            val cttVw = HomeLay.createNetSelectMenu(this@MainActivity)
             netSelectSldMenu = SldMenu.create(this@MainActivity, cttVw, vwCtnFrmLy)
             netSelectSldMenu?.setOnStateChangeListener(object : SldMenu.OnStateChangeListener {
                 override fun onStateChange(state: Int) {
@@ -536,32 +536,32 @@ class MainActivity : android.app.Activity(), OnBackListener {
             val qqBtn = cttVw.findViewById(R.id.main_net_ser_selector_qq) as LinearLayout
             val bdBtn = cttVw.findViewById(R.id.main_net_ser_selector_bd) as LinearLayout
             val wsBtn = cttVw.findViewById(R.id.main_net_ser_selector_ws) as LinearLayout
-            wyBtn.onClick {
+            wyBtn.setOnClickListener {
                 netSelectorBtn?.tag = "wy"
                 netSelectorBtn?.backgroundResource = R.mipmap.icon_wy
                 netSelectSldMenu?.cancle()
             }
-            xmBtn.onClick {
+            xmBtn.setOnClickListener {
                 netSelectorBtn?.tag = "xm"
                 netSelectorBtn?.backgroundResource = R.mipmap.icon_xm
                 netSelectSldMenu?.cancle()
             }
-            kgBtn.onClick {
+            kgBtn.setOnClickListener {
                 netSelectorBtn?.tag = "kg"
                 netSelectorBtn?.backgroundResource = R.mipmap.icon_kg
                 netSelectSldMenu?.cancle()
             }
-            qqBtn.onClick {
+            qqBtn.setOnClickListener {
                 netSelectorBtn?.tag = "qq"
                 netSelectorBtn?.backgroundResource = R.mipmap.icon_qq
                 netSelectSldMenu?.cancle()
             }
-            bdBtn.onClick {
+            bdBtn.setOnClickListener {
                 netSelectorBtn?.tag = "bd"
                 netSelectorBtn?.backgroundResource = R.mipmap.icon_bd
                 netSelectSldMenu?.cancle()
             }
-            wsBtn.onClick {
+            wsBtn.setOnClickListener {
                 netSelectorBtn?.tag = "ws"
                 netSelectorBtn?.backgroundResource = R.mipmap.icon_ws
                 netSelectSldMenu?.cancle()
@@ -571,7 +571,7 @@ class MainActivity : android.app.Activity(), OnBackListener {
 
         }
         var searchingNetLsFlag=true
-        netSerBtn?.onClick {
+        netSerBtn?.setOnClickListener {
             if(NetUtils.isConnected(this@MainActivity)) {
                 if(searchingNetLsFlag) {
                     searchingNetLsFlag = false
@@ -770,7 +770,7 @@ class MainActivity : android.app.Activity(), OnBackListener {
                     doFrmLyAnimation(magTop, if (b) 0 else wHeight - hdLyloc[1], 300, b)
                 } else {
                     //Log.v(TAG, "its looks loke FrmLy clicked!")
-                    val hdvw = MainLay().createVolumeView(this@MainActivity)
+                    val hdvw = MainLay.createVolumeView(this@MainActivity)
                     volumeSldMenu = SldMenu.create(this@MainActivity, hdvw, vwCtnFrmLy)
                     volumeSldMenu?.setOnStateChangeListener(object: SldMenu.OnStateChangeListener{
                         override fun onStateChange(state: Int) {
@@ -1228,7 +1228,7 @@ class MainActivity : android.app.Activity(), OnBackListener {
     }
 
     private fun genTmpLsVw() {
-        val hdvw = TmplsLay().createView(this)
+        val hdvw = TmplsLay.createView(this)
         val tmpLstit = hdvw.findViewById(R.id.tmp_lshd_lsTit) as TextView
         tmpLstit.text = "播放列表 - 0首"
         val tmpLsView = hdvw.findViewById(R.id.tmp_lshd_ls) as ListView
@@ -1248,7 +1248,7 @@ class MainActivity : android.app.Activity(), OnBackListener {
             tadp.curSongIndx = position
             tadp.notifyDataSetChanged()
         }
-        synBtn.onClick {
+        synBtn.setOnClickListener {
             AppContext.instance?.updateCurrentTmpls2Db()
         }
         tmpSldMenu = SldMenu.create(this, hdvw, vwCtnFrmLy)
@@ -1514,7 +1514,8 @@ class MainActivity : android.app.Activity(), OnBackListener {
         filter.addAction(AppConstants.PLAYER_REVW_ACTION_PLAY)
         filter.addAction(AppConstants.PLAYER_REVW_ACTION_PROG)
         filter.addAction(AppConstants.PLAYER_REVW_ACTION_SENDLS)
-        mLocalBroadcastManager?.registerReceiver(mReceiver, filter)
+        val recver = mReceiver
+        if(recver!=null)mLocalBroadcastManager?.registerReceiver(recver, filter)
 
         val itt = Intent(AppConstants.PLAYER_CTRL_ACTION_ACTIVITY_RESUME)
         mLocalBroadcastManager?.sendBroadcast(itt)
@@ -1531,17 +1532,15 @@ class MainActivity : android.app.Activity(), OnBackListener {
 
     override fun onStop() {
         thisState = AppConstants.VW_STATE_GONE
-        mLocalBroadcastManager?.unregisterReceiver(mReceiver)
+        val recver = mReceiver
+        if(recver!=null)mLocalBroadcastManager?.unregisterReceiver(recver)
         val itt = Intent(AppConstants.PLAYER_CTRL_ACTION_ACTIVITY_STOP)
         mLocalBroadcastManager?.sendBroadcast(itt)
 
         window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         super.onStop()
     }
-
-    override fun onDestroy() {
-        super.onDestroy()
-    }
+    
 
     fun push2BackLsnStack(obkLsnHd: BackLsnHolder) {
         backLsnStack?.push(obkLsnHd)
